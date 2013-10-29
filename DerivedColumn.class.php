@@ -39,4 +39,13 @@ class Skwal_DerivedColumn implements Skwal_AliasExpression
     {
         $this->correlatedParent = clone $this->correlatedParent;
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Skwal_AliasExpression::accept()
+     */
+    public function accept(Skwal_Visitor_Expression $visitor)
+    {
+        return $visitor->visitColumn($this);
+    }
 }

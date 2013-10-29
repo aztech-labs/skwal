@@ -7,6 +7,5 @@ interface Skwal_CorrelatableReference
      */
     function getCorrelationName();
     
-    
     function accept(Skwal_Visitor_Correlatable $visitor);
 }

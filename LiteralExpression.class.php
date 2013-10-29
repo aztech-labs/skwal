@@ -67,4 +67,13 @@ class Skwal_LiteralExpression implements Skwal_AliasExpression, Skwal_ValueExpre
         
         return $alias;
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see Skwal_AliasExpression::accept()
+     */
+    public function accept(Skwal_Visitor_Expression $visitor)
+    {
+        return $visitor->visitLiteral($this);
+    }
 }

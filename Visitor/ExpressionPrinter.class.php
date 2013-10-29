@@ -11,7 +11,7 @@ class Skwal_Visitor_ExpressionPrinter implements Skwal_Visitor_Expression
     
     public function visit(Skwal_AliasExpression $expression)
     {
-        $expression->accept($this);
+        return $expression->accept($this);
     }
     
     public function visitColumn(Skwal_DerivedColumn $column)

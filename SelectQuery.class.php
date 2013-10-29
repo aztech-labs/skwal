@@ -9,22 +9,48 @@
  */
 class Skwal_SelectQuery implements Skwal_CorrelatableReference
 {
+    /**
+     * 
+     * @var string
+     */
     private $alias;
     
+    /**
+     * 
+     * @var Skwal_CorrelatedReference[]
+     */
     private $tables = array();
     
+    /**
+     * 
+     * @var Skwal_AliasExpression[]
+     */
     private $columns = array();
     
+    /**
+     * Initialize a new instance with an optional alias.
+     * @param string $alias
+     */
     public function __construct($alias = '')
     {
         $this->alias = $alias;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see Skwal_CorrelatableReference::getCorrelationName()
+     */
     public function getCorrelationName()
     {
         return $this->alias;
     }
     
+    /**
+     * Adds a correlated reference (table, nested query...) to the current query.
+     * @param Skwal_CorrelatableReference $table
+     * @return Skwal_SelectQuery A new query with the added table
+     * in its from clause.
+     */
     public function addTable(Skwal_CorrelatableReference $table)
     {
         $clone = clone $this;
@@ -35,13 +61,19 @@ class Skwal_SelectQuery implements Skwal_CorrelatableReference
     }
     
     /**
-     * @return Skwal_CorrelatableReference First table found in from clause
+     * @return Skwal_CorrelatableReference First table found in from clause, 
+     * or boolean false if no tables have been added.
      */
     public function getFirstTable()
     {
-        return $this->tables[0];
+        return reset($this->tables);
     }
     
+    /**
+     * Adds a derived column to the select list of the query.
+     * @param Skwal_AliasExpression $column
+     * @return Skwal_SelectQuery A new query with the added column in its select list.
+     */
     public function addColumn(Skwal_AliasExpression $column)
     {
         $clone = clone $this;
@@ -53,13 +85,14 @@ class Skwal_SelectQuery implements Skwal_CorrelatableReference
     
     public function __clone()
     {
-        $clones = array();
-        foreach($this->tables as $table)
-        {
-            $clones[] = clone $table;
-        }
+        $tableClones = array();
+        $columnClones = array();
         
-        $this->tables = $clones;
+        foreach($this->tables as $table) $tableClones[] = clone $table;
+        foreach($this->columns as $column) $columnClones[] = clone $column;
+        
+        $this->tables = $tableClones;
+        $this->columns = $columnClones;
     }
     
     public function accept(Skwal_Visitor_Query $visitor)
