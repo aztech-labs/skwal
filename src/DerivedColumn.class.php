@@ -1,51 +1,56 @@
 <?php
-
-class Skwal_DerivedColumn implements Skwal_AliasExpression
+namespace Skwal
 {
-    private $columnName;
 
-    private $alias;
-
-    private $correlatedParent;
-
-    public function __construct($columnName, $alias = '')
+    class DerivedColumn implements AliasExpression
     {
-        $this->columnName = $columnName;
-        $this->alias = $alias;
-    }
 
-    public function getValue()
-    {
-        return $this->columnName;
-    }
+        private $columnName;
 
-    public function getAlias()
-    {
-        return $this->alias;
-    }
+        private $alias;
 
-    public function setTable(Skwal_CorrelatableReference $reference = null)
-    {
-        // Not using cloning to avoid unnecessary cloning of the attached
-        // correlated reference.
-        $clone = new self($this->columnName, $this->alias);
+        private $correlatedParent;
 
-        $clone->correlatedParent = $reference;
+        public function __construct($columnName, $alias = '')
+        {
+            $this->columnName = $columnName;
+            $this->alias = $alias;
+        }
 
-        return $clone;
-    }
+        public function getValue()
+        {
+            return $this->columnName;
+        }
 
-    public function __clone()
-    {
-        $this->correlatedParent = clone $this->correlatedParent;
-    }
+        public function getAlias()
+        {
+            return $this->alias;
+        }
 
-    /**
-     * (non-PHPdoc)
-     * @see Skwal_AliasExpression::accept()
-     */
-    public function acceptExpressionVisitor(Skwal_Visitor_Expression $visitor)
-    {
-        return $visitor->visitColumn($this);
+        public function setTable(CorrelatableReference $reference = null)
+        {
+            // Not using cloning to avoid unnecessary cloning of the attached
+            // correlated reference.
+            $clone = new self($this->columnName, $this->alias);
+
+            $clone->correlatedParent = $reference;
+
+            return $clone;
+        }
+
+        public function __clone()
+        {
+            $this->correlatedParent = clone $this->correlatedParent;
+        }
+
+        /**
+         * (non-PHPdoc)
+         *
+         * @see Skwal_AliasExpression::accept()
+         */
+        public function acceptExpressionVisitor(\Skwal\Visitor\Expression $visitor)
+        {
+            return $visitor->visitColumn($this);
+        }
     }
 }

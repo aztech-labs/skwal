@@ -1,8 +1,13 @@
 <?php
 
-interface Skwal_AliasExpression
+namespace Skwal
 {
-    function getAlias();
 
-    function acceptExpressionVisitor(Skwal_Visitor_Expression $visitor);
+    interface AliasExpression
+    {
+        function getAlias();
+
+        function acceptExpressionVisitor(\Skwal\Visitor\Expression $visitor);
+    }
+
 }

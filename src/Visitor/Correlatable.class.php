@@ -1,10 +1,14 @@
 <?php
-
-interface Skwal_Visitor_Correlatable
+namespace Skwal\Visitor
 {
-    function visit(Skwal_CorrelatableReference $reference);
-    
-    function visitTable(Skwal_TableReference $table);
-    
-    function visitQuery(Skwal_SelectQuery $query);
+
+    interface Correlatable
+    {
+
+        function visit(\Skwal\CorrelatableReference $reference);
+
+        function visitTable(\Skwal\TableReference $table);
+
+        function visitQuery(\Skwal\SelectQuery $query);
+    }
 }

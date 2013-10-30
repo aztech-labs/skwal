@@ -1,6 +1,10 @@
 <?php
-
-interface Skwal_Query
+namespace Skwal
 {
-    function acceptQueryVisitor(Skwal_Visitor_Query $visitor);
+
+    interface Query
+    {
+
+        function acceptQueryVisitor(Skwal_Visitor_Query $visitor);
+    }
 }

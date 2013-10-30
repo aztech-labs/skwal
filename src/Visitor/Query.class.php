@@ -1,11 +1,18 @@
 <?php
-
-interface Skwal_Visitor_Query
+namespace Skwal\Visitor
 {
-    function visit(Skwal_Query $query);
-    
-    function visitSelect(Skwal_SelectQuery $query);
-    function visitUpdate();
-    function visitInsert();
-    function visitDelete();
+
+    interface Query
+    {
+
+        function visit(\Skwal\Query $query);
+
+        function visitSelect(\Skwal\SelectQuery $query);
+
+        function visitUpdate();
+
+        function visitInsert();
+
+        function visitDelete();
+    }
 }

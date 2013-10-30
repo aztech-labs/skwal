@@ -1,6 +1,10 @@
 <?php
-
-interface Skwal_ValueExpression
+namespace Skwal
 {
-    function getValue();
+
+    interface ValueExpression
+    {
+
+        function getValue();
+    }
 }

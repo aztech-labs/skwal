@@ -1,11 +1,15 @@
 <?php
 
-interface Skwal_CorrelatableReference
-{
-    /**
-     * @return string
-     */
-    function getCorrelationName();
+namespace Skwal {
 
-    function acceptCorrelatableVisitor(Skwal_Visitor_Correlatable $visitor);
+    interface CorrelatableReference
+    {
+        /**
+         * @return string
+         */
+        function getCorrelationName();
+
+        function acceptCorrelatableVisitor(\Skwal\Visitor\Correlatable $visitor);
+    }
+
 }
