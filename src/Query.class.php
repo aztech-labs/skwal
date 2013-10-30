@@ -1,10 +1,8 @@
 <?php
 namespace Skwal
 {
-
-    interface Query
+    interface Query extends CorrelatableReference
     {
-
         function acceptQueryVisitor(Skwal_Visitor_Query $visitor);
     }
 }
