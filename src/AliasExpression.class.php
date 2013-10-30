@@ -3,6 +3,6 @@
 interface Skwal_AliasExpression
 {
     function getAlias();
-    
-    function accept(Skwal_Visitor_Expression $visitor);
+
+    function acceptExpressionVisitor(Skwal_Visitor_Expression $visitor);
 }

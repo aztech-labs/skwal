@@ -31,9 +31,9 @@ class Skwal_TableReference implements Skwal_CorrelatableReference
 
     /**
      * Creates a new table using a name and optionally an alias.
-     * 
-     * @param string $name            
-     * @param string $alias            
+     *
+     * @param string $name
+     * @param string $alias
      * @throws InvalidArgumentException if $name is an empty string.
      */
     public function __construct($name, $alias = '')
@@ -42,7 +42,7 @@ class Skwal_TableReference implements Skwal_CorrelatableReference
             $message = 'Argument $name is required.';
             throw new InvalidArgumentException($message);
         }
-        
+
         $this->name = trim($name);
         $this->alias = trim($alias);
     }
@@ -59,8 +59,8 @@ class Skwal_TableReference implements Skwal_CorrelatableReference
 
     /**
      * Sets the name of the table as it is defined in the table's schema/
-     * 
-     * @param string $name            
+     *
+     * @param string $name
      * @return Skwal_TableReference
      */
     public function setName($name)
@@ -78,11 +78,11 @@ class Skwal_TableReference implements Skwal_CorrelatableReference
         if (empty($this->alias)) {
             return $this->name;
         }
-        
+
         return $this->alias;
     }
-    
-    public function accept(Skwal_Visitor_Correlatable $visitor)
+
+    public function acceptCorrelatableVisitor(Skwal_Visitor_Correlatable $visitor)
     {
         $visitor->visitTable($this);
     }

@@ -23,9 +23,9 @@ class Skwal_LiteralExpression implements Skwal_AliasExpression, Skwal_ValueExpre
 
     /**
      * Initialize a new instance using a value and optionally an alias.
-     * 
-     * @param mixed $value            
-     * @param string $alias            
+     *
+     * @param mixed $value
+     * @param string $alias
      */
     public function __construct($value, $alias = '')
     {
@@ -35,7 +35,7 @@ class Skwal_LiteralExpression implements Skwal_AliasExpression, Skwal_ValueExpre
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see Skwal_ValueExpression::getValue()
      */
     public function getValue()
@@ -45,7 +45,7 @@ class Skwal_LiteralExpression implements Skwal_AliasExpression, Skwal_ValueExpre
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see Skwal_AliasExpression::getAlias()
      */
     public function getAlias()
@@ -56,23 +56,23 @@ class Skwal_LiteralExpression implements Skwal_AliasExpression, Skwal_ValueExpre
     /**
      * Sets the alias.
      * @param string $alias Name by which the literal can be referenced in contexts
-     * where it acts as a derived column.            
+     * where it acts as a derived column.
      * @return Skwal_LiteralExpression
      */
     public function setAlias($alias)
     {
         $clone = clone $this;
-        
+
         $clone->alias = $alias;
-        
+
         return $alias;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Skwal_AliasExpression::accept()
      */
-    public function accept(Skwal_Visitor_Expression $visitor)
+    public function acceptExpressionVisitor(Skwal_Visitor_Expression $visitor)
     {
         return $visitor->visitLiteral($this);
     }
