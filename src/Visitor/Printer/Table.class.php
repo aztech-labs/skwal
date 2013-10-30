@@ -1,9 +1,19 @@
 <?php
 namespace Skwal\Visitor\Printer
 {
-
-    class Correlatable implements \Skwal\Visitor\Correlatable
+    class Table implements \Skwal\Visitor\Correlatable
     {
+        private $queryVisitor;
+
+        public function setQueryVisitor(\Skwal\Visitor\Query $visitor)
+        {
+            $this->queryVisitor = $visitor;
+        }
+
+        public function getFromStatement(\Skwal\Query $query)
+        {
+
+        }
 
         public function visit(\Skwal\CorrelatableReference $reference)
         {

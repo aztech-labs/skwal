@@ -11,19 +11,30 @@ namespace Skwal\Visitor\Printer
 
         private $expressionVisitor;
 
+        /**
+         *
+         * @var \Skwal\Visitor\Printer\Correlatable
+         */
         private $correlationVisitor;
 
         public function initialize()
         {
-            $this->expressionVisitor = new \Skwal\Visitor\Printer\Expression();
+            $this->expressionVisitor = $this->getExpressionVisitor();
             $this->correlationVisitor = $this->getCorrelationVisitor();
             $this->queryCommand = '';
             $this->buffer = '';
         }
 
+        private function getExpressionVisitor()
+        {
+            $visitor = new Expression();
+        }
+
         private function getCorrelationVisitor()
         {
-            $visitor = new \Skwal\Visitor\Printer\Table();
+            $visitor = new Table();
+
+            $visitor->setQueryVisitor($this);
 
             return $visitor;
         }
