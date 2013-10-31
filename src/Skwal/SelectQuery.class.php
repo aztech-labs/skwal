@@ -94,6 +94,13 @@ namespace Skwal
             return $clone;
         }
         
+        private function validateColumnIndex($index)
+        {
+            if ($index < 0 || $index >= count($this->columns)) {
+                throw new \OutOfRangeException('$index is out of range.');
+            }
+        }
+        
         /**
          * Derives a column from an expression in the query's select clause.
          * @param int $index
@@ -102,9 +109,7 @@ namespace Skwal
          */
         public function deriveColumn($index)
         {
-            if ($index < 0 || $index >= count($this->columns)) {
-            	throw new \OutOfRangeException('$index is out of range.');
-            }
+            $this->validateColumnIndex($index);
             
             $column = new DerivedColumn($this->columns[$index]->getAlias());
             
@@ -130,9 +135,7 @@ namespace Skwal
          */
         public function getColumn($index)
         {
-            if ($index < 0 || $index >= count($this->columns)) {
-                throw new \OutOfRangeException('$index is out of range.');
-            }
+            $this->validateColumnIndex($index);
         
             return $this->columns[$index];
         }
@@ -148,16 +151,29 @@ namespace Skwal
 
         public function __clone()
         {
-            $tableClones = array();
+            $this->cloneColumns();
+            $this->cloneTables();
+        }
+        
+        private function cloneColumns()
+        {
             $columnClones = array();
             
-            foreach ($this->tables as $table)
-                $tableClones[] = clone $table;
             foreach ($this->columns as $column)
                 $columnClones[] = clone $column;
             
-            $this->tables = $tableClones;
             $this->columns = $columnClones;
+        }
+        
+        private function cloneTables()
+        {
+            $tableClones = array();
+            
+            
+            foreach ($this->tables as $table)
+                $tableClones[] = clone $table;
+            
+            $this->tables = $tableClones;
         }
 
         public function acceptQueryVisitor(\Skwal\Visitor\Query $visitor)

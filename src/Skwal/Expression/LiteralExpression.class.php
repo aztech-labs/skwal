@@ -71,7 +71,7 @@ namespace Skwal\Expression
 
             $clone->alias = $alias;
 
-            return $alias;
+            return $clone;
         }
 
         /**
