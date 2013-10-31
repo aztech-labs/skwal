@@ -4,6 +4,7 @@ namespace Skwal
 
     use Skwal\Expression\AliasExpression;
     use Skwal\Expression\DerivedColumn;
+    use Skwal\Condition\Predicate;
 
     /**
      * Defines a select query.
@@ -33,6 +34,12 @@ namespace Skwal
          * @var Skwal_AliasExpression[]
          */
         private $columns = array();
+
+        /**
+         *
+         * @var \Skwal\Condition\Predicate
+         */
+        private $condition;
 
         /**
          * Initialize a new instance with an optional alias.
@@ -142,6 +149,20 @@ namespace Skwal
             $this->validateColumnIndex($index);
 
             return $this->columns[$index];
+        }
+
+        public function setCondition(Predicate $predicate)
+        {
+            $clone = clone $this;
+
+        	$clone->condition = $predicate;
+
+        	return $clone;
+        }
+
+        public function getCondition()
+        {
+            return $this->condition;
         }
 
         /**

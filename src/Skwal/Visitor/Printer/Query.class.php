@@ -23,11 +23,18 @@ namespace Skwal\Visitor\Printer
          */
         private $correlationVisitor;
 
+        /**
+         *
+         * @var \Skwal\Visitor\Printer\Predicate
+         */
+        private $predicateVisitor;
+
         public function __construct()
         {
             $this->queryStack = new \SplStack();
             $this->expressionVisitor = $this->getExpressionVisitor();
             $this->correlationVisitor = $this->getCorrelationVisitor();
+            $this->predicateVisitor  = $this->getPredicateVisitor();
         }
 
         /**
@@ -37,7 +44,7 @@ namespace Skwal\Visitor\Printer
         private function getExpressionVisitor()
         {
             $visitor = new Expression();
-            
+
             return $visitor;
         }
 
@@ -48,16 +55,23 @@ namespace Skwal\Visitor\Printer
         private function getCorrelationVisitor()
         {
             $visitor = new Table();
-            
+
             $visitor->setQueryVisitor($this);
-            
+
+            return $visitor;
+        }
+
+        private function getPredicateVisitor()
+        {
+            $visitor = new Predicate();
+
             return $visitor;
         }
 
         public function getQueryCommand(\Skwal\Query $query)
         {
             $this->visit($query);
-            
+
             return $this->queryStack->pop();
         }
 
@@ -79,20 +93,21 @@ namespace Skwal\Visitor\Printer
         public function visitSelect(\Skwal\SelectQuery $query)
         {
             $this->expressionVisitor->useAliases(true);
-            
+
             $command = 'SELECT';
             $fromNames = array();
-            
+
             foreach ($query->getColumns() as $column) {
                 $fromNames[] = $this->expressionVisitor->printExpression($column);
             }
-            
+
             $command .= ' ' . implode(', ', $fromNames);
-            
-            $fromStatement = $this->correlationVisitor->getFromStatement($query);
-            
-            $command .= ' FROM ' . $fromStatement;
-            
+            $command .= ' FROM ' . $this->correlationVisitor->getFromStatement($query);
+
+            if ($query->getCondition() != null) {
+                $command .= ' WHERE ' . $this->predicateVisitor->getPredicateStatement($query->getCondition());
+            }
+
             $this->queryStack->push($command);
         }
 
