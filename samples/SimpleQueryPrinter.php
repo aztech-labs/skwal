@@ -12,7 +12,7 @@ $printer = new Skwal\Visitor\Printer\Query();
 $table = new TableReference('test');
 $query = new SelectQuery('childQuery');
 
-$query = $query->addTable($table)
+$query = $query->setTable($table)
                ->addColumn($table->getColumn('anyCol', 'aliasedCol'))
                ->addColumn($table->getColumn('unaliasedCol'))
                ->addColumn(new LiteralExpression(10, 'intExpr'))
@@ -24,7 +24,7 @@ echo $printer->getQueryCommand($query) . PHP_EOL;
 
 $parentQuery = new SelectQuery('parent');
 
-$parentQuery = $parentQuery->addTable($query)
+$parentQuery = $parentQuery->setTable($query)
                            ->addColumn($query->deriveColumn(0))
                            ->addColumn($query->deriveColumn(2));
 
