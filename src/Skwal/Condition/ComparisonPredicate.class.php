@@ -12,12 +12,12 @@ namespace Skwal\Condition
 
         private $rightOperand;
 
-        public function __construct(ValueExpression $expression, $operator, ValueExpression $expression)
+        public function __construct(ValueExpression $left, $operator, ValueExpression $right)
         {
             // @todo Operator checking
             $this->operator = $operator;
-            $this->leftOperand = $expression;
-            $this->rightOperand = $expression;
+            $this->leftOperand = $left;
+            $this->rightOperand = $right;
         }
 
         public function getOperator()
