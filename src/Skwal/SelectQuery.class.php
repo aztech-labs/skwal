@@ -91,22 +91,50 @@ namespace Skwal
             
             return $clone;
         }
-
+        
         /**
-         * Gets a column identified by its index.
+         * Derives a column from an expression in the query's select clause.
          * @param int $index
          * @throws \OutOfRangeException
          * @return multitype:\Skwal\Skwal_AliasExpression
          */
-        public function getColumn($index)
+        public function deriveColumn($index)
         {
             if ($index < 0 || $index >= count($this->columns)) {
             	throw new \OutOfRangeException('$index is out of range.');
             }
             
-            return $this->columns[$index];
+            $column = new DerivedColumn($this->columns[$index]->getAlias());
+            
+            return $column->setTable($this);
+        }
+        
+        public function deriveColumns()
+        {
+            $derived = array();
+            
+            for ($i = 0; $i < count($this->columns); $i++) {
+                $derived[] = $this->deriveColumn($i);
+            }
+            
+            return $derived;
         }
 
+        /**
+         * Gets a column identified by its index
+         * @param int $index
+         * @throws \OutOfRangeException If $index is out of the column's count range.
+         * @return multitype:\Skwal\Skwal_AliasExpression
+         */
+        public function getColumn($index)
+        {
+            if ($index < 0 || $index >= count($this->columns)) {
+                throw new \OutOfRangeException('$index is out of range.');
+            }
+        
+            return $this->columns[$index];
+        }
+        
         /**
          *
          * @return \Skwal\Skwal_AliasExpression[]

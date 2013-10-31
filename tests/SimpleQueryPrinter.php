@@ -1,22 +1,31 @@
 <?php
 
+use Skwal\TableReference;
+use Skwal\SelectQuery;
+use Skwal\LiteralExpression;
+
 include __DIR__ . '/../Loader.php';
 
-$printer = new \Skwal\Visitor\Printer\Query();
-$table = new \Skwal\TableReference('test');
-$query = new \Skwal\SelectQuery('childQuery');
+$printer = new Skwal\Visitor\Printer\Query();
+$table = new TableReference('test');
+$query = new SelectQuery('childQuery');
 
 $query = $query->addTable($table)
-               ->addColumn($table->getColumn('testCol', 'aliasedCol'))
-               ->addColumn($table->getColumn('unaliasedCol'));
+               ->addColumn($table->getColumn('anyCol', 'aliasedCol'))
+               ->addColumn($table->getColumn('unaliasedCol'))
+               ->addColumn(new LiteralExpression(10, 'intExpr'))
+               ->addColumn(new LiteralExpression('text', 'textExpr'))
+               ->addColumn(new LiteralExpression(true, 'boolExpr'))
+               ->addColumn(new LiteralExpression(null, 'nullExpr'));
 
 echo $printer->getQueryCommand($query) . PHP_EOL;
 
-$parentQuery = new \Skwal\SelectQuery('parent');
+$parentQuery = new SelectQuery('parent');
 /** @todo : Fix incorrect column reference when deriving columns from
  *          nested queries
  */
 $parentQuery = $parentQuery->addTable($query)
-                           ->addColumn($query->getColumn(0));
+                           ->addColumn($query->deriveColumn(0))
+                           ->addColumn($query->deriveColumn(2));
 
 echo $printer->getQueryCommand($parentQuery) . PHP_EOL;

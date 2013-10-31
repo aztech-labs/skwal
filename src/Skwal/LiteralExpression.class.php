@@ -10,7 +10,7 @@ namespace Skwal
      * @author thibaud
      *
      */
-    class LiteralExpression implements AliasExpression, ValueExpression
+    class LiteralExpression extends AbstractExpression implements ValueExpression
     {
 
         /**

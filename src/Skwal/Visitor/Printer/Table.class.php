@@ -4,7 +4,6 @@ namespace Skwal\Visitor\Printer
 
     class Table implements \Skwal\Visitor\Correlatable
     {
-
         private $queryVisitor;
 
         private $fromStatement;

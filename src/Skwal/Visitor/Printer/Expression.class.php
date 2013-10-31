@@ -4,7 +4,6 @@ namespace Skwal\Visitor\Printer
 
     class Expression implements \Skwal\Visitor\Expression
     {
-
         private $printedExpression;
 
         private $useAliases = true;
@@ -28,12 +27,26 @@ namespace Skwal\Visitor\Printer
 
         public function visitColumn(\Skwal\DerivedColumn $column)
         {
-            $this->printedExpression = sprintf('%s.%s AS %s', $column->getTable()->getCorrelationName(), $column->getValue(), $column->getAlias());
+            $scope = $column->getTable();
+            
+            $this->printedExpression = sprintf('%s.%s AS %s', $scope->getCorrelationName(), $column->getValue(), $column->getAlias());
         }
 
         public function visitLiteral(\Skwal\LiteralExpression $literal)
         {
-            $this->printedExpression = sprintf('%s AS %s', $literal->getValue(), $literal->getAlias());
+            $value = $literal->getValue();
+            
+            if (is_string($value)) {
+                $value = "'$value'";
+            }
+            else if (is_bool($value)) {
+                $value = $value ? 'TRUE' : 'FALSE';
+            }
+            else if ($value === null) {
+                $value = 'NULL';
+            }
+            
+            $this->printedExpression = sprintf('%s AS %s', $value, $literal->getAlias());
         }
     }
 }

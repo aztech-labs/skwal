@@ -2,7 +2,7 @@
 namespace Skwal
 {
 
-    class DerivedColumn implements AliasExpression
+    class DerivedColumn extends AbstractExpression
     {
 
         private $columnName;
@@ -53,7 +53,9 @@ namespace Skwal
 
         public function __clone()
         {
-            $this->correlatedParent = clone $this->correlatedParent;
+            if ($this->correlatedParent != null) {
+                $this->correlatedParent = clone $this->correlatedParent;
+            }
         }
 
         /**
