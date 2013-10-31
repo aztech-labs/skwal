@@ -16,7 +16,7 @@ namespace Skwal\Visitor\Printer
         public function printExpression(\Skwal\Expression\AliasExpression $expression)
         {
             $this->visit($expression);
-            
+
             return $this->printedExpression;
         }
 
@@ -28,14 +28,14 @@ namespace Skwal\Visitor\Printer
         public function visitColumn(\Skwal\Expression\DerivedColumn $column)
         {
             $scope = $column->getTable();
-            
+
             $this->printedExpression = sprintf('%s.%s AS %s', $scope->getCorrelationName(), $column->getValue(), $column->getAlias());
         }
 
         public function visitLiteral(\Skwal\Expression\LiteralExpression $literal)
         {
             $value = $literal->getValue();
-            
+
             if (is_string($value)) {
                 $value = "'$value'";
             }
@@ -45,8 +45,13 @@ namespace Skwal\Visitor\Printer
             else if ($value === null) {
                 $value = 'NULL';
             }
-            
-            $this->printedExpression = sprintf('%s AS %s', $value, $literal->getAlias());
+
+            if (trim($literal->getAlias()) != '') {
+                $this->printedExpression = sprintf('%s AS %s', $value, $literal->getAlias());
+            }
+            else {
+                $this->printedExpression = $value;
+            }
         }
     }
 }

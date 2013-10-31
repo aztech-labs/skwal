@@ -1,6 +1,7 @@
 <?php
 namespace Skwal\Condition
 {
+
     use Skwal\Expression\ValueExpression;
 
     class ComparisonPredicate extends AbstractPredicate
@@ -33,6 +34,11 @@ namespace Skwal\Condition
         public function getRightOperand()
         {
             return $this->rightOperand;
+        }
+
+        function acceptPredicateVisitor(\Skwal\Visitor\Predicate $visitor)
+        {
+        	$visitor->visitComparisonPredicate($this);
         }
     }
 }

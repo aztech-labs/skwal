@@ -22,6 +22,6 @@ namespace Skwal\Condition
          */
         function BOr(Predicate $predicate);
 
-        function acceptPredicateVisitor(\Skwa\Visitor\Predicate $visitor);
+        function acceptPredicateVisitor(\Skwal\Visitor\Predicate $visitor);
     }
 }

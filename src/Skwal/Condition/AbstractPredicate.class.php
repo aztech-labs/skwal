@@ -2,17 +2,19 @@
 namespace Skwal\Condition
 {
 
-    class AbstractPredicate implements Predicate
+    abstract class AbstractPredicate implements Predicate
     {
 
-        function BAnd(Predicate $predicate)
+        public function BAnd(Predicate $predicate)
         {
             return new AndPredicate($this, $predicate);
         }
 
-        function BOr(Predicate $predicate)
+        public function BOr(Predicate $predicate)
         {
             return new OrPredicate($this, $predicate);
         }
+
+        abstract function acceptPredicateVisitor(\Skwal\Visitor\Predicate $visitor);
     }
 }
