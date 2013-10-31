@@ -3,7 +3,6 @@
 namespace Skwal\Visitor
 {
 
-    use Skwal\Condition\Predicate;
     use Skwal\Condition\AndPredicate;
     use Skwal\Condition\OrPredicate;
     use Skwal\Condition\ComparisonPredicate;
@@ -11,7 +10,7 @@ namespace Skwal\Visitor
     interface Predicate
     {
 
-        function visit(Predicate $predicate);
+        function visit(\Skwal\Condition\Predicate $predicate);
 
         function visitAndPredicate(AndPredicate $predicate);
 

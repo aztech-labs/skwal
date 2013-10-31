@@ -11,9 +11,9 @@ namespace Test\Skwal\Condition
         {
             $first = $this->getMock('\Skwal\Condition\Predicate');
             $second = $this->getMock('\Skwal\Condition\Predicate');
-            
+
             $predicate = new AndPredicate($first, $second);
-            
+
             $this->assertSame($first, $predicate->getFirstPredicate());
         }
 
@@ -21,10 +21,26 @@ namespace Test\Skwal\Condition
         {
             $first = $this->getMock('\Skwal\Condition\Predicate');
             $second = $this->getMock('\Skwal\Condition\Predicate');
-            
+
             $predicate = new AndPredicate($first, $second);
-            
+
             $this->assertSame($second, $predicate->getSecondPredicate());
+        }
+
+        public function testAcceptCallsCorrectVisitorMethod()
+        {
+            $first = $this->getMock('\Skwal\Condition\Predicate');
+            $second = $this->getMock('\Skwal\Condition\Predicate');
+
+            $predicate = new AndPredicate($first, $second);
+
+            $visitor = $this->getMock('\Skwal\Visitor\Predicate');
+
+            $visitor->expects($this->once())
+                ->method('visitAndPredicate')
+                ->with($this->equalTo($predicate));
+
+            $predicate->acceptPredicateVisitor($visitor);
         }
     }
 }

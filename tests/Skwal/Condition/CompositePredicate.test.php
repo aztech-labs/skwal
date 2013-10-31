@@ -6,7 +6,7 @@ namespace Test\Skwal\Condition
     use Skwal\CompOp;
 
     /**
-     * 
+     *
      * @author thibaud
      * @todo Test invalid operators
      */
@@ -17,28 +17,28 @@ namespace Test\Skwal\Condition
         {
             $left = $this->getMock('\Skwal\Expression\ValueExpression');
             $right = $this->getMock('\Skwal\Expression\ValueExpression');
-            
+
             $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
-            
+
             $this->assertSame($left, $predicate->getLeftOperand());
         }
-        
+
         function testGetRightOperandReturnsCorrectValue()
         {
             $left = $this->getMock('\Skwal\Expression\ValueExpression');
             $right = $this->getMock('\Skwal\Expression\ValueExpression');
-            
+
             $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
-            
+
             $this->assertSame($right, $predicate->getRightOperand());
         }
-        
+
         function getOperands()
         {
             return array(array(CompOp::Equals), array(CompOp::GreaterThan), array(CompOp::GreaterThanEq),
                 array(CompOp::LessThan), array(CompOp::LessThanEq), array(CompOp::NotEquals));
         }
-        
+
         /**
          * @dataProvider getOperands
          */
@@ -46,10 +46,26 @@ namespace Test\Skwal\Condition
         {
             $left = $this->getMock('\Skwal\Expression\ValueExpression');
             $right = $this->getMock('\Skwal\Expression\ValueExpression');
-            
+
             $predicate = new ComparisonPredicate($left, $operand, $right);
-            
+
             $this->assertEquals($operand, $predicate->getOperator());
+        }
+
+        public function testAcceptCallsCorrectVisitorMethod()
+        {
+            $first = $this->getMock('\Skwal\Expression\ValueExpression');
+            $second = $this->getMock('\Skwal\Expression\ValueExpression');
+
+            $predicate = new ComparisonPredicate($first, CompOp::Equals, $second);
+
+            $visitor = $this->getMock('\Skwal\Visitor\Predicate');
+
+            $visitor->expects($this->once())
+                ->method('visitComparisonPredicate')
+                ->with($this->equalTo($predicate));
+
+            $predicate->acceptPredicateVisitor($visitor);
         }
     }
 }

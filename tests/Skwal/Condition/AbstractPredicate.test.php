@@ -11,26 +11,26 @@ namespace Test\Skwal\Condition
 
         protected function setUp()
         {
-            $this->predicate = new AbstractPredicate();
+            $this->predicate = $this->getMockForAbstractClass('\Skwal\Condition\AbstractPredicate');
         }
-        
+
         public function testBAndReturnsAndPredicate()
         {
             $other = $this->getMock('\Skwal\Condition\Predicate');
-            
+
             $andPredicate = $this->predicate->BAnd($other);
-            
+
             $this->assertInstanceOf('\Skwal\Condition\AndPredicate', $andPredicate);
             $this->assertSame($andPredicate->getFirstPredicate(), $this->predicate);
             $this->assertSame($andPredicate->getSecondPredicate(), $other);
         }
-        
+
         public function testBOrReturnsAndPredicate()
         {
             $other = $this->getMock('\Skwal\Condition\Predicate');
-        
+
             $andPredicate = $this->predicate->BOr($other);
-        
+
             $this->assertInstanceOf('\Skwal\Condition\OrPredicate', $andPredicate);
             $this->assertSame($andPredicate->getFirstPredicate(), $this->predicate);
             $this->assertSame($andPredicate->getSecondPredicate(), $other);
