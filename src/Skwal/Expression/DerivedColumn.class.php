@@ -1,6 +1,8 @@
 <?php
-namespace Skwal
+namespace Skwal\Expression
 {
+
+    use Skwal\CorrelatableReference;
 
     class DerivedColumn extends AbstractExpression
     {

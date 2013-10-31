@@ -1,6 +1,6 @@
 <?php
 
-namespace Skwal
+namespace Skwal\Expression
 {
 
     interface AliasExpression

@@ -2,7 +2,7 @@
 
 use Skwal\TableReference;
 use Skwal\SelectQuery;
-use Skwal\LiteralExpression;
+use Skwal\Expression\LiteralExpression;
 
 include __DIR__ . '/../Loader.php';
 
@@ -21,9 +21,7 @@ $query = $query->addTable($table)
 echo $printer->getQueryCommand($query) . PHP_EOL;
 
 $parentQuery = new SelectQuery('parent');
-/** @todo : Fix incorrect column reference when deriving columns from
- *          nested queries
- */
+
 $parentQuery = $parentQuery->addTable($query)
                            ->addColumn($query->deriveColumn(0))
                            ->addColumn($query->deriveColumn(2));

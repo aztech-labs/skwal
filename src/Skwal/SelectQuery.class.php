@@ -1,7 +1,9 @@
 <?php
 namespace Skwal
 {
-
+    use Skwal\Expression\AliasExpression;
+    use Skwal\Expression\DerivedColumn;
+				    
     /**
      * Defines a select query.
      *

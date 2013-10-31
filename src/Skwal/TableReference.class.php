@@ -1,13 +1,14 @@
 <?php
-
 namespace Skwal
 {
+
+    use Skwal\Expression\DerivedColumn;
 
     /**
      * References a table in a schema.
      *
      * @author thibaud
-     *
+     *        
      */
     class TableReference implements CorrelatableReference
     {
@@ -36,17 +37,17 @@ namespace Skwal
         /**
          * Creates a new table using a name and optionally an alias.
          *
-         * @param string $name
-         * @param string $alias
+         * @param string $name            
+         * @param string $alias            
          * @throws InvalidArgumentException if $name is an empty string.
          */
         public function __construct($name, $alias = '')
         {
-            if (!trim($name)) {
+            if (! trim($name)) {
                 $message = 'Argument $name is required.';
                 throw new \InvalidArgumentException($message);
             }
-
+            
             $this->name = trim($name);
             $this->alias = trim($alias);
         }
@@ -64,7 +65,7 @@ namespace Skwal
         /**
          * Sets the name of the table as it is defined in the table's schema/
          *
-         * @param string $name
+         * @param string $name            
          * @return Skwal_TableReference
          */
         public function setName($name)
@@ -82,14 +83,17 @@ namespace Skwal
             if (empty($this->alias)) {
                 return $this->name;
             }
-
+            
             return $this->alias;
         }
 
         /**
-         * Returns a column object correlated to the current table. 
-         * @param string $name Name of the column to return.
-         * @param string $alias Alias to use on the column.
+         * Returns a column object correlated to the current table.
+         *
+         * @param string $name
+         *            Name of the column to return.
+         * @param string $alias
+         *            Alias to use on the column.
          * @return \Skwal\DerivedColumn
          */
         public function getColumn($name, $alias = '')
@@ -98,9 +102,10 @@ namespace Skwal
             
             return $column->setTable($this);
         }
-        
+
         /**
          * (non-PHPdoc)
+         * 
          * @see \Skwal\CorrelatableReference::acceptCorrelatableVisitor()
          */
         public function acceptCorrelatableVisitor(\Skwal\Visitor\Correlatable $visitor)

@@ -1,5 +1,5 @@
 <?php
-namespace Skwal
+namespace Skwal\Expression
 {
 
     /**

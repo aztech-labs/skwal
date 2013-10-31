@@ -5,11 +5,11 @@ namespace Skwal\Visitor
 
 interface Expression
 {
-    function visit(\Skwal\AliasExpression $alias);
+    function visit(\Skwal\Expression\AliasExpression $alias);
 
-    function visitColumn(\Skwal\DerivedColumn $column);
+    function visitColumn(\Skwal\Expression\DerivedColumn $column);
 
-    function visitLiteral(\Skwal\LiteralExpression $literal);
+    function visitLiteral(\Skwal\Expression\LiteralExpression $literal);
 }
 
 }
