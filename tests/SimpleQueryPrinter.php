@@ -6,6 +6,8 @@ use Skwal\Expression\LiteralExpression;
 
 include __DIR__ . '/../Loader.php';
 
+$startTime = microtime(true);
+
 $printer = new Skwal\Visitor\Printer\Query();
 $table = new TableReference('test');
 $query = new SelectQuery('childQuery');
@@ -27,3 +29,7 @@ $parentQuery = $parentQuery->addTable($query)
                            ->addColumn($query->deriveColumn(2));
 
 echo $printer->getQueryCommand($parentQuery) . PHP_EOL;
+
+$endTime = microtime(true);
+
+echo sprintf("Executed in %s s", $endTime - $startTime) . PHP_EOL;
