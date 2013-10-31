@@ -15,7 +15,7 @@ namespace Skwal\Visitor\Printer
 
         public function getFromStatement(\Skwal\SelectQuery $query)
         {
-        	$this->visit($query->getFirstTable());
+        	$this->visit($query->getTable());
         	
         	return $this->fromStatement;
         }
