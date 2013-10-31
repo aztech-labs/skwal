@@ -3,6 +3,8 @@
 use Skwal\TableReference;
 use Skwal\SelectQuery;
 use Skwal\Expression\LiteralExpression;
+use Skwal\Condition\ComparisonPredicate;
+use Skwal\CompOp;
 
 include __DIR__ . '/../Loader.php';
 
@@ -22,11 +24,15 @@ $query = $query->setTable($table)
 
 echo $printer->getQueryCommand($query) . PHP_EOL;
 
-$parentQuery = new SelectQuery('parent');
+$condition = new ComparisonPredicate($query->deriveColumn(0), CompOp::Equals, new LiteralExpression(10));
+$condition = $condition->BOr($condition);
+$condition = $condition->BAnd($condition);
 
+$parentQuery = new SelectQuery('parent');
 $parentQuery = $parentQuery->setTable($query)
                            ->addColumn($query->deriveColumn(0))
-                           ->addColumn($query->deriveColumn(2));
+                           ->addColumn($query->deriveColumn(2))
+                           ->setCondition($condition);
 
 echo $printer->getQueryCommand($parentQuery) . PHP_EOL;
 
