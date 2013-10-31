@@ -11,4 +11,4 @@ include '/path/to/Skwal/Loader.php';
 
 ### Sample usage
 
-See tests/SimpleQueryPrinter.php
+See samples/SimpleQueryPrinter.php
