@@ -2,15 +2,15 @@
 namespace Test\Skwal
 {
 
-    use Skwal\SelectQuery;
+    use Skwal\Query\Select;
     use Skwal\Expression\DerivedColumn;
 
-    class SelectQueryTest extends \PHPUnit_Framework_TestCase
+    class SelectTest extends \PHPUnit_Framework_TestCase
     {
 
         public function testAcceptCorrelatableVisitorCallsProperVisitMethod()
         {
-            $query = new SelectQuery();
+            $query = new Select();
 
             $visitor = $this->getMock('\Skwal\Visitor\Correlatable');
 
@@ -23,7 +23,7 @@ namespace Test\Skwal
 
         public function testAcceptQueryVisitorCallsProperVisitMethod()
         {
-            $query = new SelectQuery();
+            $query = new Select();
 
             $visitor = $this->getMock('\Skwal\Visitor\Query');
 
@@ -58,7 +58,7 @@ namespace Test\Skwal
          */
         public function testGetColumnThrowsExceptionWhenIndexIsOutOfBounds($index)
         {
-            $query = new SelectQuery();
+            $query = new Select();
 
             $query->getColumn($index);
         }
@@ -87,7 +87,7 @@ namespace Test\Skwal
          */
         public function testGetColumnReturnsCorrectColumn($columns, $index)
         {
-            $query = new SelectQuery();
+            $query = new Select();
 
             foreach ($columns as $column) {
                 $query = $query->addColumn($column);
@@ -114,7 +114,7 @@ namespace Test\Skwal
          */
         public function testGetColumnsReturnsAllColumns($columns)
         {
-            $query = new SelectQuery();
+            $query = new Select();
             $expected = array();
 
             foreach ($columns as $column) {
@@ -127,14 +127,14 @@ namespace Test\Skwal
 
         public function testGetCorrelationNameReturnsCorrectValue()
         {
-            $query = new SelectQuery('alias');
+            $query = new Select('alias');
 
             $this->assertEquals('alias', $query->getCorrelationName());
         }
 
         public function testDeriveColumnSetsAppropriateCorrelationReference()
         {
-            $query = new SelectQuery();
+            $query = new Select();
             $query = $query->addColumn(new DerivedColumn('alias'));
 
             $column = $query->deriveColumn(0);
@@ -144,7 +144,7 @@ namespace Test\Skwal
 
         public function testDeriveColumnsSetsAppropriateCorrelationReferences()
         {
-            $query = new SelectQuery();
+            $query = new Select();
             $query = $query->addColumn(new DerivedColumn('alias'));
 
             $derived = $query->deriveColumns();
@@ -154,7 +154,7 @@ namespace Test\Skwal
 
         public function testSetTableReturnsNewInstance()
         {
-            $query = new SelectQuery();
+            $query = new Select();
             $table = $this->getMock('\Skwal\CorrelatableReference');
 
             $this->assertNotSame($query, $query->setTable($table));
@@ -162,7 +162,7 @@ namespace Test\Skwal
 
         public function testGetTableReturnsSetValue()
         {
-            $query = new SelectQuery();
+            $query = new Select();
             $table = $this->getMock('\Skwal\CorrelatableReference');
 
             $query = $query->setTable($table);
@@ -172,14 +172,14 @@ namespace Test\Skwal
 
         public function testGetConditionReturnsDefaultNullValue()
         {
-            $query = new SelectQuery();
+            $query = new Select();
 
             $this->assertNull($query->getCondition());
         }
 
         public function testSetConditionReturnsNewQueryInstance()
         {
-            $query = new SelectQuery();
+            $query = new Select();
 
             $condition = $this->getMock('\Skwal\Condition\Predicate');
 

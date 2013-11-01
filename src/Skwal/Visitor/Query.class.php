@@ -6,7 +6,7 @@ namespace Skwal\Visitor
     {
         function visit(\Skwal\Query $query);
 
-        function visitSelect(\Skwal\SelectQuery $query);
+        function visitSelect(\Skwal\Query\Select $query);
 
         function visitUpdate();
 

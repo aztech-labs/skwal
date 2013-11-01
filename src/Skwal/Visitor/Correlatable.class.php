@@ -9,6 +9,6 @@ namespace Skwal\Visitor
 
         function visitTable(\Skwal\TableReference $table);
 
-        function visitQuery(\Skwal\SelectQuery $query);
+        function visitQuery(\Skwal\Query\Select $query);
     }
 }

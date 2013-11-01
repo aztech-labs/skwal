@@ -1,7 +1,6 @@
 <?php
 namespace Skwal\Visitor\Printer
 {
-
     class Query implements \Skwal\Visitor\Query
     {
 
@@ -81,7 +80,7 @@ namespace Skwal\Visitor\Printer
          */
         private function buildCorrelationVisitor()
         {
-            $visitor = new Table();
+            $visitor = new Correlatable();
 
             $visitor->setQueryVisitor($this);
 
@@ -97,7 +96,7 @@ namespace Skwal\Visitor\Printer
             return $visitor;
         }
 
-        public function getQueryCommand(\Skwal\Query $query)
+        public function printQuery(\Skwal\Query $query)
         {
             $this->visit($query);
 
@@ -109,25 +108,34 @@ namespace Skwal\Visitor\Printer
             $query->acceptQueryVisitor($this);
         }
 
-        public function visitSelect(\Skwal\SelectQuery $query)
+        public function visitSelect(\Skwal\Query\Select $query)
         {
+            $assembler = new \Skwal\Visitor\Printer\Assembler\Select();
+
             $this->expressionVisitor->useAliases(true);
 
-            $command = 'SELECT';
-            $fromNames = array();
-
+            $selectList = array();
             foreach ($query->getColumns() as $column) {
-                $fromNames[] = $this->expressionVisitor->printExpression($column);
+                $selectList[] = $this->expressionVisitor->printExpression($column);
             }
+            $assembler->setSelectList($selectList);
 
-            $command .= ' ' . implode(', ', $fromNames);
-            $command .= ' FROM ' . $this->correlationVisitor->getFromStatement($query);
+            $fromStatement = $this->correlationVisitor->printCorrelatableStatement($query->getTable());
+            $assembler->setFromClause($fromStatement);
 
             if ($query->getCondition() != null) {
-                $command .= ' WHERE ' . $this->predicateVisitor->getPredicateStatement($query->getCondition());
+                $whereClause = $this->predicateVisitor->printPredicateStatement($query->getCondition());
+                $assembler->setWhereClause($whereClause);
             }
 
-            $this->queryStack->push($command);
+            $this->expressionVisitor->useAliases(false);
+            $groupByList = array();
+            foreach ($query->getGroupingColumns() as $groupingColumn) {
+                $groupByList[] = $this->expressionVisitor->printExpression($groupingColumn);
+            }
+            $assembler->setGroupByList($groupByList);
+
+            $this->queryStack->push($assembler->getAssembledStatement());
         }
 
         public function visitUpdate()

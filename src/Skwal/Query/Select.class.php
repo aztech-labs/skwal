@@ -1,10 +1,12 @@
 <?php
-namespace Skwal
+namespace Skwal\Query
 {
 
     use Skwal\Expression\AliasExpression;
     use Skwal\Expression\DerivedColumn;
     use Skwal\Condition\Predicate;
+    use Skwal\CorrelatableReference;
+    use Skwal\Query;
 
     /**
      * Defines a select query.
@@ -14,7 +16,7 @@ namespace Skwal
      * @todo Review accept function names to allow implementation of multiple
      *       Visitor patterns.
      */
-    class SelectQuery implements CorrelatableReference, Query
+    class Select implements CorrelatableReference, Query
     {
 
         /**
@@ -25,15 +27,21 @@ namespace Skwal
 
         /**
          *
-         * @var Skwal_CorrelatedReference
+         * @var \Skwal\CorrelatableReference
          */
         private $table = null;
 
         /**
          *
-         * @var Skwal_AliasExpression[]
+         * @var \Skwal\Expression\AliasExpression[]
          */
         private $columns = array();
+
+        /**
+         *
+         * @var \Skwal\Expression\AliasExpression[]
+         */
+        private $aggregateColumns = array();
 
         /**
          *
@@ -53,8 +61,7 @@ namespace Skwal
 
         /**
          * (non-PHPdoc)
-         *
-         * @see Skwal_CorrelatableReference::getCorrelationName()
+         * @see \Skwal\CorrelatableReference::getCorrelationName()
          */
         public function getCorrelationName()
         {
@@ -64,12 +71,12 @@ namespace Skwal
         /**
          * Adds a correlated reference (table, nested query...) to the current query.
          *
-         * @param Skwal_CorrelatableReference $table
-         * @return Skwal_SelectQuery A new query with the added table
+         * @param \Skwal\CorrelatableReference $table
+         * @return \Skwal\Query\Select A new query with the added table
          *         in its from clause.
          * @todo Avoid duplicate table cloning
          */
-        public function setTable(CorrelatableReference $table)
+        public function setTable(\Skwal\CorrelatableReference $table)
         {
             $clone = clone $this;
 
@@ -80,7 +87,7 @@ namespace Skwal
 
         /**
          *
-         * @return Skwal_CorrelatableReference First table found in from clause,
+         * @return \Skwal\CorrelatableReference First table found in from clause,
          *         or boolean false if no tables have been added.
          */
         public function getTable()
@@ -91,14 +98,23 @@ namespace Skwal
         /**
          * Adds a derived column to the select list of the query.
          *
-         * @param Skwal_AliasExpression $column
-         * @return Skwal_SelectQuery A new query with the added column in its select list.
+         * @param \Skwal\Expression\AliasExpression $column
+         * @return \Skwal\Query\Select A new query with the added column in its select list.
          */
         public function addColumn(AliasExpression $column)
         {
             $clone = clone $this;
 
             $clone->columns[] = $column;
+
+            return $clone;
+        }
+
+        public function groupBy(AliasExpression $column)
+        {
+            $clone = clone $this;
+
+            $clone->aggregateColumns[] = $column;
 
             return $clone;
         }
@@ -115,7 +131,7 @@ namespace Skwal
          *
          * @param int $index
          * @throws \OutOfRangeException
-         * @return multitype:\Skwal\Skwal_AliasExpression
+         * @return multitype:\Skwal\Expression\AliasExpression
          */
         public function deriveColumn($index)
         {
@@ -151,15 +167,24 @@ namespace Skwal
             return $this->columns[$index];
         }
 
+        /**
+         *
+         * @param Predicate $predicate
+         * @return \Skwal\Query\Select
+         */
         public function setCondition(Predicate $predicate)
         {
             $clone = clone $this;
 
-        	$clone->condition = $predicate;
+            $clone->condition = $predicate;
 
-        	return $clone;
+            return $clone;
         }
 
+        /**
+         *
+         * @return \Skwal\Condition\Predicate
+         */
         public function getCondition()
         {
             return $this->condition;
@@ -174,11 +199,28 @@ namespace Skwal
             return $this->columns;
         }
 
+        /**
+         *
+         * @return multitype:\Skwal\Expression\AliasExpression
+         */
+        public function getGroupingColumns()
+        {
+            return $this->aggregateColumns;
+        }
+
+        /**
+         * (non-PHPdoc)
+         * @see \Skwal\Query::acceptQueryVisitor()
+         */
         public function acceptQueryVisitor(\Skwal\Visitor\Query $visitor)
         {
             $visitor->visitSelect($this);
         }
 
+        /**
+         * (non-PHPdoc)
+         * @see \Skwal\CorrelatableReference::acceptCorrelatableVisitor()
+         */
         public function acceptCorrelatableVisitor(\Skwal\Visitor\Correlatable $visitor)
         {
             $visitor->visitQuery($this);

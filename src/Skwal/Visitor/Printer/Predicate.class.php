@@ -17,7 +17,7 @@ namespace Skwal\Visitor\Printer
             $this->expressionPrinter = $expressionPrinter;
         }
 
-        public function getPredicateStatement(\Skwal\Condition\Predicate $predicate)
+        public function printPredicateStatement(\Skwal\Condition\Predicate $predicate)
         {
             $predicate->acceptPredicateVisitor($this);
 
@@ -31,16 +31,16 @@ namespace Skwal\Visitor\Printer
 
         public function visitAndPredicate(AndPredicate $predicate)
         {
-            $first = $this->getPredicateStatement($predicate->getFirstPredicate());
-            $second = $this->getPredicateStatement($predicate->getSecondPredicate());
+            $first = $this->printPredicateStatement($predicate->getFirstPredicate());
+            $second = $this->printPredicateStatement($predicate->getSecondPredicate());
 
             $this->predicateStatement = sprintf('(%s AND %s)', $first, $second);
         }
 
         public function visitOrPredicate(OrPredicate $predicate)
         {
-            $first = $this->getPredicateStatement($predicate->getFirstPredicate());
-            $second = $this->getPredicateStatement($predicate->getSecondPredicate());
+            $first = $this->printPredicateStatement($predicate->getFirstPredicate());
+            $second = $this->printPredicateStatement($predicate->getSecondPredicate());
 
             $this->predicateStatement =  sprintf('(%s OR %s)', $first, $second);
         }

@@ -5,7 +5,7 @@ namespace Test\Skwal\Visitor\Printer
     {
         public function testVisitDispatchesCallToVisitable()
         {
-            $visitor = new \Skwal\Visitor\Printer\Table();
+            $visitor = new \Skwal\Visitor\Printer\Correlatable();
 
             $reference = $this->getMock('\Skwal\CorrelatableReference');
 

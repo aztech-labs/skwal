@@ -2,7 +2,7 @@
 namespace Skwal\Visitor\Printer
 {
 
-    class Table implements \Skwal\Visitor\Correlatable
+    class Correlatable implements \Skwal\Visitor\Correlatable
     {
         private $queryVisitor;
 
@@ -13,10 +13,10 @@ namespace Skwal\Visitor\Printer
             $this->queryVisitor = $visitor;
         }
 
-        public function getFromStatement(\Skwal\SelectQuery $query)
+        public function printCorrelatableStatement(\Skwal\CorrelatableReference $reference)
         {
-        	$this->visit($query->getTable());
-        	
+        	$this->visit($reference);
+
         	return $this->fromStatement;
         }
 
@@ -30,10 +30,10 @@ namespace Skwal\Visitor\Printer
             $this->fromStatement = sprintf('%s AS %s', $table->getName(), $table->getCorrelationName());
         }
 
-        public function visitQuery(\Skwal\SelectQuery $query)
+        public function visitQuery(\Skwal\Query\Select $query)
         {
-            $queryText = $this->queryVisitor->getQueryCommand($query);
-            
+            $queryText = $this->queryVisitor->printQuery($query);
+
             $this->fromStatement = sprintf('(%s) AS %s', $queryText, $query->getCorrelationName());
         }
     }
