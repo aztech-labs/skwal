@@ -34,6 +34,15 @@ namespace Test\Skwal
             $query->acceptQueryVisitor($visitor);
         }
 
+        public function testAddColumnReturnsNewQueryInstance()
+        {
+            $query = new Select();
+
+            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+
+            $this->assertNotSame($query, $query->addColumn($column));
+        }
+
         public function getInvalidIndexes()
         {
             return array(
@@ -100,11 +109,11 @@ namespace Test\Skwal
         {
             return array(
                 array(
+                    new DerivedColumn('one')
+                ),
+                array(
                     new DerivedColumn('one'),
-                    array(
-                        new DerivedColumn('one'),
-                        new DerivedColumn('two')
-                    )
+                    new DerivedColumn('two')
                 )
             );
         }
@@ -184,6 +193,33 @@ namespace Test\Skwal
             $condition = $this->getMock('\Skwal\Condition\Predicate');
 
             $this->assertNotSame($query->setCondition($condition), $condition);
+        }
+
+        public function testGroupByReturnsNewQueryInstance()
+        {
+            $query = new Select();
+
+            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+
+            $this->assertNotSame($query, $query->groupBy($column));
+        }
+
+        public function testGetGroupingColumnsReturnsCorrectArray()
+        {
+            $query = new Select();
+
+            $groupBys = array();
+            for ($i = 0; $i < 10; $i++) {
+                $column = $this->getMock('\Skwal\Expression\AliasExpression');
+
+                $groupBys[] = $column;
+                $query = $query->groupBy($column);
+            }
+
+            $returned = $query->getGroupingColumns();
+            for ($i = 0; $i < 10; $i++) {
+                $this->assertSame($groupBys[$i], $returned[$i]);
+            }
         }
     }
 }
