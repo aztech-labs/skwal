@@ -22,13 +22,12 @@ namespace Skwal\Visitor\Printer
 
         public function visit(\Skwal\Expression\AliasExpression $expression)
         {
-            return $expression->acceptExpressionVisitor($this);
+            $expression->acceptExpressionVisitor($this);
         }
 
         public function visitColumn(\Skwal\Expression\DerivedColumn $column)
         {
             $scope = $column->getTable();
-
 
             $this->printedExpression = sprintf('%s.%s', $scope->getCorrelationName(), $column->getValue());
 

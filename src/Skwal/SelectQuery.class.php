@@ -174,29 +174,6 @@ namespace Skwal
             return $this->columns;
         }
 
-        public function __clone()
-        {
-            $this->cloneColumns();
-            $this->cloneTable();
-        }
-
-        private function cloneColumns()
-        {
-            $columnClones = array();
-
-            foreach ($this->columns as $column)
-                $columnClones[] = clone $column;
-
-            $this->columns = $columnClones;
-        }
-
-        private function cloneTable()
-        {
-            if ($this->table != null) {
-                $this->table = clone $this->table;
-            }
-        }
-
         public function acceptQueryVisitor(\Skwal\Visitor\Query $visitor)
         {
             $visitor->visitSelect($this);

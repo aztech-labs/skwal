@@ -32,16 +32,43 @@ namespace Skwal\Visitor\Printer
         public function __construct()
         {
             $this->queryStack = new \SplStack();
-            $this->expressionVisitor = $this->getExpressionVisitor();
-            $this->correlationVisitor = $this->getCorrelationVisitor();
-            $this->predicateVisitor  = $this->getPredicateVisitor();
+            $this->expressionVisitor = $this->buildExpressionVisitor();
+            $this->correlationVisitor = $this->buildCorrelationVisitor();
+            $this->predicateVisitor  = $this->buildPredicateVisitor();
+        }
+
+        /**
+         * Sets the visitor instance for used to output expressions.
+         * @param \Skwal\Visitor\Printer\Expression $visitor
+         */
+        public function setExpressionVisitor(\Skwal\Visitor\Printer\Expression $visitor)
+        {
+            $this->expressionVisitor = $visitor;
+        }
+
+        /**
+         * Sets the visitor instance for used to output correlated references.
+         * @param \Skwal\Visitor\Printer\Table $visitor
+         */
+        public function setCorrelationVisitor(\Skwal\Visitor\Printer\Table $visitor)
+        {
+            $this->correlationVisitor = $visitor;
+        }
+
+        /**
+         * * Sets the visitor instance for used to output predicates.
+         * @param \Skwal\Visitor\Printer\Predicate $visitor
+         */
+        public function setPredicateVisitor(\Skwal\Visitor\Printer\Predicate $visitor)
+        {
+            $this->predicateVisitor = $visitor;
         }
 
         /**
          *
          * @return \Skwal\Visitor\Printer\Expression
          */
-        private function getExpressionVisitor()
+        private function buildExpressionVisitor()
         {
             $visitor = new Expression();
 
@@ -52,7 +79,7 @@ namespace Skwal\Visitor\Printer
          *
          * @return \Skwal\Visitor\Printer\Table
          */
-        private function getCorrelationVisitor()
+        private function buildCorrelationVisitor()
         {
             $visitor = new Table();
 
@@ -61,9 +88,11 @@ namespace Skwal\Visitor\Printer
             return $visitor;
         }
 
-        private function getPredicateVisitor()
+        private function buildPredicateVisitor()
         {
             $visitor = new Predicate();
+
+            $visitor->setExpressionPrinter($this->expressionVisitor);
 
             return $visitor;
         }
@@ -78,16 +107,6 @@ namespace Skwal\Visitor\Printer
         public function visit(\Skwal\Query $query)
         {
             $query->acceptQueryVisitor($this);
-        }
-
-        public function visitExpression(\Skwal\AliasExpression $expression)
-        {
-            $this->expressionVisitor->visit($expression);
-        }
-
-        public function visitCorrelatedReference(\Skwal\CorrelatableReference $reference)
-        {
-            $this->correlationVisitor->visit($reference);
         }
 
         public function visitSelect(\Skwal\SelectQuery $query)
@@ -113,17 +132,17 @@ namespace Skwal\Visitor\Printer
 
         public function visitUpdate()
         {
-            throw new RuntimeException('Not implemented');
+            throw new \RuntimeException('Not implemented');
         }
 
         public function visitDelete()
         {
-            throw new RuntimeException('Not implemented');
+            throw new \RuntimeException('Not implemented');
         }
 
         public function visitInsert()
         {
-            throw new RuntimeException('Not implemented');
+            throw new \RuntimeException('Not implemented');
         }
     }
 }

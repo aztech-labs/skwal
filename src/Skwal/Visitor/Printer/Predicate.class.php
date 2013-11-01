@@ -12,9 +12,9 @@ namespace Skwal\Visitor\Printer
 
         private $predicateStatement = '';
 
-        public function __construct()
+        public function setExpressionPrinter(\Skwal\Visitor\Printer\Expression $expressionPrinter)
         {
-            $this->expressionPrinter = new Expression();
+            $this->expressionPrinter = $expressionPrinter;
         }
 
         public function getPredicateStatement(\Skwal\Condition\Predicate $predicate)

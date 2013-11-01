@@ -152,16 +152,38 @@ namespace Test\Skwal
             $this->assertSame($query, $derived[0]->getTable());
         }
 
-        public function testCloneReturnsInstanceWithClonedTable()
+        public function testSetTableReturnsNewInstance()
+        {
+            $query = new SelectQuery();
+            $table = $this->getMock('\Skwal\CorrelatableReference');
+
+            $this->assertNotSame($query, $query->setTable($table));
+        }
+
+        public function testGetTableReturnsSetValue()
         {
             $query = new SelectQuery();
             $table = $this->getMock('\Skwal\CorrelatableReference');
 
             $query = $query->setTable($table);
 
-            $clone = clone $query;
+            $this->assertSame($table, $query->getTable());
+        }
 
-            $this->assertNotSame($table, $clone->getTable());
+        public function testGetConditionReturnsDefaultNullValue()
+        {
+            $query = new SelectQuery();
+
+            $this->assertNull($query->getCondition());
+        }
+
+        public function testSetConditionReturnsNewQueryInstance()
+        {
+            $query = new SelectQuery();
+
+            $condition = $this->getMock('\Skwal\Condition\Predicate');
+
+            $this->assertNotSame($query->setCondition($condition), $condition);
         }
     }
 }

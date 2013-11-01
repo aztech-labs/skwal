@@ -16,5 +16,36 @@ namespace Test\Skwal\Visitor\Printer
 
             $visitor->visit($query);
         }
+
+        /**
+         * @expectedException RuntimeException
+         */
+        public function testVisitUpdateThrowsException()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Query();
+
+            $visitor->visitUpdate();
+        }
+
+        /**
+         * @expectedException RuntimeException
+         */
+        public function testVisitDeleteThrowsException()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Query();
+
+            $visitor->visitDelete();
+        }
+
+        /**
+         * @expectedException RuntimeException
+         */
+        public function testVisitInsertThrowsException()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Query();
+
+            $visitor->visitInsert();
+        }
+
     }
 }
