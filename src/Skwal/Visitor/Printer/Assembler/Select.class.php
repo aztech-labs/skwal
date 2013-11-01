@@ -13,7 +13,7 @@ namespace Skwal\Visitor\Printer\Assembler
 
         private $groupByList = array();
 
-        private $orderByClause = '';
+        private $orderByList = array();
 
         private $limitClause = '';
 
@@ -39,9 +39,9 @@ namespace Skwal\Visitor\Printer\Assembler
             $this->groupByList = $expressions;
         }
 
-        public function setOrderByClause($statement)
+        public function setOrderByList(array $expression = array())
         {
-            $this->orderByClause = $statement;
+            $this->orderByList = $expression;
         }
 
         public function setLimitClause($limitStatement, $offsetStatement)
@@ -58,6 +58,7 @@ namespace Skwal\Visitor\Printer\Assembler
             $this->appendFromClause($command);
             $this->appendWhereIfNecessary($command);
             $this->appendGroupByIfNecessary($command);
+            $this->appendOrderByIfNecessary($command);
 
             return $command;
         }
@@ -91,6 +92,13 @@ namespace Skwal\Visitor\Printer\Assembler
         {
             if (count($this->groupByList)) {
                 $command .= ' GROUP BY ' . implode(', ', $this->groupByList);
+            }
+        }
+
+        private function appendOrderByIfNecessary(&$command)
+        {
+            if (count($this->orderByList)) {
+                $command .= ' ORDER BY ' . implode(', ', $this->orderByList);
             }
         }
     }

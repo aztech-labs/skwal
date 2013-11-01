@@ -71,7 +71,9 @@ namespace Test\Skwal\Visitor\Printer\Assembler
             $assembler->setFromClause('table');
             $assembler->setWhereClause('1 = 1');
             $assembler->setGroupByList(array('1'));
-            $this->assertEquals('SELECT expression FROM table WHERE 1 = 1 GROUP BY 1', $assembler->getAssembledStatement());
+            $assembler->setLimitClause('1', '1');
+            $assembler->setOrderByList(array('1 ASC', '2 DESC'));
+            $this->assertEquals('SELECT expression FROM table WHERE 1 = 1 GROUP BY 1 ORDER BY 1 ASC, 2 DESC', $assembler->getAssembledStatement());
         }
     }
 }
