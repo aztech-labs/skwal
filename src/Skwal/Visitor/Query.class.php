@@ -2,6 +2,11 @@
 namespace Skwal\Visitor
 {
 
+    /**
+     * Visitor interface for the Query class hierarchy.
+     * @author thibaud
+     *
+     */
     interface Query
     {
         function visit(\Skwal\Query $query);

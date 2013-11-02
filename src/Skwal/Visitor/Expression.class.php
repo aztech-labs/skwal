@@ -1,15 +1,19 @@
 <?php
-
 namespace Skwal\Visitor
 {
 
-interface Expression
-{
-    function visit(\Skwal\Expression\AliasExpression $alias);
+    /**
+     * Visitor interface for the AliasExpression class hierarchy.
+     * @author thibaud
+     *
+     */
+    interface Expression
+    {
 
-    function visitColumn(\Skwal\Expression\DerivedColumn $column);
+        function visit(\Skwal\Expression\AliasExpression $alias);
 
-    function visitLiteral(\Skwal\Expression\LiteralExpression $literal);
-}
+        function visitColumn(\Skwal\Expression\DerivedColumn $column);
 
+        function visitLiteral(\Skwal\Expression\LiteralExpression $literal);
+    }
 }

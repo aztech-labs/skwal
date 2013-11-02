@@ -7,7 +7,7 @@ namespace Skwal
 
         private $expressions = array();
 
-        public function addExpression(\Skwal\Expression\ValueExpression $expression)
+        public function addExpression(\Skwal\Expression\Expression $expression)
         {
             $clone = clone $this;
 

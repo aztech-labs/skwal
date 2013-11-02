@@ -45,6 +45,12 @@ namespace Skwal\Query
 
         /**
          *
+         * @var multitype:\Skwal\OrderBy
+         */
+        private $sortList = array();
+
+        /**
+         *
          * @var \Skwal\Condition\Predicate
          */
         private $condition;
@@ -127,7 +133,7 @@ namespace Skwal\Query
         }
 
         /**
-         * Derives a column from an expression in the query's select clause.
+         * Derives an expression in the query's select clause as a column of the query's associated resultset.
          *
          * @param int $index
          * @throws \OutOfRangeException
@@ -142,6 +148,10 @@ namespace Skwal\Query
             return $column->setTable($this);
         }
 
+        /**
+         * Derives all expressions in the query's select clause as columns of the query's associated resultset.
+         * @return multitype:Ambigous <\Skwal\Query\multitype:\Skwal\Expression\AliasExpression, \Skwal\Expression\DerivedColumn>
+         */
         public function deriveColumns()
         {
             $derived = array();

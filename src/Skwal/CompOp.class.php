@@ -2,6 +2,12 @@
 namespace Skwal
 {
 
+    /**
+     * Available comparison operators for comparison predicates.
+     *
+     * @author thibaud
+     *
+     */
     final class CompOp
     {
 

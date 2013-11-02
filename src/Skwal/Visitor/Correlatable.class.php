@@ -1,7 +1,11 @@
 <?php
 namespace Skwal\Visitor
 {
-
+    /**
+     * Visitor interface for the CorrelatableReference class hierarchy.
+     * @author thibaud
+     *
+     */
     interface Correlatable
     {
 

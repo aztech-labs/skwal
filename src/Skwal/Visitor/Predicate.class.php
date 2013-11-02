@@ -1,5 +1,4 @@
 <?php
-
 namespace Skwal\Visitor
 {
 
@@ -7,6 +6,11 @@ namespace Skwal\Visitor
     use Skwal\Condition\OrPredicate;
     use Skwal\Condition\ComparisonPredicate;
 
+    /**
+     * Visitor interface for the Predicate class hierarchy.
+     * @author thibaud
+     *
+     */
     interface Predicate
     {
 

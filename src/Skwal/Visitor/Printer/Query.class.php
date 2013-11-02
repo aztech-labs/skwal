@@ -28,6 +28,9 @@ namespace Skwal\Visitor\Printer
          */
         private $predicateVisitor;
 
+        /**
+         * Initializes a new instance with default dependencies set.
+         */
         public function __construct()
         {
             $this->queryStack = new \SplStack();
@@ -90,6 +93,10 @@ namespace Skwal\Visitor\Printer
             return $visitor;
         }
 
+        /**
+         *
+         * @return \Skwal\Visitor\Printer\Predicate
+         */
         private function buildPredicateVisitor()
         {
             $visitor = new Predicate();
@@ -99,6 +106,11 @@ namespace Skwal\Visitor\Printer
             return $visitor;
         }
 
+        /**
+         * Generates the SQL command for a given query.
+         * @param \Skwal\Query $query
+         * @return mixed
+         */
         public function printQuery(\Skwal\Query $query)
         {
             $this->visit($query);
@@ -106,11 +118,19 @@ namespace Skwal\Visitor\Printer
             return $this->queryStack->pop();
         }
 
+        /**
+         * (non-PHPdoc)
+         * @see \Skwal\Visitor\Query::visit()
+         */
         public function visit(\Skwal\Query $query)
         {
             $query->acceptQueryVisitor($this);
         }
 
+        /**
+         * (non-PHPdoc)
+         * @see \Skwal\Visitor\Query::visitSelect()
+         */
         public function visitSelect(\Skwal\Query\Select $query)
         {
             $assembler = new \Skwal\Visitor\Printer\Assembler\Select();
@@ -123,6 +143,11 @@ namespace Skwal\Visitor\Printer
             $this->queryStack->push($assembler->getAssembledStatement());
         }
 
+        /**
+         * Adds the select list elements of a query to a query assembler.
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
+         * @param \Skwal\Query\Select $query
+         */
         private function appendSelectList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
         {
             $this->expressionVisitor->useAliases(true);
@@ -136,12 +161,22 @@ namespace Skwal\Visitor\Printer
             $assembler->setSelectList($selectList);
         }
 
+        /**
+         * Adds the from clause of a query to a query assembler.
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
+         * @param \Skwal\Query\Select $query
+         */
         private function appendFromClause(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
         {
             $fromStatement = $this->correlationVisitor->printCorrelatableStatement($query->getTable());
             $assembler->setFromClause($fromStatement);
         }
 
+        /**
+         * Adds the where clause of a query to a query assembler if the given query has a selection condition.
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
+         * @param \Skwal\Query\Select $query
+         */
         private function appendWhereClauseIfNecessary(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
         {
             if ($query->getCondition() != null) {
@@ -150,6 +185,11 @@ namespace Skwal\Visitor\Printer
             }
         }
 
+        /**
+         * Adds the group by list from a query to a query assembler.
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
+         * @param \Skwal\Query\Select $query
+         */
         private function appendGroupByList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
         {
             $this->expressionVisitor->useAliases(false);

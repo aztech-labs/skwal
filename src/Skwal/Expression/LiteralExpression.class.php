@@ -10,7 +10,7 @@ namespace Skwal\Expression
      * @author thibaud
      *
      */
-    class LiteralExpression extends AbstractExpression implements ValueExpression
+    class LiteralExpression extends AbstractExpression implements Expression
     {
 
         /**
@@ -40,7 +40,7 @@ namespace Skwal\Expression
         /**
          * (non-PHPdoc)
          *
-         * @see Skwal_ValueExpression::getValue()
+         * @see Skwal_Expression::getValue()
          */
         public function getValue()
         {

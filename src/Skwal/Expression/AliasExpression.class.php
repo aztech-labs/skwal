@@ -3,7 +3,12 @@
 namespace Skwal\Expression
 {
 
-    interface AliasExpression extends ValueExpression
+    /**
+     * Interface for expression classes that can be aliased
+     * @author thibaud
+     *
+     */
+    interface AliasExpression extends Expression
     {
         function getAlias();
 

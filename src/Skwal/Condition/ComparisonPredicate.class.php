@@ -2,7 +2,7 @@
 namespace Skwal\Condition
 {
 
-    use Skwal\Expression\ValueExpression;
+    use Skwal\Expression\Expression;
 
     class ComparisonPredicate extends AbstractPredicate
     {
@@ -13,7 +13,7 @@ namespace Skwal\Condition
 
         private $rightOperand;
 
-        public function __construct(ValueExpression $left, $operator, ValueExpression $right)
+        public function __construct(Expression $left, $operator, Expression $right)
         {
             // @todo Operator checking
             $this->operator = $operator;

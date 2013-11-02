@@ -9,7 +9,7 @@ namespace Test\Skwal
 
         public function testAddExpressionReturnsNewInstance()
         {
-            $expression = $this->getMock('\Skwal\Expression\ValueExpression');
+            $expression = $this->getMock('\Skwal\Expression\Expression');
 
             $groupBy = new GroupBy();
 
@@ -18,7 +18,7 @@ namespace Test\Skwal
 
         public function testAddExpressionReturnsInstanceWithNewExpression()
         {
-            $expression = $this->getMock('\Skwal\Expression\ValueExpression');
+            $expression = $this->getMock('\Skwal\Expression\Expression');
 
             $groupBy = new GroupBy();
             $groupBy = $groupBy->addExpression($expression);

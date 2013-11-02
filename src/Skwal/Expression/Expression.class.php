@@ -2,7 +2,7 @@
 namespace Skwal\Expression
 {
 
-    interface ValueExpression
+    interface Expression
     {
 
     }
