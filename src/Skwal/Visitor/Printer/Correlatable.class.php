@@ -6,11 +6,16 @@ namespace Skwal\Visitor\Printer
     {
         private $queryVisitor;
 
-        private $fromStatement;
+        private $fromStatement = '';
 
         public function setQueryVisitor(\Skwal\Visitor\Printer\Query $visitor)
         {
             $this->queryVisitor = $visitor;
+        }
+
+        public function getLastStatement()
+        {
+            return $this->fromStatement;
         }
 
         public function printCorrelatableStatement(\Skwal\CorrelatableReference $reference)

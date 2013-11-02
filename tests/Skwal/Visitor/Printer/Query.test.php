@@ -1,6 +1,10 @@
 <?php
 namespace Test\Skwal\Visitor\Printer
 {
+
+    use Skwal\Expression\LiteralExpression;
+    use Skwal\CompOp;
+
     class QueryTest extends \PHPUnit_Framework_TestCase
     {
 
@@ -11,10 +15,56 @@ namespace Test\Skwal\Visitor\Printer
             $query = $this->getMock('\Skwal\Query');
 
             $query->expects($this->once())
-                  ->method('acceptQueryVisitor')
-                  ->with($this->equalTo($visitor));
+                ->method('acceptQueryVisitor')
+                ->with($this->equalTo($visitor));
 
             $visitor->visit($query);
+        }
+
+        public function testVisitSimpleSelect()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Query();
+
+            $table = new \Skwal\TableReference('table');
+            $query = new \Skwal\Query\Select();
+
+            $query = $query->setTable($table)->addColumn($table->getColumn('column'));
+
+            $this->assertEquals('SELECT table.column AS column FROM table AS table', $visitor->printQuery($query));
+        }
+
+        public function testVisitSimpleSelectWithWhere()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Query();
+
+            $table = new \Skwal\TableReference('table');
+            $query = new \Skwal\Query\Select();
+            $predicate = new \Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
+                new LiteralExpression(1));
+
+            $query = $query->setTable($table)
+                ->addColumn($table->getColumn('column'))
+                ->setCondition($predicate);
+
+            $this->assertEquals('SELECT table.column AS column FROM table AS table WHERE 1 = 1',
+                $visitor->printQuery($query));
+        }
+
+        public function testVisitSimpleSelectWithGroupBy()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Query();
+
+            $table = new \Skwal\TableReference('table');
+            $query = new \Skwal\Query\Select();
+            $predicate = new \Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
+                new LiteralExpression(1));
+
+            $query = $query->setTable($table)
+                ->addColumn($table->getColumn('column'))
+                ->groupBy($table->getColumn('column'));
+
+            $this->assertEquals('SELECT table.column AS column FROM table AS table GROUP BY table.column',
+                $visitor->printQuery($query));
         }
 
         /**
@@ -46,6 +96,5 @@ namespace Test\Skwal\Visitor\Printer
 
             $visitor->visitInsert();
         }
-
     }
 }

@@ -38,13 +38,40 @@ namespace Test\Skwal\Visitor\Printer
         {
             $first = $this->getMock('\Skwal\Expression\AliasExpression');
             $second = $this->getMock('\Skwal\Expression\AliasExpression');
-
             $predicate = new ComparisonPredicate($first, CompOp::Equals, $second);
 
             $visitor = new Predicate();
             $visitor->setExpressionPrinter($this->expressionVisitor);
 
             $this->assertEquals('expression = expression', $visitor->printPredicateStatement($predicate));
+        }
+
+        public function testPrintAndPredicateReturnsCorrectString()
+        {
+            $first = $this->getMock('\Skwal\Expression\AliasExpression');
+            $second = $this->getMock('\Skwal\Expression\AliasExpression');
+            $boundPredicate = new ComparisonPredicate($first, CompOp::Equals, $second);
+            $predicate = $boundPredicate->BAnd($boundPredicate);
+
+            $visitor = new Predicate();
+            $visitor->setExpressionPrinter($this->expressionVisitor);
+
+            $this->assertEquals('(expression = expression AND expression = expression)',
+                $visitor->printPredicateStatement($predicate));
+        }
+
+        public function testPrintOrPredicateReturnsCorrectString()
+        {
+            $first = $this->getMock('\Skwal\Expression\AliasExpression');
+            $second = $this->getMock('\Skwal\Expression\AliasExpression');
+            $boundPredicate = new ComparisonPredicate($first, CompOp::Equals, $second);
+            $predicate = $boundPredicate->BOr($boundPredicate);
+
+            $visitor = new Predicate();
+            $visitor->setExpressionPrinter($this->expressionVisitor);
+
+            $this->assertEquals('(expression = expression OR expression = expression)',
+                $visitor->printPredicateStatement($predicate));
         }
     }
 }

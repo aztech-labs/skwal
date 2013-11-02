@@ -39,6 +39,7 @@ namespace Skwal\Visitor\Printer
         /**
          * Sets the visitor instance for used to output expressions.
          * @param \Skwal\Visitor\Printer\Expression $visitor
+         * @codeCoverageIgnore
          */
         public function setExpressionVisitor(\Skwal\Visitor\Printer\Expression $visitor)
         {
@@ -48,6 +49,7 @@ namespace Skwal\Visitor\Printer
         /**
          * Sets the visitor instance for used to output correlated references.
          * @param \Skwal\Visitor\Printer\Table $visitor
+         * @codeCoverageIgnore
          */
         public function setCorrelationVisitor(\Skwal\Visitor\Printer\Table $visitor)
         {
@@ -55,8 +57,9 @@ namespace Skwal\Visitor\Printer
         }
 
         /**
-         * * Sets the visitor instance for used to output predicates.
+         * Sets the visitor instance for used to output predicates.
          * @param \Skwal\Visitor\Printer\Predicate $visitor
+         * @codeCoverageIgnore
          */
         public function setPredicateVisitor(\Skwal\Visitor\Printer\Predicate $visitor)
         {
@@ -112,30 +115,52 @@ namespace Skwal\Visitor\Printer
         {
             $assembler = new \Skwal\Visitor\Printer\Assembler\Select();
 
+            $this->appendSelectList($assembler, $query);
+            $this->appendFromClause($assembler, $query);
+            $this->appendWhereClauseIfNecessary($assembler, $query);
+            $this->appendGroupByList($assembler, $query);
+
+            $this->queryStack->push($assembler->getAssembledStatement());
+        }
+
+        private function appendSelectList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        {
             $this->expressionVisitor->useAliases(true);
 
             $selectList = array();
+
             foreach ($query->getColumns() as $column) {
                 $selectList[] = $this->expressionVisitor->printExpression($column);
             }
-            $assembler->setSelectList($selectList);
 
+            $assembler->setSelectList($selectList);
+        }
+
+        private function appendFromClause(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        {
             $fromStatement = $this->correlationVisitor->printCorrelatableStatement($query->getTable());
             $assembler->setFromClause($fromStatement);
+        }
 
+        private function appendWhereClauseIfNecessary(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        {
             if ($query->getCondition() != null) {
                 $whereClause = $this->predicateVisitor->printPredicateStatement($query->getCondition());
                 $assembler->setWhereClause($whereClause);
             }
+        }
 
+        private function appendGroupByList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        {
             $this->expressionVisitor->useAliases(false);
+
             $groupByList = array();
+
             foreach ($query->getGroupingColumns() as $groupingColumn) {
                 $groupByList[] = $this->expressionVisitor->printExpression($groupingColumn);
             }
-            $assembler->setGroupByList($groupByList);
 
-            $this->queryStack->push($assembler->getAssembledStatement());
+            $assembler->setGroupByList($groupByList);
         }
 
         public function visitUpdate()
