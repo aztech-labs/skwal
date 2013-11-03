@@ -2,6 +2,8 @@
 namespace Skwal\Expression
 {
 
+    use Skwal\Expression;
+
     /**
      * Literal value expression.
      * This class is immutable meaning any setters/modifier methods will return

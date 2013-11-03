@@ -4,6 +4,7 @@ namespace Test\Skwal\Visitor\Printer
 
     use Skwal\Expression\LiteralExpression;
     use Skwal\CompOp;
+use Skwal\OrderBy;
 
     class QueryTest extends \PHPUnit_Framework_TestCase
     {
@@ -64,6 +65,23 @@ namespace Test\Skwal\Visitor\Printer
                 ->groupBy($table->getColumn('column'));
 
             $this->assertEquals('SELECT table.column AS column FROM table AS table GROUP BY table.column',
+                $visitor->printQuery($query));
+        }
+
+        public function testVisitSimpleSelectWithOrderBy()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Query();
+
+            $table = new \Skwal\TableReference('table');
+            $query = new \Skwal\Query\Select();
+            $predicate = new \Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
+                new LiteralExpression(1));
+
+            $query = $query->setTable($table)
+            ->addColumn($table->getColumn('column'))
+            ->orderBy(new OrderBy($table->getColumn('column')));
+
+            $this->assertEquals('SELECT table.column AS column FROM table AS table ORDER BY table.column ASC',
                 $visitor->printQuery($query));
         }
 

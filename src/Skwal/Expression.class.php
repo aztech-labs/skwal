@@ -1,5 +1,5 @@
 <?php
-namespace Skwal\Expression
+namespace Skwal
 {
 
     interface Expression

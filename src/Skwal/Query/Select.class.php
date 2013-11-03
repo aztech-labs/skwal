@@ -7,6 +7,8 @@ namespace Skwal\Query
     use Skwal\Condition\Predicate;
     use Skwal\CorrelatableReference;
     use Skwal\Query;
+    use Skwal\Expression;
+use Skwal\OrderBy;
 
     /**
      * Defines a select query.
@@ -67,6 +69,7 @@ namespace Skwal\Query
 
         /**
          * (non-PHPdoc)
+         *
          * @see \Skwal\CorrelatableReference::getCorrelationName()
          */
         public function getCorrelationName()
@@ -125,6 +128,15 @@ namespace Skwal\Query
             return $clone;
         }
 
+        public function orderBy(OrderBy $column)
+        {
+            $clone = clone $this;
+
+            $clone->sortList[] = $column;
+
+            return $clone;
+        }
+
         private function validateColumnIndex($index)
         {
             if ($index < 0 || $index >= count($this->columns)) {
@@ -150,6 +162,7 @@ namespace Skwal\Query
 
         /**
          * Derives all expressions in the query's select clause as columns of the query's associated resultset.
+         *
          * @return multitype:Ambigous <\Skwal\Query\multitype:\Skwal\Expression\AliasExpression, \Skwal\Expression\DerivedColumn>
          */
         public function deriveColumns()
@@ -219,7 +232,17 @@ namespace Skwal\Query
         }
 
         /**
+         *
+         * @return \Skwal\Query\multitype:\Skwal\OrderBy
+         */
+        public function getSortingColumns()
+        {
+            return $this->sortList;
+        }
+
+        /**
          * (non-PHPdoc)
+         *
          * @see \Skwal\Query::acceptQueryVisitor()
          */
         public function acceptQueryVisitor(\Skwal\Visitor\Query $visitor)
@@ -229,6 +252,7 @@ namespace Skwal\Query
 
         /**
          * (non-PHPdoc)
+         *
          * @see \Skwal\CorrelatableReference::acceptCorrelatableVisitor()
          */
         public function acceptCorrelatableVisitor(\Skwal\Visitor\Correlatable $visitor)

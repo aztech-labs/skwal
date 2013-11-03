@@ -2,7 +2,7 @@
 namespace Skwal\Condition
 {
 
-    use Skwal\Expression\Expression;
+    use Skwal\Expression;
 
     class ComparisonPredicate extends AbstractPredicate
     {

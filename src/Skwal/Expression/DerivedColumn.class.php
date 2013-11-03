@@ -3,6 +3,7 @@ namespace Skwal\Expression
 {
 
     use Skwal\CorrelatableReference;
+    use Skwal\Expression;
 
     class DerivedColumn extends AbstractExpression implements Expression
     {
@@ -33,7 +34,7 @@ namespace Skwal\Expression
             if (empty($this->alias)) {
                 return $this->columnName;
             }
-            
+
             return $this->alias;
         }
 
@@ -47,9 +48,9 @@ namespace Skwal\Expression
             // Not using cloning to avoid unnecessary cloning of the attached
             // correlated reference.
             $clone = new self($this->columnName, $this->alias);
-            
+
             $clone->correlatedParent = $reference;
-            
+
             return $clone;
         }
 

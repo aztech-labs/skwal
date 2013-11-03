@@ -4,6 +4,7 @@ namespace Test\Skwal
 
     use Skwal\Query\Select;
     use Skwal\Expression\DerivedColumn;
+use Skwal\OrderBy;
 
     class SelectTest extends \PHPUnit_Framework_TestCase
     {
@@ -219,6 +220,35 @@ namespace Test\Skwal
             $returned = $query->getGroupingColumns();
             for ($i = 0; $i < 10; $i++) {
                 $this->assertSame($groupBys[$i], $returned[$i]);
+            }
+        }
+
+        public function testOrderByReturnsNewQueryInstance()
+        {
+            $query = new Select();
+
+            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+            $orderBy = new OrderBy($column);
+
+            $this->assertNotSame($query, $query->orderBy($orderBy));
+        }
+
+        public function testGetSortingColumnsReturnsCorrectArray()
+        {
+            $query = new Select();
+
+            $orderBys = array();
+            for ($i = 0; $i < 10; $i++) {
+                $column = $this->getMock('\Skwal\Expression\AliasExpression');
+                $orderBy = new OrderBy($column);
+
+                $orderBys[] = $orderBy;
+                $query = $query->orderBy($orderBy);
+            }
+
+            $returned = $query->getSortingColumns();
+            for ($i = 0; $i < 10; $i++) {
+                $this->assertSame($orderBys[$i], $returned[$i]);
             }
         }
     }

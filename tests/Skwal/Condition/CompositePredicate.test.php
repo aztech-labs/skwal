@@ -15,8 +15,8 @@ namespace Test\Skwal\Condition
 
         function testGetLeftOperandReturnsCorrectValue()
         {
-            $left = $this->getMock('\Skwal\Expression\Expression');
-            $right = $this->getMock('\Skwal\Expression\Expression');
+            $left = $this->getMock('\Skwal\Expression');
+            $right = $this->getMock('\Skwal\Expression');
 
             $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
 
@@ -25,8 +25,8 @@ namespace Test\Skwal\Condition
 
         function testGetRightOperandReturnsCorrectValue()
         {
-            $left = $this->getMock('\Skwal\Expression\Expression');
-            $right = $this->getMock('\Skwal\Expression\Expression');
+            $left = $this->getMock('\Skwal\Expression');
+            $right = $this->getMock('\Skwal\Expression');
 
             $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
 
@@ -44,8 +44,8 @@ namespace Test\Skwal\Condition
          */
         function testGetOperatorReturnsCorrectValue($operand)
         {
-            $left = $this->getMock('\Skwal\Expression\Expression');
-            $right = $this->getMock('\Skwal\Expression\Expression');
+            $left = $this->getMock('\Skwal\Expression');
+            $right = $this->getMock('\Skwal\Expression');
 
             $predicate = new ComparisonPredicate($left, $operand, $right);
 
@@ -54,8 +54,8 @@ namespace Test\Skwal\Condition
 
         public function testAcceptCallsCorrectVisitorMethod()
         {
-            $first = $this->getMock('\Skwal\Expression\Expression');
-            $second = $this->getMock('\Skwal\Expression\Expression');
+            $first = $this->getMock('\Skwal\Expression');
+            $second = $this->getMock('\Skwal\Expression');
 
             $predicate = new ComparisonPredicate($first, CompOp::Equals, $second);
 

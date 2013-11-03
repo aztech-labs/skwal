@@ -139,6 +139,7 @@ namespace Skwal\Visitor\Printer
             $this->appendFromClause($assembler, $query);
             $this->appendWhereClauseIfNecessary($assembler, $query);
             $this->appendGroupByList($assembler, $query);
+            $this->appendOrderByList($assembler, $query);
 
             $this->queryStack->push($assembler->getAssembledStatement());
         }
@@ -201,6 +202,20 @@ namespace Skwal\Visitor\Printer
             }
 
             $assembler->setGroupByList($groupByList);
+        }
+
+        private function appendOrderByList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        {
+            $this->expressionVisitor->useAliases(false);
+
+            $orderByList = array();
+
+            foreach ($query->getSortingColumns() as $sortingColumn) {
+                $direction = ($sortingColumn->isDescending()) ? ' DESC' : ' ASC';
+                $orderByList[] = $this->expressionVisitor->printExpression($sortingColumn->getExpression()) . $direction;
+            }
+
+            $assembler->setOrderByList($orderByList);
         }
 
         public function visitUpdate()

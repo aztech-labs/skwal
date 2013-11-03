@@ -63,6 +63,17 @@ namespace Test\Skwal\Visitor\Printer\Assembler
             $this->assertEquals('SELECT expression FROM table GROUP BY 1', $assembler->getAssembledStatement());
         }
 
+        public function testAssemblingSimpleQueryWithOrderByReturnsProperString()
+        {
+            $assembler = new Select();
+
+            $assembler->setSelectList(array('expression'));
+            $assembler->setFromClause('table');
+            $assembler->setOrderByList(array('expression'));
+
+            $this->assertEquals('SELECT expression FROM table ORDER BY expression', $assembler->getAssembledStatement());
+        }
+
         public function testAssemblingSimpleQueryAssemblesElementsInCorrectOrder()
         {
             $assembler = new Select();
