@@ -27,12 +27,7 @@ namespace Skwal
          */
         private $alias = null;
 
-        /**
-         * Contains the fields referenced in the table
-         *
-         * @var Skwal_Field[]
-         */
-        private $fields = array();
+        private $joins = array();
 
         /**
          * Creates a new table using a name and optionally an alias.

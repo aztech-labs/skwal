@@ -114,7 +114,48 @@ namespace Test\Skwal\Visitor\Printer
                     $visitor->visitColumn($expression);
                 }));
 
-                return $expression;
+            return $expression;
+        }
+
+        public function testPrintParameterStringReturnsCorrectString()
+        {
+            $visitor = new \Skwal\Visitor\Printer\Expression();
+
+            $parameter = $this->getMock('\Skwal\Expression\ParameterExpression', array(), array(), '', false);
+            $parameter->expects($this->any())
+                ->method('getName')
+                ->will($this->returnValue('param'));
+
+            $parameter->expects($this->atLeastOnce())
+                ->method('acceptExpressionVisitor')
+                ->with($this->equalTo($visitor))
+                ->will($this->returnCallback(function() use ($visitor, $parameter) {
+                    $visitor->visitParameter($parameter);
+                }));
+
+                $this->assertEquals(':param', $visitor->printExpression($parameter));
+        }
+
+        public function testPrintScalarQueryReturnsCorrectString()
+        {
+            $queryPrinter = $this->getMock('\Skwal\Visitor\Printer\Query', array('printQuery'), array(), '', false);
+            $query = $this->getMock('\Skwal\Query\ScalarSelect', array('getAlias'), array(), '', false);
+
+            $query->expects($this->any())
+                ->method('getAlias')
+                ->will($this->returnValue('query'));
+
+            $queryPrinter->expects($this->any())
+                ->method('printQuery')
+                ->with($this->equalTo($query))
+                ->will($this->returnValue('scalar-query'));
+
+
+            $visitor = new \Skwal\Visitor\Printer\Expression();
+            $visitor->useAliases(true);
+            $visitor->setQueryPrinter($queryPrinter);
+
+            $this->assertEquals('(scalar-query) AS query', $visitor->printExpression($query));
         }
     }
 }

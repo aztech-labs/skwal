@@ -58,6 +58,12 @@ use Skwal\OrderBy;
         private $condition;
 
         /**
+         *
+         * @var bool
+         */
+        private $distinct = false;
+
+        /**
          * Initialize a new instance with an optional alias.
          *
          * @param string $alias
@@ -104,11 +110,34 @@ use Skwal\OrderBy;
             return $this->table;
         }
 
+        public function addJoin(CorrelatableReference $reference, Predicate $condition)
+        {
+            $this->joins[] = array($reference, $condition);
+        }
+
+
+        public function getJoinedTables()
+        {
+            return array_map(function ($element) {
+                return $element[0];
+            }, $this->joins);
+        }
+
+        /**
+         * Indicates whether columns can be addded to the query.
+         * @return boolean
+         */
+        public function canAddColumn()
+        {
+            return true;
+        }
+
         /**
          * Adds a derived column to the select list of the query.
          *
          * @param \Skwal\Expression\AliasExpression $column
          * @return \Skwal\Query\Select A new query with the added column in its select list.
+         * @throws \Exception if no more columns can be added to the query.
          */
         public function addColumn(AliasExpression $column)
         {
@@ -238,6 +267,42 @@ use Skwal\OrderBy;
         public function getSortingColumns()
         {
             return $this->sortList;
+        }
+
+        /**
+         *
+         * @return \Skwal\Query\Select
+         */
+        public function selectDistinct()
+        {
+            if (!$this->distinct)
+            {
+                $clone = clone $this;
+                $clone->distinct = true;
+                return $clone;
+            }
+
+            return $this;
+        }
+
+        /**
+         *
+         * @return \Skwal\Query\Select
+         */
+        public function selectAll()
+        {
+            if ($this->distinct) {
+                $clone = clone $this;
+                $clone->distinct = false;
+                return $clone;
+            }
+
+            return $this;
+        }
+
+        public function isDistinct()
+        {
+            return $this->distinct;
         }
 
         /**

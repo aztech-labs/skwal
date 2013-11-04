@@ -47,18 +47,7 @@ use Skwal\OrderBy;
         public function getInvalidIndexes()
         {
             return array(
-                array(
-                    - 1
-                ),
-                array(
-                    0
-                ),
-                array(
-                    1
-                ),
-                array(
-                    2
-                )
+                array(-1), array(0), array(1), array(2)
             );
         }
 
@@ -249,6 +238,63 @@ use Skwal\OrderBy;
             $returned = $query->getSortingColumns();
             for ($i = 0; $i < 10; $i++) {
                 $this->assertSame($orderBys[$i], $returned[$i]);
+            }
+        }
+
+        public function testIsDistinctReturnsFalseByDefault()
+        {
+            $query = new Select();
+
+            $this->assertFalse($query->isDistinct());
+        }
+
+        public function testIsDistinctReturnsTrueAfterEnablingDistinct()
+        {
+            $query = new Select();
+
+            $query = $query->selectDistinct();
+
+            $this->assertTrue($query->isDistinct());
+        }
+
+        public function testIsDistinctReturnsFalseAfterEnablingThenDisablingDistinct()
+        {
+            $query = new Select();
+
+            $query = $query->selectDistinct()->selectAll();
+
+            $this->assertFalse($query->isDistinct());
+        }
+
+        public function testSelectDistinctHasNoEffectWhenDistinctIsAlreadyEnabled()
+        {
+            $query = new Select();
+
+            $query = $query->selectDistinct();
+
+            $this->assertSame($query, $query->selectDistinct());
+        }
+
+        public function testSelectAllHasNoEffectWhenDistinctIsAlreadyDisabled()
+        {
+            $query = new Select();
+
+            $query = $query->selectAll();
+
+            $this->assertSame($query, $query->selectAll());
+        }
+
+        public function testCanAddColumnAlwaysReturnsTrue()
+        {
+            $query = new Select();
+
+            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+
+            $this->assertTrue($query->canAddColumn());
+
+            for ($i = 0; $i < 100; $i++) {
+                $query = $query->addColumn($column);
+                $this->assertTrue($query->canAddColumn());
             }
         }
     }

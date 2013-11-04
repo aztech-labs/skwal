@@ -77,6 +77,8 @@ namespace Skwal\Visitor\Printer
         {
             $visitor = new Expression();
 
+            $visitor->setQueryPrinter($this);
+
             return $visitor;
         }
 

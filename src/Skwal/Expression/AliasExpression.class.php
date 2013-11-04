@@ -15,6 +15,5 @@ namespace Skwal\Expression
 
         function getAlias();
 
-        function acceptExpressionVisitor(\Skwal\Visitor\Expression $visitor);
     }
 }
