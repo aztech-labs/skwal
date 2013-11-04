@@ -32,7 +32,9 @@ namespace Skwal\Visitor\Printer
 
         public function visitTable(\Skwal\TableReference $table)
         {
-            $this->fromStatement = sprintf('%s AS %s', $table->getName(), $table->getCorrelationName());
+            $fromStatement = sprintf('%s AS %s', $table->getName(), $table->getCorrelationName());
+
+            $this->fromStatement = $fromStatement;
         }
 
         public function visitQuery(\Skwal\Query\Select $query)

@@ -115,7 +115,6 @@ use Skwal\OrderBy;
             $this->joins[] = array($reference, $condition);
         }
 
-
         public function getJoinedTables()
         {
             return array_map(function ($element) {

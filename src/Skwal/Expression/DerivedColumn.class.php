@@ -5,7 +5,7 @@ namespace Skwal\Expression
     use Skwal\CorrelatableReference;
     use Skwal\Expression;
 
-    class DerivedColumn extends AbstractExpression implements Expression
+    class DerivedColumn extends AbstractExpression implements Expression, AssignableExpression
     {
 
         private $columnName;

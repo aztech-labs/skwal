@@ -20,5 +20,7 @@ namespace Skwal\Visitor
         function visitParameter(\Skwal\Expression\ParameterExpression $parameter);
 
         function visitScalarSelect(\Skwal\Query\ScalarSelect $query);
+
+        function visitAssignmentExpression(\Skwal\Expression\AssignmentExpression $assignment);
     }
 }

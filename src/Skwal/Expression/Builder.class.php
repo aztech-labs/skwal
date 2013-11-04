@@ -44,6 +44,11 @@ namespace Skwal\Expression
             return new ComparisonPredicate($left, CompOp::LessThanEq, $right);
         }
 
+        public function assign(AssignableExpression $assignee, AliasExpression $value)
+        {
+            return new AssignmentExpression($assignee, $value);
+        }
+
         public function int($value, $alias = '')
         {
             return new LiteralExpression($value, $alias);
