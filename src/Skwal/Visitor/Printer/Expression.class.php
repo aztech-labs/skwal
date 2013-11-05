@@ -4,6 +4,7 @@ namespace Skwal\Visitor\Printer
 
     use Skwal\Expression\ParameterExpression;
     use Skwal\Query\ScalarSelect;
+use Skwal\Expression\AssignmentExpression;
 
     class Expression implements \Skwal\Visitor\Expression
     {
@@ -81,6 +82,11 @@ namespace Skwal\Visitor\Printer
         public function visitScalarSelect(ScalarSelect $query)
         {
             $this->printedExpression = sprintf('(%s) AS %s', $this->queryPrinter->printQuery($query), $query->getAlias());
+        }
+
+        public function visitAssignmentExpression(AssignmentExpression $assignment)
+        {
+
         }
     }
 }
