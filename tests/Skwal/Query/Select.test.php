@@ -1,7 +1,6 @@
 <?php
-namespace Test\Skwal
+namespace Test\Skwal\Query
 {
-
     use Skwal\Query\Select;
     use Skwal\Expression\DerivedColumn;
 use Skwal\OrderBy;
