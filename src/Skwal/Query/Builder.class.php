@@ -23,7 +23,7 @@ namespace Skwal\Query
         public function exprs()
         {
             $builder = new \Skwal\Expression\Builder();
-            $builder->setQueryBuilder($this);
+            //$builder->setQueryBuilder($this);
 
             return $builder;
         }
@@ -94,8 +94,6 @@ namespace Skwal\Query
 
         public function addColumn($name, $alias = '', $table = '')
         {
-            $context = debug_backtrace();
-
             $this->query = $this->query->addColumn($this->table->getColumn($name, $alias));
 
             return $this;

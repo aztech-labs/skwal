@@ -133,7 +133,7 @@ namespace Test\Skwal\Visitor\Printer
                     $visitor->visitParameter($parameter);
                 }));
 
-                $this->assertEquals(':param', $visitor->printExpression($parameter));
+            $this->assertEquals(':param', $visitor->printExpression($parameter));
         }
 
         public function testPrintScalarQueryReturnsCorrectString()
@@ -149,7 +149,6 @@ namespace Test\Skwal\Visitor\Printer
                 ->method('printQuery')
                 ->with($this->equalTo($query))
                 ->will($this->returnValue('scalar-query'));
-
 
             $visitor = new \Skwal\Visitor\Printer\Expression();
             $visitor->useAliases(true);
