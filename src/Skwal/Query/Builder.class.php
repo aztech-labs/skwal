@@ -65,33 +65,11 @@ namespace Skwal\Query
             return null;
         }
 
-        public function innerJoin($tableName)
+        public function join()
         {
-            $builder = $this;
-
-            return $builder;
+            return new JoinBuilder();
         }
-
-        public function crossJoin($tableName)
-        {
-            return $this;
-        }
-
-        public function outerLeftJoin($tableName)
-        {
-            return $this;
-        }
-
-        public function outerRightJoin($tableName)
-        {
-            return $this;
-        }
-
-        public function on(Predicate $predicate)
-        {
-            return $this;
-        }
-
+        
         public function addColumn($name, $alias = '', $table = '')
         {
             $this->query = $this->query->addColumn($this->table->getColumn($name, $alias));

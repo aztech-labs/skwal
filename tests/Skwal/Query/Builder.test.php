@@ -48,5 +48,43 @@ namespace Test\Skwal\Query
         
             $this->assertNull($table);
         }
+        
+        public function testAddColumnAddsColumnToBuiltQuery()
+        {
+            $builder = new Builder();
+            
+            $builder->select('table')
+                ->addColumn('column');
+            $query = $builder->getQuery();
+            
+            $this->assertNotNull($query->getColumn(0));
+            $this->assertEquals('column', $query->getColumn(0)->getAlias());
+        }
+        
+        public function testGetColumnReturnsMatchingColumn()
+        {
+            $builder = new Builder();
+            
+            $builder->select('table')
+                ->addColumn('column');
+            
+            $column = $builder->getColumn('column');
+            
+            $this->assertNotNull($column);
+            $this->assertEquals('column', $column->getAlias());
+        }
+        
+        /**
+         * @expectedException RuntimeException
+         */
+        public function testGetColumnThrowsExceptionWhenNoMatchIsFound()
+        {
+            $builder = new Builder();
+            
+            $builder->select('table')
+                ->addColumn('column');
+            
+            $column = $builder->getColumn('unknown');
+        }
     }
 }

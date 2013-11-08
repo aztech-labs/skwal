@@ -1,7 +1,8 @@
 <?php
 namespace Skwal\Visitor\Printer
 {
-    class Query implements \Skwal\Visitor\Query
+    use Skwal\OrderBy;
+				class Query implements \Skwal\Visitor\Query
     {
 
         /**
@@ -213,11 +214,16 @@ namespace Skwal\Visitor\Printer
             $orderByList = array();
 
             foreach ($query->getSortingColumns() as $sortingColumn) {
-                $direction = ($sortingColumn->isDescending()) ? ' DESC' : ' ASC';
+                $direction = $this->getSortDirectionText($sortingColumn);
                 $orderByList[] = $this->expressionVisitor->printExpression($sortingColumn->getExpression()) . $direction;
             }
 
             $assembler->setOrderByList($orderByList);
+        }
+        
+        private function getSortDirectionText(OrderBy $sortingColumn)
+        {
+            return $sortingColumn->isDescending() ? ' DESC' : ' ASC';
         }
 
         public function visitUpdate()
