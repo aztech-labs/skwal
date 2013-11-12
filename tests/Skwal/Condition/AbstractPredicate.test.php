@@ -4,6 +4,10 @@ namespace Test\Skwal\Condition
 
     use Skwal\Condition\AbstractPredicate;
 
+    /**
+     * @author thibaud
+     *
+     */
     class AbstractPredicateTest extends \PHPUnit_Framework_TestCase
     {
 
@@ -14,7 +18,10 @@ namespace Test\Skwal\Condition
             $this->predicate = $this->getMockForAbstractClass('\Skwal\Condition\AbstractPredicate');
         }
 
-        public function testBAndReturnsAndPredicate()
+        /**
+         * @testdox Calling BAnd(...) returns new AndPredicate with original and bound predicates.
+         */
+        public function testAndBindingReturnsPredicateWithBothConditionsAndCorrectOperator()
         {
             $other = $this->getMock('\Skwal\Condition\Predicate');
 
@@ -25,7 +32,10 @@ namespace Test\Skwal\Condition
             $this->assertSame($andPredicate->getSecondPredicate(), $other);
         }
 
-        public function testBOrReturnsAndPredicate()
+        /**
+         * @testdox Calling BOr(...) returns new OrPredicate with original and bound predicates.
+         */
+        public function testOrBindingReturnsPredicateWithBothConditionsAndCorrectOperator()
         {
             $other = $this->getMock('\Skwal\Condition\Predicate');
 

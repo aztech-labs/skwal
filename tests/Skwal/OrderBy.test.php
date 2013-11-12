@@ -16,7 +16,6 @@ namespace Test\Skwal
             $this->assertSame($expression, $orderBy->getExpression());
         }
 
-
         public function testIsDescendingReturnsCorrectValues()
         {
             $expression = $this->getMock('\Skwal\Expression');

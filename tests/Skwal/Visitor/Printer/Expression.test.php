@@ -4,6 +4,9 @@ namespace Test\Skwal\Visitor\Printer
 
     class ExpressionTest extends \PHPUnit_Framework_TestCase
     {
+        /**
+         * @testdox Visiting an expression dispatches the call to the accept method of the expression.
+         */
         public function testVisitMethodDispatchesCallToVisitable()
         {
             $expression = $this->getMock('\Skwal\Expression\AliasExpression');
@@ -25,6 +28,7 @@ namespace Test\Skwal\Visitor\Printer
 
         /**
          * @dataProvider getLiteralExpressions
+         * @testdox Printing a literal expression returns the expected representation of the literal with an alias clause with quote escaping when necessary.
          */
         public function testPrintLiteralExpression($value, $expected)
         {
@@ -63,6 +67,9 @@ namespace Test\Skwal\Visitor\Printer
             return $expression;
         }
 
+        /**
+         * @testdox Printing a column expression with no alias returns a <i>tableName.columnName</i> type expression without an alias clause.
+         */
         public function testPrintColumnExpressionWithoutAliasReturnsCorrectString()
         {
             $visitor = new \Skwal\Visitor\Printer\Expression();
@@ -73,6 +80,9 @@ namespace Test\Skwal\Visitor\Printer
             $this->assertEquals('table.column', $visitor->printExpression($expression));
         }
 
+        /**
+         * @testdox Printing a column expression with an alias returns a <i>tableName.columnName</i> type expression with the correct alias clause.
+         */
         public function testPrintColumnExpressionWithAliasReturnsCorrectString()
         {
             $visitor = new \Skwal\Visitor\Printer\Expression();

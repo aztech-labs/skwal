@@ -7,7 +7,10 @@ namespace Test\Skwal\Condition
     class AndPredicateTest extends \PHPUnit_Framework_TestCase
     {
 
-        public function testGetFirstPredicateReturnsCorrectValue()
+        /**
+         * @testdox Calling getFirstPredicate() returns first predicate that was injected in constructor.
+         */
+        public function testGetFirstPredicateReturnsConstructorInjectedPredicate()
         {
             $first = $this->getMock('\Skwal\Condition\Predicate');
             $second = $this->getMock('\Skwal\Condition\Predicate');
@@ -17,7 +20,10 @@ namespace Test\Skwal\Condition
             $this->assertSame($first, $predicate->getFirstPredicate());
         }
 
-        public function testGetSecondPredicateReturnsCorrectValue()
+        /**
+         * @testdox Calling getSecondPredicate() returns second predicate that was injected in constructor.
+         */
+        public function testGetSecondPredicateReturnsConstructorInjectedPredicate()
         {
             $first = $this->getMock('\Skwal\Condition\Predicate');
             $second = $this->getMock('\Skwal\Condition\Predicate');
@@ -27,6 +33,9 @@ namespace Test\Skwal\Condition
             $this->assertSame($second, $predicate->getSecondPredicate());
         }
 
+        /**
+         * @testdox Calling acceptPredicateVisitor(...) dispatches the call to the appropriate visitor method.
+         */
         public function testAcceptCallsCorrectVisitorMethod()
         {
             $first = $this->getMock('\Skwal\Condition\Predicate');
