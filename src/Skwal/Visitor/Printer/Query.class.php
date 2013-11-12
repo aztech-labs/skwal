@@ -1,8 +1,16 @@
 <?php
 namespace Skwal\Visitor\Printer
 {
+
     use Skwal\OrderBy;
-				class Query implements \Skwal\Visitor\Query
+
+    /**
+     * Generates SQL from a given query.
+     * 
+     * @author thibaud
+     *
+     */
+    class Query implements \Skwal\Visitor\Query
     {
 
         /**
@@ -21,7 +29,7 @@ namespace Skwal\Visitor\Printer
          *
          * @var \Skwal\Visitor\Printer\Correlatable
          */
-        private $correlationVisitor;
+        private $tableReferenceVisitor;
 
         /**
          *
@@ -36,14 +44,15 @@ namespace Skwal\Visitor\Printer
         {
             $this->queryStack = new \SplStack();
             $this->expressionVisitor = $this->buildExpressionVisitor();
-            $this->correlationVisitor = $this->buildCorrelationVisitor();
-            $this->predicateVisitor  = $this->buildPredicateVisitor();
+            $this->tableReferenceVisitor = $this->buildTableReferenceVisitor();
+            $this->predicateVisitor = $this->buildPredicateVisitor();
         }
 
         /**
          * Sets the visitor instance for used to output expressions.
+         *
          * @param \Skwal\Visitor\Printer\Expression $visitor
-         * @codeCoverageIgnore
+         * @codeCoverageIgnore Cannot be tested as there are no getters
          */
         public function setExpressionVisitor(\Skwal\Visitor\Printer\Expression $visitor)
         {
@@ -52,16 +61,18 @@ namespace Skwal\Visitor\Printer
 
         /**
          * Sets the visitor instance for used to output correlated references.
+         *
          * @param \Skwal\Visitor\Printer\Table $visitor
-         * @codeCoverageIgnore
+         * @codeCoverageIgnore Cannot be tested as there are no getters
          */
-        public function setCorrelationVisitor(\Skwal\Visitor\Printer\Table $visitor)
+        public function setTableReferenceVisitor(\Skwal\Visitor\Printer\Table $visitor)
         {
-            $this->correlationVisitor = $visitor;
+            $this->tableReferenceVisitor = $visitor;
         }
 
         /**
          * Sets the visitor instance for used to output predicates.
+         *
          * @param \Skwal\Visitor\Printer\Predicate $visitor
          * @codeCoverageIgnore
          */
@@ -77,9 +88,9 @@ namespace Skwal\Visitor\Printer
         private function buildExpressionVisitor()
         {
             $visitor = new Expression();
-
+            
             $visitor->setQueryPrinter($this);
-
+            
             return $visitor;
         }
 
@@ -87,12 +98,12 @@ namespace Skwal\Visitor\Printer
          *
          * @return \Skwal\Visitor\Printer\Table
          */
-        private function buildCorrelationVisitor()
+        private function buildTableReferenceVisitor()
         {
-            $visitor = new Correlatable();
-
+            $visitor = new TableReference();
+            
             $visitor->setQueryVisitor($this);
-
+            
             return $visitor;
         }
 
@@ -103,26 +114,28 @@ namespace Skwal\Visitor\Printer
         private function buildPredicateVisitor()
         {
             $visitor = new Predicate();
-
+            
             $visitor->setExpressionPrinter($this->expressionVisitor);
-
+            
             return $visitor;
         }
 
         /**
          * Generates the SQL command for a given query.
-         * @param \Skwal\Query $query
+         *
+         * @param \Skwal\Query $query 
          * @return mixed
          */
         public function printQuery(\Skwal\Query $query)
         {
             $this->visit($query);
-
+            
             return $this->queryStack->pop();
         }
 
         /**
          * (non-PHPdoc)
+         *
          * @see \Skwal\Visitor\Query::visit()
          */
         public function visit(\Skwal\Query $query)
@@ -132,56 +145,60 @@ namespace Skwal\Visitor\Printer
 
         /**
          * (non-PHPdoc)
+         *
          * @see \Skwal\Visitor\Query::visitSelect()
          */
         public function visitSelect(\Skwal\Query\Select $query)
         {
             $assembler = new \Skwal\Visitor\Printer\Assembler\Select();
-
+            
             $this->appendSelectList($assembler, $query);
             $this->appendFromClause($assembler, $query);
             $this->appendWhereClauseIfNecessary($assembler, $query);
             $this->appendGroupByList($assembler, $query);
             $this->appendOrderByList($assembler, $query);
-
+            
             $this->queryStack->push($assembler->getAssembledStatement());
         }
 
         /**
          * Adds the select list elements of a query to a query assembler.
-         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
-         * @param \Skwal\Query\Select $query
+         *
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler 
+         * @param \Skwal\Query\Select $query 
          */
-        private function appendSelectList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        private function appendSelectList(\Skwal\Visitor\Printer\Assembler\Select $assembler,\Skwal\Query\Select $query)
         {
             $this->expressionVisitor->useAliases(true);
-
+            
             $selectList = array();
-
+            
             foreach ($query->getColumns() as $column) {
                 $selectList[] = $this->expressionVisitor->printExpression($column);
             }
-
+            
             $assembler->setSelectList($selectList);
         }
 
         /**
          * Adds the from clause of a query to a query assembler.
-         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
-         * @param \Skwal\Query\Select $query
+         *
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler 
+         * @param \Skwal\Query\Select $query 
          */
-        private function appendFromClause(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        private function appendFromClause(\Skwal\Visitor\Printer\Assembler\Select $assembler,\Skwal\Query\Select $query)
         {
-            $fromStatement = $this->correlationVisitor->printCorrelatableStatement($query->getTable());
+            $fromStatement = $this->tableReferenceVisitor->printTableStatement($query->getTable());
             $assembler->setFromClause($fromStatement);
         }
 
         /**
          * Adds the where clause of a query to a query assembler if the given query has a selection condition.
-         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
-         * @param \Skwal\Query\Select $query
+         *
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler 
+         * @param \Skwal\Query\Select $query 
          */
-        private function appendWhereClauseIfNecessary(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        private function appendWhereClauseIfNecessary(\Skwal\Visitor\Printer\Assembler\Select $assembler,\Skwal\Query\Select $query)
         {
             if ($query->getCondition() != null) {
                 $whereClause = $this->predicateVisitor->printPredicateStatement($query->getCondition());
@@ -191,36 +208,43 @@ namespace Skwal\Visitor\Printer
 
         /**
          * Adds the group by list from a query to a query assembler.
-         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler
-         * @param \Skwal\Query\Select $query
+         *
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler 
+         * @param \Skwal\Query\Select $query 
          */
-        private function appendGroupByList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        private function appendGroupByList(\Skwal\Visitor\Printer\Assembler\Select $assembler,\Skwal\Query\Select $query)
         {
             $this->expressionVisitor->useAliases(false);
-
+            
             $groupByList = array();
-
+            
             foreach ($query->getGroupingColumns() as $groupingColumn) {
                 $groupByList[] = $this->expressionVisitor->printExpression($groupingColumn);
             }
-
+            
             $assembler->setGroupByList($groupByList);
         }
 
-        private function appendOrderByList(\Skwal\Visitor\Printer\Assembler\Select $assembler, \Skwal\Query\Select $query)
+        /**
+         * Adds the sort expressions from a query to a query assembler.
+         *
+         * @param \Skwal\Visitor\Printer\Assembler\Select $assembler 
+         * @param \Skwal\Query\Select $query 
+         */
+        private function appendOrderByList(\Skwal\Visitor\Printer\Assembler\Select $assembler,\Skwal\Query\Select $query)
         {
             $this->expressionVisitor->useAliases(false);
-
+            
             $orderByList = array();
-
+            
             foreach ($query->getSortingColumns() as $sortingColumn) {
                 $direction = $this->getSortDirectionText($sortingColumn);
                 $orderByList[] = $this->expressionVisitor->printExpression($sortingColumn->getExpression()) . $direction;
             }
-
+            
             $assembler->setOrderByList($orderByList);
         }
-        
+
         private function getSortDirectionText(OrderBy $sortingColumn)
         {
             return $sortingColumn->isDescending() ? ' DESC' : ' ASC';

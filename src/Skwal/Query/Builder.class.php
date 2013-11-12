@@ -2,7 +2,7 @@
 namespace Skwal\Query
 {
 
-    use Skwal\TableReference;
+    use Skwal\Table;
     use Skwal\Condition\Predicate;
 
     class Builder
@@ -16,7 +16,7 @@ namespace Skwal\Query
 
         /**
          *
-         * @var TableReference
+         * @var Table
          */
         private $table;
 
@@ -37,7 +37,7 @@ namespace Skwal\Query
         {
             $builder = $this;
 
-            $builder->table = new TableReference($tableName);
+            $builder->table = new Table($tableName);
             $builder->query = new Select();
 
             $builder->query = $builder->query->setTable($builder->table);

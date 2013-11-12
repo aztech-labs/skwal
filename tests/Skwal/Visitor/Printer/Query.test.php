@@ -26,7 +26,7 @@ use Skwal\OrderBy;
         {
             $visitor = new \Skwal\Visitor\Printer\Query();
 
-            $table = new \Skwal\TableReference('table');
+            $table = new \Skwal\Table('table');
             $query = new \Skwal\Query\Select();
 
             $query = $query->setTable($table)->addColumn($table->getColumn('column'));
@@ -38,7 +38,7 @@ use Skwal\OrderBy;
         {
             $visitor = new \Skwal\Visitor\Printer\Query();
 
-            $table = new \Skwal\TableReference('table');
+            $table = new \Skwal\Table('table');
             $query = new \Skwal\Query\Select();
             $predicate = new \Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
                 new LiteralExpression(1));
@@ -55,7 +55,7 @@ use Skwal\OrderBy;
         {
             $visitor = new \Skwal\Visitor\Printer\Query();
 
-            $table = new \Skwal\TableReference('table');
+            $table = new \Skwal\Table('table');
             $query = new \Skwal\Query\Select();
             $predicate = new \Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
                 new LiteralExpression(1));
@@ -72,7 +72,7 @@ use Skwal\OrderBy;
         {
             $visitor = new \Skwal\Visitor\Printer\Query();
 
-            $table = new \Skwal\TableReference('table');
+            $table = new \Skwal\Table('table');
             $query = new \Skwal\Query\Select();
             $predicate = new \Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
                 new LiteralExpression(1));

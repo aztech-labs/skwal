@@ -2,6 +2,14 @@
 namespace Skwal\Visitor\Printer\Assembler
 {
 
+    /**
+     * Assembles query parts into the correct order to generate well-formed SQL
+     * for select queries.
+     *
+     *
+     * @author thibaud
+     *
+     */
     class Select
     {
 
@@ -53,22 +61,22 @@ namespace Skwal\Visitor\Printer\Assembler
         public function getAssembledStatement()
         {
             $command = '';
-
+            
             $this->appendSelectList($command);
             $this->appendFromClause($command);
             $this->appendWhereIfNecessary($command);
             $this->appendGroupByIfNecessary($command);
             $this->appendOrderByIfNecessary($command);
-
+            
             return $command;
         }
 
         private function appendSelectList(&$command)
         {
-            if (! count($this->selectList)) {
+            if (empty($this->selectList)) {
                 throw new \RuntimeException('Select list cannot be empty.');
             }
-
+            
             $command .= 'SELECT ' . implode(', ', $this->selectList);
         }
 
@@ -77,7 +85,7 @@ namespace Skwal\Visitor\Printer\Assembler
             if (trim($this->fromClause) == '') {
                 throw new \RuntimeException('From clause is required.');
             }
-
+            
             $command .= ' FROM ' . $this->fromClause;
         }
 
@@ -90,7 +98,7 @@ namespace Skwal\Visitor\Printer\Assembler
 
         private function appendGroupByIfNecessary(&$command)
         {
-            if (count($this->groupByList)) {
+            if (! empty($this->groupByList)) {
                 $command .= ' GROUP BY ' . implode(', ', $this->groupByList);
             }
         }

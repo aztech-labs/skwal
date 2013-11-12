@@ -2,20 +2,20 @@
 namespace Test\Skwal\Visitor\Printer
 {
 
-    use Skwal\TableReference;
-    use Skwal\Visitor\Printer\Correlatable;
-
-    class CorrelatableTest extends \PHPUnit_Framework_TestCase
+    use Skwal\Table;
+    use Skwal\Visitor\Printer\TableReference;
+				
+    class TableReferenceTest extends \PHPUnit_Framework_TestCase
     {
 
         public function testVisitDispatchesCallToVisitable()
         {
-            $visitor = new \Skwal\Visitor\Printer\Correlatable();
+            $visitor = new \Skwal\Visitor\Printer\TableReference();
 
             $reference = $this->getMock('\Skwal\CorrelatableReference');
 
             $reference->expects($this->once())
-                ->method('acceptCorrelatableVisitor')
+                ->method('acceptTableVisitor')
                 ->with($this->equalTo($visitor));
 
             $visitor->visit($reference);
@@ -23,10 +23,10 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testVisitTableGeneratesCorrectString()
         {
-            $table = new TableReference('dummy', 'alias');
-            $visitor = new Correlatable();
+            $table = new Table('dummy', 'alias');
+            $visitor = new TableReference();
 
-            $this->assertEquals('dummy AS alias', $visitor->printCorrelatableStatement($table));
+            $this->assertEquals('dummy AS alias', $visitor->printTableStatement($table));
         }
 
         public function testVisitQueryGeneratesCorrectString()
@@ -41,7 +41,7 @@ namespace Test\Skwal\Visitor\Printer
                 ->method($this->anything())
                 ->will($this->returnValue('nested query'));
 
-            $visitor = new Correlatable();
+            $visitor = new TableReference();
             $visitor->setQueryVisitor($queryVisitor);
 
             $visitor->visitQuery($query);

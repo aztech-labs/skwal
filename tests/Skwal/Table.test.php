@@ -2,9 +2,9 @@
 namespace Test\Skwal
 {
 
-    use Skwal\TableReference;
+    use Skwal\Table;
 
-    class TableReferenceTest extends \PHPUnit_Framework_TestCase
+    class TableTest extends \PHPUnit_Framework_TestCase
     {
 
         /**
@@ -12,19 +12,19 @@ namespace Test\Skwal
          */
         public function testInitializeWithEmptyNameThrowsException()
         {
-            $table = new TableReference('');
+            $table = new Table('');
         }
 
         public function testGetNameReturnsProperValue()
         {
-            $table = new TableReference('table');
+            $table = new Table('table');
 
             $this->assertEquals('table', $table->getName());
         }
 
         public function testSetNameReturnsCloneWithCorrectName()
         {
-            $table = new TableReference('table', 'alias');
+            $table = new Table('table', 'alias');
 
             $clone = $table->setName('newTable');
 
@@ -35,21 +35,21 @@ namespace Test\Skwal
 
         public function testGetCorrelationNameReturnsTableNameWhenNotSet()
         {
-            $table = new TableReference('table');
+            $table = new Table('table');
 
             $this->assertEquals('table', $table->getCorrelationName());
         }
 
         public function testGetCorrelationNameReturnsAliasWhenSet()
         {
-            $table = new TableReference('table', 'alias');
+            $table = new Table('table', 'alias');
 
             $this->assertEquals('alias', $table->getCorrelationName());
         }
 
         public function testGetColumnReturnsCorrectValueObject()
         {
-            $table = new TableReference('table');
+            $table = new Table('table');
 
             $column = $table->getColumn('column');
 
@@ -59,15 +59,15 @@ namespace Test\Skwal
 
         public function testAcceptCorrelatableVisitorCallsCorrectVisitMethod()
         {
-            $table = new TableReference('table');
+            $table = new Table('table');
 
-            $visitor = $this->getMock('\Skwal\Visitor\Correlatable');
+            $visitor = $this->getMock('\Skwal\Visitor\TableReference');
 
             $visitor->expects($this->once())
                 ->method('visitTable')
                 ->with($this->equalTo($table));
 
-            $table->acceptCorrelatableVisitor($visitor);
+            $table->acceptTableVisitor($visitor);
         }
     }
 }

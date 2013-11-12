@@ -319,7 +319,7 @@ use Skwal\OrderBy;
          *
          * @see \Skwal\CorrelatableReference::acceptCorrelatableVisitor()
          */
-        public function acceptCorrelatableVisitor(\Skwal\Visitor\Correlatable $visitor)
+        public function acceptTableVisitor(\Skwal\Visitor\TableReference $visitor)
         {
             $visitor->visitQuery($this);
         }

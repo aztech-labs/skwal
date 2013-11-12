@@ -8,17 +8,17 @@ use Skwal\OrderBy;
     class SelectTest extends \PHPUnit_Framework_TestCase
     {
 
-        public function testAcceptCorrelatableVisitorCallsProperVisitMethod()
+        public function testAcceptTableReferenceVisitorCallsProperVisitMethod()
         {
             $query = new Select();
 
-            $visitor = $this->getMock('\Skwal\Visitor\Correlatable');
+            $visitor = $this->getMock('\Skwal\Visitor\TableReference');
 
             $visitor->expects($this->once())
                 ->method('visitQuery')
                 ->with($this->equalTo($query));
 
-            $query->acceptCorrelatableVisitor($visitor);
+            $query->acceptTableVisitor($visitor);
         }
 
         public function testAcceptQueryVisitorCallsProperVisitMethod()

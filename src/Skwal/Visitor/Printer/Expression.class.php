@@ -4,18 +4,34 @@ namespace Skwal\Visitor\Printer
 
     use Skwal\Expression\ParameterExpression;
     use Skwal\Query\ScalarSelect;
-use Skwal\Expression\AssignmentExpression;
+    use Skwal\Expression\AssignmentExpression;
 
+    /**
+     * Generates SQL for expressions.
+     *
+     * @author thibaud
+     *
+     */
     class Expression implements \Skwal\Visitor\Expression
     {
+
         /**
          *
          * @var Query
          */
         private $queryPrinter;
 
+        /**
+         *
+         * @var string
+         */
         private $printedExpression;
 
+        /**
+         * Whether expressions that have aliases should be generated with an AS clause.
+         * 
+         * @var bool
+         */
         private $useAliases = true;
 
         public function useAliases($useFlag)
@@ -31,7 +47,7 @@ use Skwal\Expression\AssignmentExpression;
         public function printExpression(\Skwal\Expression $expression)
         {
             $this->visit($expression);
-
+            
             return $this->printedExpression;
         }
 
@@ -43,10 +59,10 @@ use Skwal\Expression\AssignmentExpression;
         public function visitColumn(\Skwal\Expression\DerivedColumn $column)
         {
             $scope = $column->getTable();
-
+            
             $this->printedExpression = sprintf('%s.%s', $scope->getCorrelationName(), $column->getValue());
-
-            if ($this->useAliases) {
+            
+            if ($this->useAliases && trim($column->getAlias()) != '') {
                 $this->printedExpression .= sprintf(' AS %s', $column->getAlias());
             }
         }
@@ -54,21 +70,19 @@ use Skwal\Expression\AssignmentExpression;
         public function visitLiteral(\Skwal\Expression\LiteralExpression $literal)
         {
             $value = $literal->getValue();
-
+            
             if (is_string($value)) {
                 $value = "'$value'";
             }
-            else
-                if (is_bool($value)) {
-                    $value = $value ? 'TRUE' : 'FALSE';
-                }
-                else
-                    if ($value === null) {
-                        $value = 'NULL';
-                    }
-
+            elseif (is_bool($value)) {
+                $value = $value ? 'TRUE' : 'FALSE';
+            }
+            elseif ($value === null) {
+                $value = 'NULL';
+            }
+            
             $this->printedExpression = $value;
-
+            
             if ($this->useAliases && trim($literal->getAlias()) != '') {
                 $this->printedExpression .= sprintf(' AS %s', $literal->getAlias());
             }
@@ -85,8 +99,6 @@ use Skwal\Expression\AssignmentExpression;
         }
 
         public function visitAssignmentExpression(AssignmentExpression $assignment)
-        {
-
-        }
+        {}
     }
 }

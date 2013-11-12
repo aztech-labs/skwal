@@ -7,14 +7,12 @@ namespace Skwal {
      * @author thibaud
      *
      */
-    interface CorrelatableReference
+    interface CorrelatableReference extends TableReference
     {
         /**
          * @return string
          */
         function getCorrelationName();
-
-        function acceptCorrelatableVisitor(\Skwal\Visitor\Correlatable $visitor);
     }
 
 }
