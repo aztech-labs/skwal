@@ -1,5 +1,5 @@
 <?php
-use Skwal\TableReference;
+use Skwal\Table;
 use Skwal\SelectQuery;
 use Skwal\Expression\LiteralExpression;
 use Skwal\Condition\ComparisonPredicate;
@@ -7,11 +7,13 @@ use Skwal\CompOp;
 use Skwal\Query\Select;
 use Skwal\OrderBy;
 use Skwal\Query\ScalarSelect;
+use Skwal\Join;
+use Skwal\JoinedTable;
 
 include __DIR__ . '/../Loader.php';
 
 $printer = new Skwal\Visitor\Printer\Query();
-$table = new TableReference('test');
+$table = new Table('test');
 $query = new Select('childQuery');
 
 $query = $query->setTable($table)
@@ -30,11 +32,18 @@ $condition = new ComparisonPredicate($query->deriveColumn(0), CompOp::Equals, ne
 $condition = $condition->BOr($condition)->BAnd($condition);
 
 $scalar = new ScalarSelect('scalar');
-$scalar = $scalar->setTable($table)
-    ->addColumn($table->getColumn('scalarColumn'));
+$scalar = $scalar->setTable($table)->addColumn($table->getColumn('scalarColumn'));
+
+$scalarCondition = new ComparisonPredicate($scalar, CompOp::Equals, new LiteralExpression(20));
+$condition = $scalarCondition->BAnd($condition);
+
+$join = new Join($scalar, new ComparisonPredicate($scalar->deriveColumn(0), CompOp::Equals, new LiteralExpression(20)));
+
+$joinedTable = new JoinedTable($query);
+$joinedTable->addJoin($join);
 
 $parentQuery = new Select('parent');
-$parentQuery = $parentQuery->setTable($query)
+$parentQuery = $parentQuery->setTable($joinedTable)
     ->addColumn($query->deriveColumn(0))
     ->addColumn($query->deriveColumn(2))
     ->addColumn($scalar)

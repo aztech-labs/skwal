@@ -5,12 +5,24 @@ namespace Skwal\Visitor\Printer
     class TableReference implements \Skwal\Visitor\TableReference
     {
         private $queryVisitor;
+        
+        private $predicateVisitor;
 
         private $fromStatement = '';
 
+        /**
+         * 
+         * @param \Skwal\Visitor\Printer\Query $visitor
+         * @codeCoverageIgnore
+         */
         public function setQueryVisitor(\Skwal\Visitor\Printer\Query $visitor)
         {
             $this->queryVisitor = $visitor;
+        }
+        
+        public function setPredicateVisitor(\Skwal\Visitor\Printer\Predicate $predicateVisitor)
+        {
+            $this->predicateVisitor = $predicateVisitor;
         }
 
         public function getLastStatement()
@@ -39,7 +51,15 @@ namespace Skwal\Visitor\Printer
         
         public function visitJoinedTable(\Skwal\JoinedTable $table)
         {   
-            $this->fromStatement = 'joined table';
+            $fromStatement = $this->printTableStatement($table->getFirstTable());
+            
+            foreach ($table->getJoins() as $join)
+            {
+                $fromStatement .= sprintf(" JOIN %s ON (%s)", $this->printTableStatement($join->getTable()), 
+                    $this->predicateVisitor->printPredicateStatement($join->getPredicate()));
+            }
+            
+            $this->fromStatement = $fromStatement;
         }
 
         public function visitQuery(\Skwal\Query\Select $query)

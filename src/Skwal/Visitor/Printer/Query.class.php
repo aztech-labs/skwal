@@ -27,7 +27,7 @@ namespace Skwal\Visitor\Printer
 
         /**
          *
-         * @var \Skwal\Visitor\Printer\Correlatable
+         * @var \Skwal\Visitor\Printer\TableReference
          */
         private $tableReferenceVisitor;
 
@@ -44,8 +44,8 @@ namespace Skwal\Visitor\Printer
         {
             $this->queryStack = new \SplStack();
             $this->expressionVisitor = $this->buildExpressionVisitor();
-            $this->tableReferenceVisitor = $this->buildTableReferenceVisitor();
             $this->predicateVisitor = $this->buildPredicateVisitor();
+            $this->tableReferenceVisitor = $this->buildTableReferenceVisitor();
         }
 
         /**
@@ -103,6 +103,7 @@ namespace Skwal\Visitor\Printer
             $visitor = new TableReference();
             
             $visitor->setQueryVisitor($this);
+            $visitor->setPredicateVisitor($this->predicateVisitor);
             
             return $visitor;
         }

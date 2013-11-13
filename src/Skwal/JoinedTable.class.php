@@ -7,19 +7,51 @@ namespace Skwal
     class JoinedTable implements TableReference
     {
 
-        private $tables;
-
-        public function addTable(TableReference $reference, Predicate $condition)
-        {}
+        /**
+         *
+         * @var \Skwal\TableReference
+         */
+        private $topTable = null;
 
         /**
          *
-         * @return TableReference[]
+         * @var \Skwal\Join[]
          */
-        public function getTables()
-        {}
+        private $joins = array();
 
+        
+        public function __construct(TableReference $firstTable)
+        {
+            $this->topTable = $firstTable;
+        }
+        
+        public function getFirstTable()
+        {
+            return $this->topTable;
+        }
+        
+        public function addJoin(Join $join)
+        {
+        	$this->joins[] = $join;
+        }
+
+        /**
+         *
+         * @return Join[]
+         */
+        public function getJoins()
+        {
+        	return $this->joins;
+        }
+
+        /**
+         * (non-PHPdoc)
+         * 
+         * @see \Skwal\TableReference::acceptTableVisitor()
+         */
         public function acceptTableVisitor(\Skwal\Visitor\TableReference $visitor)
-        {}
+        {
+            $visitor->visitJoinedTable($this);
+        }
     }
 }

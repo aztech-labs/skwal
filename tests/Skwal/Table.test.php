@@ -57,7 +57,7 @@ namespace Test\Skwal
             $this->assertEquals('column', $column->getValue());
         }
 
-        public function testAcceptCorrelatableVisitorCallsCorrectVisitMethod()
+        public function testAcceptTableReferenceVisitorCallsCorrectVisitMethod()
         {
             $table = new Table('table');
 

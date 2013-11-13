@@ -8,7 +8,7 @@ namespace Skwal\Query
     use Skwal\CorrelatableReference;
     use Skwal\Query;
     use Skwal\Expression;
-use Skwal\OrderBy;
+    use Skwal\OrderBy;
 
     /**
      * Defines a select query.
@@ -16,7 +16,7 @@ use Skwal\OrderBy;
      * @author thibaud
      *
      * @todo Review accept function names to allow implementation of multiple
-     *       Visitor patterns.
+     * Visitor patterns.
      */
     class Select implements CorrelatableReference, Query
     {
@@ -29,7 +29,7 @@ use Skwal\OrderBy;
 
         /**
          *
-         * @var \Skwal\CorrelatableReference
+         * @var \Skwal\TableReference
          */
         private $table = null;
 
@@ -66,7 +66,7 @@ use Skwal\OrderBy;
         /**
          * Initialize a new instance with an optional alias.
          *
-         * @param string $alias
+         * @param string $alias 
          */
         public function __construct($alias = '')
         {
@@ -86,24 +86,24 @@ use Skwal\OrderBy;
         /**
          * Adds a correlated reference (table, nested query...) to the current query.
          *
-         * @param \Skwal\CorrelatableReference $table
+         * @param \Skwal\TableReference $table 
          * @return \Skwal\Query\Select A new query with the added table
-         *         in its from clause.
+         * in its from clause.
          * @todo Avoid duplicate table cloning
          */
-        public function setTable(\Skwal\CorrelatableReference $table)
+        public function setTable(\Skwal\TableReference $table)
         {
             $clone = clone $this;
-
+            
             $clone->table = $table;
-
+            
             return $clone;
         }
 
         /**
          *
          * @return \Skwal\CorrelatableReference First table found in from clause,
-         *         or boolean false if no tables have been added.
+         * or boolean false if no tables have been added.
          */
         public function getTable()
         {
@@ -112,18 +112,23 @@ use Skwal\OrderBy;
 
         public function addJoin(CorrelatableReference $reference, Predicate $condition)
         {
-            $this->joins[] = array($reference, $condition);
+            $this->joins[] = array(
+                $reference,
+                $condition
+            );
         }
 
         public function getJoinedTables()
         {
-            return array_map(function ($element) {
+            return array_map(function ($element)
+            {
                 return $element[0];
             }, $this->joins);
         }
 
         /**
          * Indicates whether columns can be addded to the query.
+         * 
          * @return boolean
          */
         public function canAddColumn()
@@ -134,34 +139,34 @@ use Skwal\OrderBy;
         /**
          * Adds a derived column to the select list of the query.
          *
-         * @param \Skwal\Expression\AliasExpression $column
+         * @param \Skwal\Expression\AliasExpression $column 
          * @return \Skwal\Query\Select A new query with the added column in its select list.
          * @throws \Exception if no more columns can be added to the query.
          */
         public function addColumn(AliasExpression $column)
         {
             $clone = clone $this;
-
+            
             $clone->columns[] = $column;
-
+            
             return $clone;
         }
 
         public function groupBy(AliasExpression $column)
         {
             $clone = clone $this;
-
+            
             $clone->aggregateColumns[] = $column;
-
+            
             return $clone;
         }
 
         public function orderBy(OrderBy $column)
         {
             $clone = clone $this;
-
+            
             $clone->sortList[] = $column;
-
+            
             return $clone;
         }
 
@@ -175,16 +180,16 @@ use Skwal\OrderBy;
         /**
          * Derives an expression in the query's select clause as a column of the query's associated resultset.
          *
-         * @param int $index
+         * @param int $index 
          * @throws \OutOfRangeException
          * @return multitype:\Skwal\Expression\AliasExpression
          */
         public function deriveColumn($index)
         {
             $this->validateColumnIndex($index);
-
+            
             $column = new DerivedColumn($this->columns[$index]->getAlias());
-
+            
             return $column->setTable($this);
         }
 
@@ -196,39 +201,39 @@ use Skwal\OrderBy;
         public function deriveColumns()
         {
             $derived = array();
-
+            
             for ($i = 0; $i < count($this->columns); $i ++) {
                 $derived[] = $this->deriveColumn($i);
             }
-
+            
             return $derived;
         }
 
         /**
          * Gets a column identified by its index
          *
-         * @param int $index
+         * @param int $index 
          * @throws \OutOfRangeException If $index is out of the column's count range.
          * @return multitype:\Skwal\Skwal_AliasExpression
          */
         public function getColumn($index)
         {
             $this->validateColumnIndex($index);
-
+            
             return $this->columns[$index];
         }
 
         /**
          *
-         * @param Predicate $predicate
+         * @param Predicate $predicate 
          * @return \Skwal\Query\Select
          */
         public function setCondition(Predicate $predicate)
         {
             $clone = clone $this;
-
+            
             $clone->condition = $predicate;
-
+            
             return $clone;
         }
 
@@ -274,13 +279,12 @@ use Skwal\OrderBy;
          */
         public function selectDistinct()
         {
-            if (!$this->distinct)
-            {
+            if (! $this->distinct) {
                 $clone = clone $this;
                 $clone->distinct = true;
                 return $clone;
             }
-
+            
             return $this;
         }
 
@@ -295,7 +299,7 @@ use Skwal\OrderBy;
                 $clone->distinct = false;
                 return $clone;
             }
-
+            
             return $this;
         }
 

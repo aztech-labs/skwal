@@ -23,25 +23,25 @@ namespace Skwal\Query
         public function exprs()
         {
             $builder = new \Skwal\Expression\Builder();
-            //$builder->setQueryBuilder($this);
-
+            // $builder->setQueryBuilder($this);
+            
             return $builder;
         }
 
         /**
          *
-         * @param string $tableName
+         * @param string $tableName 
          * @return \Skwal\Query\Builder
          */
         public function select($tableName)
         {
             $builder = $this;
-
+            
             $builder->table = new Table($tableName);
             $builder->query = new Select();
-
+            
             $builder->query = $builder->query->setTable($builder->table);
-
+            
             return $builder;
         }
 
@@ -55,13 +55,13 @@ namespace Skwal\Query
             if ($table->getCorrelationName() == $tableName) {
                 return $table;
             }
-
+            
             foreach ($this->query->getJoinedTables() as $child) {
                 if ($join = $this->findTable($child, $tableName)) {
                     return $join;
                 }
             }
-
+            
             return null;
         }
 
@@ -69,11 +69,11 @@ namespace Skwal\Query
         {
             return new JoinBuilder();
         }
-        
+
         public function addColumn($name, $alias = '', $table = '')
         {
             $this->query = $this->query->addColumn($this->table->getColumn($name, $alias));
-
+            
             return $this;
         }
 
@@ -84,7 +84,7 @@ namespace Skwal\Query
                     return $column;
                 }
             }
-
+            
             throw new \RuntimeException('Column not found.');
         }
 
@@ -94,11 +94,10 @@ namespace Skwal\Query
                 $this->query = $this->query->setCondition($condition);
             }
             else {
-                $this->query = $this->query->setCondition(
-                    $this->query->getCondition()
-                        ->BAnd($condition));
+                $this->query = $this->query->setCondition($this->query->getCondition()
+                    ->BAnd($condition));
             }
-
+            
             return $this;
         }
 

@@ -10,7 +10,7 @@ namespace Skwal\Visitor\Printer
      * Generates SQL for expressions.
      *
      * @author thibaud
-     *
+     * @todo Fix alias rendering in where clause when using sub-queries in conditions
      */
     class Expression implements \Skwal\Visitor\Expression
     {
@@ -95,7 +95,11 @@ namespace Skwal\Visitor\Printer
 
         public function visitScalarSelect(ScalarSelect $query)
         {
-            $this->printedExpression = sprintf('(%s) AS %s', $this->queryPrinter->printQuery($query), $query->getAlias());
+            $this->printedExpression = sprintf('(%s)', $this->queryPrinter->printQuery($query), $query->getAlias());
+            
+            if ($this->useAliases && trim($query->getAlias() != '')) {
+                $this->printedExpression .= sprintf(' AS %s', $query->getAlias());
+            }
         }
 
         public function visitAssignmentExpression(AssignmentExpression $assignment)
