@@ -5,13 +5,13 @@ namespace Skwal\Visitor\Printer
     class TableReference implements \Skwal\Visitor\TableReference
     {
         private $queryVisitor;
-        
+
         private $predicateVisitor;
 
         private $fromStatement = '';
 
         /**
-         * 
+         *
          * @param \Skwal\Visitor\Printer\Query $visitor
          * @codeCoverageIgnore
          */
@@ -19,7 +19,7 @@ namespace Skwal\Visitor\Printer
         {
             $this->queryVisitor = $visitor;
         }
-        
+
         public function setPredicateVisitor(\Skwal\Visitor\Printer\Predicate $predicateVisitor)
         {
             $this->predicateVisitor = $predicateVisitor;
@@ -48,18 +48,19 @@ namespace Skwal\Visitor\Printer
 
             $this->fromStatement = $fromStatement;
         }
-        
+
         public function visitJoinedTable(\Skwal\JoinedTable $table)
-        {   
-            $fromStatement = $this->printTableStatement($table->getFirstTable());
-            
+        {
+            $fromStatements = array();
+            $fromStatements[] = $this->printTableStatement($table->getFirstTable());
+
             foreach ($table->getJoins() as $join)
             {
-                $fromStatement .= sprintf(" JOIN %s ON (%s)", $this->printTableStatement($join->getTable()), 
+                $fromStatements[] = sprintf("%s JOIN %s ON (%s)", $join->getType(), $this->printTableStatement($join->getTable()),
                     $this->predicateVisitor->printPredicateStatement($join->getPredicate()));
             }
-            
-            $this->fromStatement = $fromStatement;
+
+            $this->fromStatement = implode(' ', $fromStatements);
         }
 
         public function visitQuery(\Skwal\Query\Select $query)

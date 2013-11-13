@@ -9,7 +9,7 @@ $exprs = $builder->exprs();
 $builder->select('table')
     ->addColumn('column')
     ->addColumn('column', 'alias')
-    ->innerJoin('joinedTable')
+    ->join('joinedTable')
     ->on($exprs->equals($builder->getColumn('column'), $builder->getTable('joinedTable')->getColumn('joinColumn')))
     ->where($exprs->greaterThan($builder->getColumn('column'), $exprs->int(10)))
     ->where($exprs->equals($builder->getColumn('column'), $exprs->param('column')));

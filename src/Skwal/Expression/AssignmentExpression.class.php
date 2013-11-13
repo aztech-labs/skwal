@@ -19,7 +19,7 @@ namespace Skwal\Expression
         private $value;
 
         /**
-         * @param AssignableExpression $assignee The
+         * @param AssignableExpression $assignee
          * @param AliasExpression $value
          */
         public function __construct(AssignableExpression $assignee, AliasExpression $value)

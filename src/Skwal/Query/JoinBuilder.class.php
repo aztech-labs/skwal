@@ -12,22 +12,22 @@ namespace Skwal\Query
             $this->queryBuilder = $queryBuilder;
         }
 
-        public function inner()
+        public function inner($tableName)
         {
             return $this;
         }
 
-        public function outerLeft()
+        public function outerLeft($tableName)
         {
             return $this;
         }
 
-        public function outerRight()
+        public function outerRight($tableName)
         {
             return $this;
         }
 
-        public function cross()
+        public function cross($tableName)
         {
             return $this;
         }
