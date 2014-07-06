@@ -39,7 +39,9 @@ namespace Aztech\Skwal\Tests
             $table->addJoin($join);
             
             $this->assertCount(1, $table->getJoins());
-            $this->assertEquals($join, reset($table->getJoins()));
+            
+            $joins = $table->getJoins();
+            $this->assertEquals($join, reset($joins));
         }
     }
 }
