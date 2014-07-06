@@ -176,6 +176,9 @@ class Select implements CorrelatableReference, Query
         return $clone;
     }
 
+    /**
+     * @param integer $index
+     */
     private function validateColumnIndex($index)
     {
         if ($index < 0 || $index >= count($this->columns)) {
@@ -254,7 +257,7 @@ class Select implements CorrelatableReference, Query
 
     /**
      *
-     * @return \Aztech\Skwal\Aztech\Skwal_AliasExpression[]
+     * @return AliasExpression[]
      */
     public function getColumns()
     {

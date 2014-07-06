@@ -32,11 +32,17 @@ class Select
         $this->selectList = $expressions;
     }
 
+    /**
+     * @param string $statement
+     */
     public function setFromClause($statement)
     {
         $this->fromClause = $statement;
     }
 
+    /**
+     * @param string $statement
+     */
     public function setWhereClause($statement)
     {
         $this->whereClause = $statement;
@@ -71,6 +77,9 @@ class Select
         return $command;
     }
 
+    /**
+     * @param string $command
+     */
     private function appendSelectList(&$command)
     {
         if (empty($this->selectList)) {

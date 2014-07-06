@@ -50,6 +50,9 @@ class Builder
         return $this->findTable($this->table, $tableName);
     }
 
+    /**
+     * @param Table $table
+     */
     private function findTable($table, $tableName)
     {
         if ($table->getCorrelationName() == $tableName) {

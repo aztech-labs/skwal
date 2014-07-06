@@ -14,11 +14,23 @@ use Aztech\Skwal\Condition\ComparisonPredicate;
 interface Predicate
 {
 
+    /**
+     * @return void
+     */
     function visit(\Aztech\Skwal\Condition\Predicate $predicate);
 
+    /**
+     * @return void
+     */
     function visitAndPredicate(AndPredicate $predicate);
 
+    /**
+     * @return void
+     */
     function visitOrPredicate(OrPredicate $predicate);
 
+    /**
+     * @return void
+     */
     function visitComparisonPredicate(ComparisonPredicate $predicate);
 }

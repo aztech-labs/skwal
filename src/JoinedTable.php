@@ -2,8 +2,6 @@
 
 namespace Aztech\Skwal;
 
-use Aztech\Skwal\Condition\Predicate;
-
 class JoinedTable implements TableReference
 {
 

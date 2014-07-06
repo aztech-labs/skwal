@@ -11,5 +11,8 @@ namespace Aztech\Skwal;
 interface TableReference
 {
 
+    /**
+     * @return void
+     */
     function acceptTableVisitor(\Aztech\Skwal\Visitor\TableReference $visitor);
 }
