@@ -89,6 +89,9 @@ class Select
         $command .= 'SELECT ' . implode(', ', $this->selectList);
     }
 
+    /**
+     * @param string $command
+     */
     private function appendFromClause(&$command)
     {
         if (trim($this->fromClause) == '') {
