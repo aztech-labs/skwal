@@ -18,3 +18,4 @@ include '/path/to/Skwal/Loader.php';
 ### Sample usage
 
 See samples/SimpleQueryPrinter.php
+
