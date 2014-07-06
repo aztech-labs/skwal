@@ -11,9 +11,7 @@ before_script:
   - composer selfupdate
   - composer install --prefer-source
   - phpenv rehash
-  - wget https://scrutinizer-ci.com/ocular.phar
 
 script: 
-  - phpunit --coverage-text --coverage-clover /tmp/oliviermadre/dicit/coverage.xml
-  - php ocular.phar code-coverage:upload --format=php-clover /tmp/oliviermadre/dicit/coverage.xml
+  - phpunit --coverage-text 
   - ./vendor/bin/phpcs --standard=./phpcs.xml -n --report=gitblame ./src
