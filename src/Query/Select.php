@@ -62,6 +62,12 @@ class Select implements CorrelatableReference, Query
      * @var bool
      */
     private $distinct = false;
+    
+    /**
+     * 
+     * @var mixed[][]
+     */
+    private $joins = array();
 
     /**
      * Initialize a new instance with an optional alias.

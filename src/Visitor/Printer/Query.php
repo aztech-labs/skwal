@@ -62,10 +62,10 @@ class Query implements \Aztech\Skwal\Visitor\Query
     /**
      * Sets the visitor instance for used to output correlated references.
      *
-     * @param \Aztech\Skwal\Visitor\Printer\Table $visitor
+     * @param \Aztech\Skwal\Visitor\Printer\TableReference $visitor
      * @codeCoverageIgnore Cannot be tested as there are no getters
      */
-    public function setTableReferenceVisitor(\Aztech\Skwal\Visitor\Printer\Table $visitor)
+    public function setTableReferenceVisitor(\Aztech\Skwal\Visitor\Printer\TableReference $visitor)
     {
         $this->tableReferenceVisitor = $visitor;
     }
