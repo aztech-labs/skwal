@@ -38,7 +38,7 @@ namespace Aztech\Skwal\Tests\Visitor\Printer
         {
             $first = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $second = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
-            $predicate = new ComparisonPredicate($first, CompOp::Equals, $second);
+            $predicate = new ComparisonPredicate($first, CompOp::EQUAL, $second);
 
             $visitor = new Predicate();
             $visitor->setExpressionPrinter($this->expressionVisitor);
@@ -50,8 +50,8 @@ namespace Aztech\Skwal\Tests\Visitor\Printer
         {
             $first = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $second = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
-            $boundPredicate = new ComparisonPredicate($first, CompOp::Equals, $second);
-            $predicate = $boundPredicate->BAnd($boundPredicate);
+            $boundPredicate = new ComparisonPredicate($first, CompOp::EQUAL, $second);
+            $predicate = $boundPredicate->bAnd($boundPredicate);
 
             $visitor = new Predicate();
             $visitor->setExpressionPrinter($this->expressionVisitor);
@@ -64,8 +64,8 @@ namespace Aztech\Skwal\Tests\Visitor\Printer
         {
             $first = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $second = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
-            $boundPredicate = new ComparisonPredicate($first, CompOp::Equals, $second);
-            $predicate = $boundPredicate->BOr($boundPredicate);
+            $boundPredicate = new ComparisonPredicate($first, CompOp::EQUAL, $second);
+            $predicate = $boundPredicate->bOr($boundPredicate);
 
             $visitor = new Predicate();
             $visitor->setExpressionPrinter($this->expressionVisitor);

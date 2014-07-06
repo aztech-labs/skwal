@@ -1,27 +1,25 @@
 <?php
 
-namespace Aztech\Skwal
+namespace Aztech\Skwal;
+
+/**
+ * Available comparison operators for comparison predicates.
+ *
+ * @author thibaud
+ *
+ */
+final class CompOp
 {
 
-    /**
-     * Available comparison operators for comparison predicates.
-     *
-     * @author thibaud
-     *
-     */
-    final class CompOp
-    {
+    const EQUAL = '=';
 
-        const Equals = '=';
+    const NOT_EQUAL = '<>';
 
-        const NotEquals = '<>';
+    const LESS_THAN = '<';
 
-        const LessThan = '<';
+    const LESS_THAN_EQ = '<=';
 
-        const LessThanEq = '<=';
+    const GREATER_THAN = '>';
 
-        const GreaterThan = '>';
-
-        const GreaterThanEq = '>=';
-    }
+    const GREATER_THAN_EQ = '>=';
 }

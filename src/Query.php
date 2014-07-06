@@ -1,8 +1,8 @@
 <?php
-namespace Aztech\Skwal
+
+namespace Aztech\Skwal;
+
+interface Query extends CorrelatableReference
 {
-    interface Query extends CorrelatableReference
-    {
-        function acceptQueryVisitor(\Aztech\Skwal\Visitor\Query $visitor);
-    }
+    function acceptQueryVisitor(\Aztech\Skwal\Visitor\Query $visitor);
 }

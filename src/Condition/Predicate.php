@@ -1,38 +1,37 @@
 <?php
-namespace Aztech\Skwal\Condition
+
+namespace Aztech\Skwal\Condition;
+
+/**
+ * Interface for boolean predicates.
+ *
+ * @author thibaud
+ */
+interface Predicate
 {
 
     /**
-     * Interface for boolean primarys.
+     * Performs a boolean and composition with another predicate
      *
-     * @author thibaud
+     * @param Predicate $predicate
+     * @return Predicate
      */
-    interface Predicate
-    {
+    function bAnd(Predicate $predicate);
 
-        /**
-         * Performs a boolean and composition with another predicate
-         *
-         * @param Predicate $predicate
-         * @return Predicate
-         */
-        function BAnd(Predicate $predicate);
+    /**
+     * Performs a boolean or composition with another predicate
+     *
+     * @param Predicate $predicate
+     * @return Predicate
+     */
+    function bOr(Predicate $predicate);
 
-        /**
-         * Performs a boolean or composition with another predicate
-         *
-         * @param Predicate $predicate
-         * @return Predicate
-         */
-        function BOr(Predicate $predicate);
-
-        /**
-         * Accepts a predicate visitor.
-         * Implementations should dispatch the call to the
-         * appropriate \Aztech\Skwal\Visitor\Predicate::visit*() method.
-         *
-         * @param \Aztech\Skwal\Visitor\Predicate $visitor
-         */
-        function acceptPredicateVisitor(\Aztech\Skwal\Visitor\Predicate $visitor);
-    }
+    /**
+     * Accepts a predicate visitor.
+     * Implementations should dispatch the call to the
+     * appropriate \Aztech\Skwal\Visitor\Predicate::visit*() method.
+     *
+     * @param \Aztech\Skwal\Visitor\Predicate $visitor
+     */
+    function acceptPredicateVisitor(\Aztech\Skwal\Visitor\Predicate $visitor);
 }

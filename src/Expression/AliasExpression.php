@@ -1,19 +1,17 @@
 <?php
-namespace Aztech\Skwal\Expression
+
+namespace Aztech\Skwal\Expression;
+
+use Aztech\Skwal\Expression;
+
+/**
+ * Interface for expression classes that can be aliased
+ *
+ * @author thibaud
+ *        
+ */
+interface AliasExpression extends Expression
 {
 
-    use Aztech\Skwal\Expression;
-
-    /**
-     * Interface for expression classes that can be aliased
-     *
-     * @author thibaud
-     *
-     */
-    interface AliasExpression extends Expression
-    {
-
-        function getAlias();
-
-    }
+    function getAlias();
 }

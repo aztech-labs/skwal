@@ -1,26 +1,26 @@
 <?php
-namespace Aztech\Skwal\Expression
+
+namespace Aztech\Skwal\Expression;
+
+use Aztech\Skwal\Expression;
+
+class ParameterExpression implements Expression
 {
 
-    use Aztech\Skwal\Expression;
+    private $name;
 
-    class ParameterExpression implements Expression
+    public function __construct($name)
     {
-        private $name;
+        $this->name = $name;
+    }
 
-        public function __construct($name)
-        {
-            $this->name = $name;
-        }
+    public function getName()
+    {
+        return $this->name;
+    }
 
-        public function getName()
-        {
-            return $this->name;
-        }
-
-        public function acceptExpressionVisitor(\Aztech\Skwal\Visitor\Expression $visitor)
-        {
-            $visitor->visitParameter($this);
-        }
+    public function acceptExpressionVisitor(\Aztech\Skwal\Visitor\Expression $visitor)
+    {
+        $visitor->visitParameter($this);
     }
 }

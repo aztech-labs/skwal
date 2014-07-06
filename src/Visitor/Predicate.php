@@ -1,25 +1,24 @@
 <?php
-namespace Aztech\Skwal\Visitor
+
+namespace Aztech\Skwal\Visitor;
+
+use Aztech\Skwal\Condition\AndPredicate;
+use Aztech\Skwal\Condition\OrPredicate;
+use Aztech\Skwal\Condition\ComparisonPredicate;
+
+/**
+ * Visitor interface for the Predicate class hierarchy.
+ * @author thibaud
+ *
+ */
+interface Predicate
 {
 
-    use Aztech\Skwal\Condition\AndPredicate;
-    use Aztech\Skwal\Condition\OrPredicate;
-    use Aztech\Skwal\Condition\ComparisonPredicate;
+    function visit(\Aztech\Skwal\Condition\Predicate $predicate);
 
-    /**
-     * Visitor interface for the Predicate class hierarchy.
-     * @author thibaud
-     *
-     */
-    interface Predicate
-    {
+    function visitAndPredicate(AndPredicate $predicate);
 
-        function visit(\Aztech\Skwal\Condition\Predicate $predicate);
+    function visitOrPredicate(OrPredicate $predicate);
 
-        function visitAndPredicate(AndPredicate $predicate);
-
-        function visitOrPredicate(OrPredicate $predicate);
-
-        function visitComparisonPredicate(ComparisonPredicate $predicate);
-    }
+    function visitComparisonPredicate(ComparisonPredicate $predicate);
 }

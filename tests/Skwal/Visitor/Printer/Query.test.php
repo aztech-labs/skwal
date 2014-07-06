@@ -40,7 +40,7 @@ use Aztech\Skwal\OrderBy;
 
             $table = new \Aztech\Skwal\Table('table');
             $query = new \Aztech\Skwal\Query\Select();
-            $predicate = new \Aztech\Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
+            $predicate = new \Aztech\Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::EQUAL,
                 new LiteralExpression(1));
 
             $query = $query->setTable($table)
@@ -57,7 +57,7 @@ use Aztech\Skwal\OrderBy;
 
             $table = new \Aztech\Skwal\Table('table');
             $query = new \Aztech\Skwal\Query\Select();
-            $predicate = new \Aztech\Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
+            $predicate = new \Aztech\Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::EQUAL,
                 new LiteralExpression(1));
 
             $query = $query->setTable($table)
@@ -74,7 +74,7 @@ use Aztech\Skwal\OrderBy;
 
             $table = new \Aztech\Skwal\Table('table');
             $query = new \Aztech\Skwal\Query\Select();
-            $predicate = new \Aztech\Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::Equals,
+            $predicate = new \Aztech\Skwal\Condition\ComparisonPredicate(new LiteralExpression(1), CompOp::EQUAL,
                 new LiteralExpression(1));
 
             $query = $query->setTable($table)

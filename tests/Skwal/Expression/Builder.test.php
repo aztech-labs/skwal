@@ -30,7 +30,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->equals($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::Equals, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::EQUAL, $right);
         }
 
         public function testNotEqualsReturnsCorrectPredicate()
@@ -40,7 +40,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->notEquals($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::NotEquals, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::NOT_EQUAL, $right);
         }
 
         public function testGreaterThanReturnsCorrectPredicate()
@@ -50,7 +50,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->greaterThan($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::GreaterThan, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::GREATER_THAN, $right);
         }
 
         public function testGreaterThanEqReturnsCorrectPredicate()
@@ -60,7 +60,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->greaterThanEq($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::GreaterThanEq, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::GREATER_THANEq, $right);
         }
 
         public function testLessThanReturnsCorrectPredicate()
@@ -70,7 +70,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->lessThan($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::LessThan, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::LESS_THAN, $right);
         }
 
         public function testLessThanEqReturnsCorrectPredicate()
@@ -80,7 +80,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->lessThanEq($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::LessThanEq, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::LESS_THANEq, $right);
         }
 
         public function testAssignReturnsCorrectExpression()

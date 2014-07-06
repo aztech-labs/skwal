@@ -28,16 +28,16 @@ $query = $query->groupBy($query->getColumn(0))
     ->groupBy($query->getColumn(1))
     ->groupBy($query->getColumn(2));
 
-$condition = new ComparisonPredicate($query->deriveColumn(0), CompOp::Equals, new LiteralExpression(10));
-$condition = $condition->BOr($condition)->BAnd($condition);
+$condition = new ComparisonPredicate($query->deriveColumn(0), CompOp::EQUAL, new LiteralExpression(10));
+$condition = $condition->bOr($condition)->bAnd($condition);
 
 $scalar = new ScalarSelect('scalar');
 $scalar = $scalar->setTable($table)->addColumn($table->getColumn('scalarColumn'));
 
-$scalarCondition = new ComparisonPredicate($scalar, CompOp::Equals, new LiteralExpression(20));
-$condition = $scalarCondition->BAnd($condition);
+$scalarCondition = new ComparisonPredicate($scalar, CompOp::EQUAL, new LiteralExpression(20));
+$condition = $scalarCondition->bAnd($condition);
 
-$join = new Join($scalar, new ComparisonPredicate($scalar->deriveColumn(0), CompOp::Equals, new LiteralExpression(20)));
+$join = new Join($scalar, new ComparisonPredicate($scalar->deriveColumn(0), CompOp::EQUAL, new LiteralExpression(20)));
 
 $joinedTable = new JoinedTable($query);
 $joinedTable->addJoin($join);

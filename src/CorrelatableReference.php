@@ -1,18 +1,16 @@
 <?php
 
-namespace Aztech\Skwal {
+namespace Aztech\Skwal;
 
+/**
+ * Interface for items serving as parents in correlation-type relationships.
+ * @author thibaud
+ *
+ */
+interface CorrelatableReference extends TableReference
+{
     /**
-     * Interface for items serving as parents in correlation-type relationships.
-     * @author thibaud
-     *
+     * @return string
      */
-    interface CorrelatableReference extends TableReference
-    {
-        /**
-         * @return string
-         */
-        function getCorrelationName();
-    }
-
+    function getCorrelationName();
 }

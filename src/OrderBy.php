@@ -1,27 +1,26 @@
 <?php
 
-namespace Aztech\Skwal
+namespace Aztech\Skwal;
+
+class OrderBy
 {
-    class OrderBy
+    private $sortExpression;
+
+    private $descending;
+
+    public function __construct(\Aztech\Skwal\Expression $expression, $descending = false)
     {
-        private $sortExpression;
+        $this->sortExpression = $expression;
+        $this->descending = $descending;
+    }
 
-        private $descending;
+    public function getExpression()
+    {
+        return $this->sortExpression;
+    }
 
-        public function __construct(\Aztech\Skwal\Expression $expression, $descending = false)
-        {
-            $this->sortExpression = $expression;
-            $this->descending = $descending;
-        }
-
-        public function getExpression()
-        {
-            return $this->sortExpression;
-        }
-
-        public function isDescending()
-        {
-            return $this->descending;
-        }
+    public function isDescending()
+    {
+        return $this->descending;
     }
 }

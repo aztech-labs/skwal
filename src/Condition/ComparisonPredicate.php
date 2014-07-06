@@ -1,44 +1,43 @@
 <?php
-namespace Aztech\Skwal\Condition
+
+namespace Aztech\Skwal\Condition;
+
+use Aztech\Skwal\Expression;
+
+class ComparisonPredicate extends AbstractPredicate
 {
 
-    use Aztech\Skwal\Expression;
+    private $operator;
 
-    class ComparisonPredicate extends AbstractPredicate
+    private $leftOperand;
+
+    private $rightOperand;
+
+    public function __construct(Expression $left, $operator, Expression $right)
     {
+        // @todo Operator checking
+        $this->operator = $operator;
+        $this->leftOperand = $left;
+        $this->rightOperand = $right;
+    }
 
-        private $operator;
+    public function getOperator()
+    {
+        return $this->operator;
+    }
 
-        private $leftOperand;
+    public function getLeftOperand()
+    {
+        return $this->leftOperand;
+    }
 
-        private $rightOperand;
+    public function getRightOperand()
+    {
+        return $this->rightOperand;
+    }
 
-        public function __construct(Expression $left, $operator, Expression $right)
-        {
-            // @todo Operator checking
-            $this->operator = $operator;
-            $this->leftOperand = $left;
-            $this->rightOperand = $right;
-        }
-
-        public function getOperator()
-        {
-            return $this->operator;
-        }
-
-        public function getLeftOperand()
-        {
-            return $this->leftOperand;
-        }
-
-        public function getRightOperand()
-        {
-            return $this->rightOperand;
-        }
-
-        function acceptPredicateVisitor(\Aztech\Skwal\Visitor\Predicate $visitor)
-        {
-        	$visitor->visitComparisonPredicate($this);
-        }
+    function acceptPredicateVisitor(\Aztech\Skwal\Visitor\Predicate $visitor)
+    {
+        $visitor->visitComparisonPredicate($this);
     }
 }

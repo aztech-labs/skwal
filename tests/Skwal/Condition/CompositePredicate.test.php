@@ -19,7 +19,7 @@ namespace Aztech\Skwal\Tests\Condition
             $left = $this->getMock('\Aztech\Skwal\Expression');
             $right = $this->getMock('\Aztech\Skwal\Expression');
             
-            $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
+            $predicate = new ComparisonPredicate($left, CompOp::EQUAL, $right);
 
             $this->assertSame($left, $predicate->getLeftOperand());
         }
@@ -29,15 +29,15 @@ namespace Aztech\Skwal\Tests\Condition
             $left = $this->getMock('\Aztech\Skwal\Expression');
             $right = $this->getMock('\Aztech\Skwal\Expression');
 
-            $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
+            $predicate = new ComparisonPredicate($left, CompOp::EQUAL, $right);
 
             $this->assertSame($right, $predicate->getRightOperand());
         }
 
         function getOperands()
         {
-            return array(array(CompOp::Equals), array(CompOp::GreaterThan), array(CompOp::GreaterThanEq),
-                array(CompOp::LessThan), array(CompOp::LessThanEq), array(CompOp::NotEquals));
+            return array(array(CompOp::EQUAL), array(CompOp::GREATER_THAN), array(CompOp::GREATER_THANEq),
+                array(CompOp::LESS_THAN), array(CompOp::LESS_THANEq), array(CompOp::NOT_EQUAL));
         }
 
         /**
@@ -58,7 +58,7 @@ namespace Aztech\Skwal\Tests\Condition
             $first = $this->getMock('\Aztech\Skwal\Expression');
             $second = $this->getMock('\Aztech\Skwal\Expression');
 
-            $predicate = new ComparisonPredicate($first, CompOp::Equals, $second);
+            $predicate = new ComparisonPredicate($first, CompOp::EQUAL, $second);
 
             $visitor = $this->getMock('\Aztech\Skwal\Visitor\Predicate');
 

@@ -5,3 +5,4 @@ bootstrap/
 coverage/
 vendor/
 results-testdox.html
+composer.lock

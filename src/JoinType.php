@@ -1,14 +1,13 @@
 <?php
-namespace Aztech\Skwal
+
+namespace Aztech\Skwal;
+
+final class JoinType
 {
 
-    final class JoinType
-    {
+    const INNER = 'INNER';
 
-        const Inner = 'INNER';
+    const OUTER_LEFT = 'LEFT';
 
-        const OuterLeft = 'LEFT';
-
-        const OuterRight = 'RIGHT';
-    }
+    const OUTER_RIGHT = 'RIGHT';
 }

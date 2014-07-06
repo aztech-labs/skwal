@@ -19,13 +19,13 @@ namespace Aztech\Skwal\Tests\Condition
         }
 
         /**
-         * @testdox Calling BAnd(...) returns new AndPredicate with original and bound predicates.
+         * @testdox Calling bAnd(...) returns new AndPredicate with original and bound predicates.
          */
         public function testAndBindingReturnsPredicateWithBothConditionsAndCorrectOperator()
         {
             $other = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
-            $andPredicate = $this->predicate->BAnd($other);
+            $andPredicate = $this->predicate->bAnd($other);
 
             $this->assertInstanceOf('\Aztech\Skwal\Condition\AndPredicate', $andPredicate);
             $this->assertSame($andPredicate->getFirstPredicate(), $this->predicate);
@@ -33,13 +33,13 @@ namespace Aztech\Skwal\Tests\Condition
         }
 
         /**
-         * @testdox Calling BOr(...) returns new OrPredicate with original and bound predicates.
+         * @testdox Calling bOr(...) returns new OrPredicate with original and bound predicates.
          */
         public function testOrBindingReturnsPredicateWithBothConditionsAndCorrectOperator()
         {
             $other = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
-            $andPredicate = $this->predicate->BOr($other);
+            $andPredicate = $this->predicate->bOr($other);
 
             $this->assertInstanceOf('\Aztech\Skwal\Condition\OrPredicate', $andPredicate);
             $this->assertSame($andPredicate->getFirstPredicate(), $this->predicate);
