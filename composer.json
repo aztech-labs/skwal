@@ -8,14 +8,15 @@
 	"type" : "library",
 	"description" : "SQL Generator library",
 	"license" : "MIT",
- 	"authors": [
-        {
+ 	"authors": [{
             "name" : "Thibaud Fabre",
             "email" : "thibaud@aztech.io",
             "role" : "Developer"
-        }
-    ],
+        }],
 	"require" : {
 		"php" : ">=5.3"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer" : "~1.5"
 	}
 }
