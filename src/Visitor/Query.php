@@ -9,8 +9,14 @@ namespace Aztech\Skwal\Visitor;
  */
 interface Query
 {
+    /**
+     * @return void
+     */
     function visit(\Aztech\Skwal\Query $query);
 
+    /**
+     * @return void
+     */
     function visitSelect(\Aztech\Skwal\Query\Select $query);
 
     function visitUpdate();

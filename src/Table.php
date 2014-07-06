@@ -61,7 +61,7 @@ class Table implements CorrelatableReference
      * Sets the name of the table as it is defined in the table's schema/
      *
      * @param string $name
-     * @return Aztech\Skwal_Table
+     * @return Table
      */
     public function setName($name)
     {
@@ -89,7 +89,7 @@ class Table implements CorrelatableReference
      *            Name of the column to return.
      * @param string $alias
      *            Alias to use on the column.
-     * @return \Aztech\Skwal\DerivedColumn
+     * @return DerivedColumn
      */
     public function getColumn($name, $alias = '')
     {

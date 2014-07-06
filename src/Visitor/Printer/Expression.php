@@ -34,6 +34,9 @@ class Expression implements \Aztech\Skwal\Visitor\Expression
      */
     private $useAliases = true;
 
+    /**
+     * @param boolean $useFlag
+     */
     public function useAliases($useFlag)
     {
         $this->useAliases = $useFlag;

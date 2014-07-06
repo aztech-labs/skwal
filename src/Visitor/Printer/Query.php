@@ -96,7 +96,7 @@ class Query implements \Aztech\Skwal\Visitor\Query
 
     /**
      *
-     * @return \Aztech\Skwal\Visitor\Printer\Table
+     * @return TableReference
      */
     private function buildTableReferenceVisitor()
     {

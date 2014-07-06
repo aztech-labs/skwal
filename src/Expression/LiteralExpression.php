@@ -65,7 +65,7 @@ class LiteralExpression extends AbstractExpression implements Expression
      * @param string $alias
      *            Name by which the literal can be referenced in contexts
      *            where it acts as a derived column.
-     * @return Aztech\Skwal_LiteralExpression
+     * @return LiteralExpression
      */
     public function setAlias($alias)
     {
