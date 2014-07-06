@@ -60,7 +60,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->greaterThanEq($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::GREATER_THANEq, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::GREATER_THAN_EQ, $right);
         }
 
         public function testLessThanReturnsCorrectPredicate()
@@ -80,7 +80,7 @@ use Aztech\Skwal\CompOp;
 
             $predicate = $this->builder->lessThanEq($left, $right);
 
-            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::LESS_THANEq, $right);
+            $this->assertComparisonPredicateProperties($predicate, $left, CompOp::LESS_THAN_EQ, $right);
         }
 
         public function testAssignReturnsCorrectExpression()

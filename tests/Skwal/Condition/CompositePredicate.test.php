@@ -36,8 +36,8 @@ namespace Aztech\Skwal\Tests\Condition
 
         function getOperands()
         {
-            return array(array(CompOp::EQUAL), array(CompOp::GREATER_THAN), array(CompOp::GREATER_THANEq),
-                array(CompOp::LESS_THAN), array(CompOp::LESS_THANEq), array(CompOp::NOT_EQUAL));
+            return array(array(CompOp::EQUAL), array(CompOp::GREATER_THAN), array(CompOp::GREATER_THAN_EQ),
+                array(CompOp::LESS_THAN), array(CompOp::LESS_THAN_EQ), array(CompOp::NOT_EQUAL));
         }
 
         /**

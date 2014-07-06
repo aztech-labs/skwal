@@ -31,7 +31,7 @@ class Builder
 
     public function greaterThanEq(Expression $left, Expression $right)
     {
-        return new ComparisonPredicate($left, CompOp::GREATER_THANEq, $right);
+        return new ComparisonPredicate($left, CompOp::GREATER_THAN_EQ, $right);
     }
 
     public function lessThan(Expression $left, Expression $right)
@@ -41,7 +41,7 @@ class Builder
 
     public function lessThanEq(Expression $left, Expression $right)
     {
-        return new ComparisonPredicate($left, CompOp::LESS_THANEq, $right);
+        return new ComparisonPredicate($left, CompOp::LESS_THAN_EQ, $right);
     }
 
     public function assign(AssignableExpression $assignee, AliasExpression $value)
