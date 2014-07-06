@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal
+namespace Aztech\Skwal\Tests
 {
 
-    use Skwal\Table;
+    use Aztech\Skwal\Table;
 
     class TableTest extends \PHPUnit_Framework_TestCase
     {
@@ -61,7 +61,7 @@ namespace Test\Skwal
         {
             $table = new Table('table');
 
-            $visitor = $this->getMock('\Skwal\Visitor\TableReference');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\TableReference');
 
             $visitor->expects($this->once())
                 ->method('visitTable')

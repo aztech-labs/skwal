@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal\Expression
+namespace Aztech\Skwal\Tests\Expression
 {
 
-    use Skwal\Expression\ParameterExpression;
+    use Aztech\Skwal\Expression\ParameterExpression;
 
     class ParameterExpressionTest extends \PHPUnit_Framework_TestCase
     {
@@ -18,7 +18,7 @@ namespace Test\Skwal\Expression
         {
             $parameter = new ParameterExpression('param');
 
-            $visitor = $this->getMock('\Skwal\Visitor\Expression');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Expression');
 
             $visitor->expects($this->once())
                 ->method('visitParameter')

@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal\Condition
+namespace Aztech\Skwal\Tests\Condition
 {
 
-    use Skwal\Condition\AndPredicate;
+    use Aztech\Skwal\Condition\AndPredicate;
 
     class AndPredicateTest extends \PHPUnit_Framework_TestCase
     {
@@ -12,8 +12,8 @@ namespace Test\Skwal\Condition
          */
         public function testGetFirstPredicateReturnsConstructorInjectedPredicate()
         {
-            $first = $this->getMock('\Skwal\Condition\Predicate');
-            $second = $this->getMock('\Skwal\Condition\Predicate');
+            $first = $this->getMock('\Aztech\Skwal\Condition\Predicate');
+            $second = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $predicate = new AndPredicate($first, $second);
 
@@ -25,8 +25,8 @@ namespace Test\Skwal\Condition
          */
         public function testGetSecondPredicateReturnsConstructorInjectedPredicate()
         {
-            $first = $this->getMock('\Skwal\Condition\Predicate');
-            $second = $this->getMock('\Skwal\Condition\Predicate');
+            $first = $this->getMock('\Aztech\Skwal\Condition\Predicate');
+            $second = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $predicate = new AndPredicate($first, $second);
 
@@ -38,12 +38,12 @@ namespace Test\Skwal\Condition
          */
         public function testAcceptCallsCorrectVisitorMethod()
         {
-            $first = $this->getMock('\Skwal\Condition\Predicate');
-            $second = $this->getMock('\Skwal\Condition\Predicate');
+            $first = $this->getMock('\Aztech\Skwal\Condition\Predicate');
+            $second = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $predicate = new AndPredicate($first, $second);
 
-            $visitor = $this->getMock('\Skwal\Visitor\Predicate');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Predicate');
 
             $visitor->expects($this->once())
                 ->method('visitAndPredicate')

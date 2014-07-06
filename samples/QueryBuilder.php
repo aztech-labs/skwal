@@ -1,8 +1,8 @@
 <?php
 include __DIR__ . '/../Loader.php';
 
-$builder = new \Skwal\Query\Builder();
-$printer = new \Skwal\Visitor\Printer\Query();
+$builder = new \Aztech\Skwal\Query\Builder();
+$printer = new \Aztech\Skwal\Visitor\Printer\Query();
 
 $exprs = $builder->exprs();
 

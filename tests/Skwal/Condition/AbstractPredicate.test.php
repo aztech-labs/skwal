@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal\Condition
+namespace Aztech\Skwal\Tests\Condition
 {
 
-    use Skwal\Condition\AbstractPredicate;
+    use Aztech\Skwal\Condition\AbstractPredicate;
 
     /**
      * @author thibaud
@@ -15,7 +15,7 @@ namespace Test\Skwal\Condition
 
         protected function setUp()
         {
-            $this->predicate = $this->getMockForAbstractClass('\Skwal\Condition\AbstractPredicate');
+            $this->predicate = $this->getMockForAbstractClass('\Aztech\Skwal\Condition\AbstractPredicate');
         }
 
         /**
@@ -23,11 +23,11 @@ namespace Test\Skwal\Condition
          */
         public function testAndBindingReturnsPredicateWithBothConditionsAndCorrectOperator()
         {
-            $other = $this->getMock('\Skwal\Condition\Predicate');
+            $other = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $andPredicate = $this->predicate->BAnd($other);
 
-            $this->assertInstanceOf('\Skwal\Condition\AndPredicate', $andPredicate);
+            $this->assertInstanceOf('\Aztech\Skwal\Condition\AndPredicate', $andPredicate);
             $this->assertSame($andPredicate->getFirstPredicate(), $this->predicate);
             $this->assertSame($andPredicate->getSecondPredicate(), $other);
         }
@@ -37,11 +37,11 @@ namespace Test\Skwal\Condition
          */
         public function testOrBindingReturnsPredicateWithBothConditionsAndCorrectOperator()
         {
-            $other = $this->getMock('\Skwal\Condition\Predicate');
+            $other = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $andPredicate = $this->predicate->BOr($other);
 
-            $this->assertInstanceOf('\Skwal\Condition\OrPredicate', $andPredicate);
+            $this->assertInstanceOf('\Aztech\Skwal\Condition\OrPredicate', $andPredicate);
             $this->assertSame($andPredicate->getFirstPredicate(), $this->predicate);
             $this->assertSame($andPredicate->getSecondPredicate(), $other);
         }

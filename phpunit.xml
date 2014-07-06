@@ -1,4 +1,4 @@
-<phpunit bootstrap="Loader.php"
+<phpunit bootstrap="vendor/autoload.php"
 		 convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true">
@@ -9,7 +9,7 @@
 	</testsuites>
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".class.php">src/</directory>
+			<directory suffix=".php">src/</directory>
 		</whitelist>
 	</filter>
 	<logging>

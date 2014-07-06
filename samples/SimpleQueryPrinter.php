@@ -1,18 +1,18 @@
 <?php
-use Skwal\Table;
-use Skwal\SelectQuery;
-use Skwal\Expression\LiteralExpression;
-use Skwal\Condition\ComparisonPredicate;
-use Skwal\CompOp;
-use Skwal\Query\Select;
-use Skwal\OrderBy;
-use Skwal\Query\ScalarSelect;
-use Skwal\Join;
-use Skwal\JoinedTable;
+use Aztech\Skwal\Table;
+use Aztech\Skwal\SelectQuery;
+use Aztech\Skwal\Expression\LiteralExpression;
+use Aztech\Skwal\Condition\ComparisonPredicate;
+use Aztech\Skwal\CompOp;
+use Aztech\Skwal\Query\Select;
+use Aztech\Skwal\OrderBy;
+use Aztech\Skwal\Query\ScalarSelect;
+use Aztech\Skwal\Join;
+use Aztech\Skwal\JoinedTable;
 
 include __DIR__ . '/../Loader.php';
 
-$printer = new Skwal\Visitor\Printer\Query();
+$printer = new Atech\Aztech\Skwal\Visitor\Printer\Query();
 $table = new Table('test');
 $query = new Select('childQuery');
 

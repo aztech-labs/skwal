@@ -1,18 +1,18 @@
 <?php
-namespace Test\Skwal\Visitor\Printer
+namespace Aztech\Skwal\Tests\Visitor\Printer
 {
 
-    use Skwal\Table;
-    use Skwal\Visitor\Printer\TableReference;
+    use Aztech\Skwal\Table;
+    use Aztech\Skwal\Visitor\Printer\TableReference;
 				
     class TableReferenceTest extends \PHPUnit_Framework_TestCase
     {
 
         public function testVisitDispatchesCallToVisitable()
         {
-            $visitor = new \Skwal\Visitor\Printer\TableReference();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\TableReference();
 
-            $reference = $this->getMock('\Skwal\CorrelatableReference');
+            $reference = $this->getMock('\Aztech\Skwal\CorrelatableReference');
 
             $reference->expects($this->once())
                 ->method('acceptTableVisitor')
@@ -31,12 +31,12 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testVisitQueryGeneratesCorrectString()
         {
-            $query = $this->getMock('\Skwal\Query\Select');
+            $query = $this->getMock('\Aztech\Skwal\Query\Select');
             $query->expects($this->any())
                 ->method('getCorrelationName')
                 ->will($this->returnValue('correlation'));
 
-            $queryVisitor = $this->getMock('\Skwal\Visitor\Printer\Query');
+            $queryVisitor = $this->getMock('\Aztech\Skwal\Visitor\Printer\Query');
             $queryVisitor->expects($this->any())
                 ->method($this->anything())
                 ->will($this->returnValue('nested query'));

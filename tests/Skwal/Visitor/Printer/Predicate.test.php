@@ -1,11 +1,11 @@
 <?php
-namespace Test\Skwal\Visitor\Printer
+namespace Aztech\Skwal\Tests\Visitor\Printer
 {
 
-    use Skwal\Condition\AndPredicate;
-    use Skwal\Visitor\Printer\Predicate;
-    use Skwal\Condition\ComparisonPredicate;
-    use Skwal\CompOp;
+    use Aztech\Skwal\Condition\AndPredicate;
+    use Aztech\Skwal\Visitor\Printer\Predicate;
+    use Aztech\Skwal\Condition\ComparisonPredicate;
+    use Aztech\Skwal\CompOp;
 
     class PredicateTest extends \PHPUnit_Framework_TestCase
     {
@@ -14,7 +14,7 @@ namespace Test\Skwal\Visitor\Printer
 
         protected function setUp()
         {
-            $this->expressionVisitor = $this->getMock(('\Skwal\Visitor\Printer\Expression'));
+            $this->expressionVisitor = $this->getMock(('\Aztech\Skwal\Visitor\Printer\Expression'));
 
             $this->expressionVisitor->expects($this->any())
                 ->method('printExpression')
@@ -23,9 +23,9 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testVisitDispatchesCallToVisitable()
         {
-            $predicate = $this->getMock('\Skwal\Condition\Predicate');
+            $predicate = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
-            $visitor = new \Skwal\Visitor\Printer\Predicate();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\Predicate();
 
             $predicate->expects($this->once())
                 ->method('acceptPredicateVisitor')
@@ -36,8 +36,8 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testPrintComparisonPredicateReturnsCorrectString()
         {
-            $first = $this->getMock('\Skwal\Expression\AliasExpression');
-            $second = $this->getMock('\Skwal\Expression\AliasExpression');
+            $first = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
+            $second = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $predicate = new ComparisonPredicate($first, CompOp::Equals, $second);
 
             $visitor = new Predicate();
@@ -48,8 +48,8 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testPrintAndPredicateReturnsCorrectString()
         {
-            $first = $this->getMock('\Skwal\Expression\AliasExpression');
-            $second = $this->getMock('\Skwal\Expression\AliasExpression');
+            $first = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
+            $second = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $boundPredicate = new ComparisonPredicate($first, CompOp::Equals, $second);
             $predicate = $boundPredicate->BAnd($boundPredicate);
 
@@ -62,8 +62,8 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testPrintOrPredicateReturnsCorrectString()
         {
-            $first = $this->getMock('\Skwal\Expression\AliasExpression');
-            $second = $this->getMock('\Skwal\Expression\AliasExpression');
+            $first = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
+            $second = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $boundPredicate = new ComparisonPredicate($first, CompOp::Equals, $second);
             $predicate = $boundPredicate->BOr($boundPredicate);
 

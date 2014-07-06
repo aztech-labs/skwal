@@ -1,16 +1,16 @@
 <?php
 
-namespace Test\Skwal\Expression
+namespace Aztech\Skwal\Tests\Expression
 {
 
-    use Skwal\Expression\DerivedColumn;
+    use Aztech\Skwal\Expression\DerivedColumn;
 
     class DerivedColumnTest extends \PHPUnit_Framework_TestCase
     {
 
         public function testAcceptExpressionVisitorCallsCorrectVisitMethod()
         {
-            $visitor = $this->getMock('\Skwal\Visitor\Expression');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Expression');
 
             $column = new DerivedColumn('column');
             
@@ -51,7 +51,7 @@ namespace Test\Skwal\Expression
         
         public function testSetTableDoesNotAffectOriginalObject()
         {
-            $table = $this->getMock('\Skwal\CorrelatableReference');
+            $table = $this->getMock('\Aztech\Skwal\CorrelatableReference');
             
             $column = new DerivedColumn('column');
             
@@ -62,7 +62,7 @@ namespace Test\Skwal\Expression
         
         public function testSetTableReturnsNewObjectWithCorrectlyClonedProperties()
         {
-            $table = $this->getMock('\Skwal\CorrelatableReference');
+            $table = $this->getMock('\Aztech\Skwal\CorrelatableReference');
             
             $column = new DerivedColumn('column', 'alias');
             
@@ -77,7 +77,7 @@ namespace Test\Skwal\Expression
         
         public function testCloningInstanceClonesSubObjects()
         {
-            $table = $this->getMock('\Skwal\CorrelatableReference');
+            $table = $this->getMock('\Aztech\Skwal\CorrelatableReference');
             
             $column = new DerivedColumn('column');
             $column = $column->setTable($table);

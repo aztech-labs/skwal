@@ -1,10 +1,11 @@
 <?php
-namespace Test\Skwal\Condition
+
+namespace Aztech\Skwal\Tests\Condition
 {
 
-    use Skwal\Condition\ComparisonPredicate;
-    use Skwal\CompOp;
-
+    use Aztech\Skwal\Condition\ComparisonPredicate;
+    use Aztech\Skwal\CompOp;
+				
     /**
      *
      * @author thibaud
@@ -15,9 +16,9 @@ namespace Test\Skwal\Condition
 
         function testGetLeftOperandReturnsCorrectValue()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
-
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
+            
             $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
 
             $this->assertSame($left, $predicate->getLeftOperand());
@@ -25,8 +26,8 @@ namespace Test\Skwal\Condition
 
         function testGetRightOperandReturnsCorrectValue()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = new ComparisonPredicate($left, CompOp::Equals, $right);
 
@@ -44,8 +45,8 @@ namespace Test\Skwal\Condition
          */
         function testGetOperatorReturnsCorrectValue($operand)
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = new ComparisonPredicate($left, $operand, $right);
 
@@ -54,12 +55,12 @@ namespace Test\Skwal\Condition
 
         public function testAcceptCallsCorrectVisitorMethod()
         {
-            $first = $this->getMock('\Skwal\Expression');
-            $second = $this->getMock('\Skwal\Expression');
+            $first = $this->getMock('\Aztech\Skwal\Expression');
+            $second = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = new ComparisonPredicate($first, CompOp::Equals, $second);
 
-            $visitor = $this->getMock('\Skwal\Visitor\Predicate');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Predicate');
 
             $visitor->expects($this->once())
                 ->method('visitComparisonPredicate')

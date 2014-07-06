@@ -1,16 +1,16 @@
 <?php
-namespace Test\Skwal\Condition
+namespace Aztech\Skwal\Tests\Condition
 {
 
-    use Skwal\Condition\OrPredicate;
+    use Aztech\Skwal\Condition\OrPredicate;
 
     class OrPredicateTest extends \PHPUnit_Framework_TestCase
     {
 
         public function testGetFirstPredicateReturnsCorrectValue()
         {
-            $first = $this->getMock('\Skwal\Condition\Predicate');
-            $second = $this->getMock('\Skwal\Condition\Predicate');
+            $first = $this->getMock('\Aztech\Skwal\Condition\Predicate');
+            $second = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $predicate = new OrPredicate($first, $second);
 
@@ -19,8 +19,8 @@ namespace Test\Skwal\Condition
 
         public function testGetSecondPredicateReturnsCorrectValue()
         {
-            $first = $this->getMock('\Skwal\Condition\Predicate');
-            $second = $this->getMock('\Skwal\Condition\Predicate');
+            $first = $this->getMock('\Aztech\Skwal\Condition\Predicate');
+            $second = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $predicate = new OrPredicate($first, $second);
 
@@ -29,12 +29,12 @@ namespace Test\Skwal\Condition
 
         public function testAcceptCallsCorrectVisitorMethod()
         {
-            $first = $this->getMock('\Skwal\Condition\Predicate');
-            $second = $this->getMock('\Skwal\Condition\Predicate');
+            $first = $this->getMock('\Aztech\Skwal\Condition\Predicate');
+            $second = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $predicate = new OrPredicate($first, $second);
 
-            $visitor = $this->getMock('\Skwal\Visitor\Predicate');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Predicate');
 
             $visitor->expects($this->once())
                 ->method('visitOrPredicate')

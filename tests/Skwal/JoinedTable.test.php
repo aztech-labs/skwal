@@ -1,15 +1,15 @@
 <?php
-namespace Test\Skwal
+namespace Aztech\Skwal\Tests
 {
 
-    use Skwal\JoinedTable;
+    use Aztech\Skwal\JoinedTable;
 
     class JoinedTableTest extends \PHPUnit_Framework_TestCase
     {
 
         public function testConstructPerformsExpectedAssignments()
         {
-            $table = $this->getMock('\Skwal\TableReference');
+            $table = $this->getMock('\Aztech\Skwal\TableReference');
             $joinedTable = new JoinedTable($table);
             
             $this->assertEquals($table, $joinedTable->getFirstTable());
@@ -17,10 +17,10 @@ namespace Test\Skwal
         
         public function testAcceptTableReferenceVisitorCallsCorrectVisitMethod()
         {
-            $mockTable = $this->getMock('\Skwal\TableReference');
+            $mockTable = $this->getMock('\Aztech\Skwal\TableReference');
             $table = new JoinedTable($mockTable);
         
-            $visitor = $this->getMock('\Skwal\Visitor\TableReference');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\TableReference');
         
             $visitor->expects($this->once())
                 ->method('visitJoinedTable')
@@ -31,10 +31,10 @@ namespace Test\Skwal
         
         public function testAddedJoinsAreReturnedByGetJoinsMethod()
         {
-            $mockTable = $this->getMock('\Skwal\TableReference');
+            $mockTable = $this->getMock('\Aztech\Skwal\TableReference');
             $table = new JoinedTable($mockTable);
             
-            $join = $this->getMock('\Skwal\Join', array(), array(), '', false);
+            $join = $this->getMock('\Aztech\Skwal\Join', array(), array(), '', false);
             
             $table->addJoin($join);
             

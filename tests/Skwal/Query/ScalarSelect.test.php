@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal\Query
+namespace Aztech\Skwal\Tests\Query
 {
 
-    use Skwal\Query\ScalarSelect;
+    use Aztech\Skwal\Query\ScalarSelect;
     require_once __DIR__ . '/Select.test.php';
 
     class ScalarSelectTest extends SelectTest
@@ -27,7 +27,7 @@ namespace Test\Skwal\Query
         
         public function testCanAddColumnReturnsFalseWhenQueryHasOneField()
         {
-            $expression = $this->getMock('\Skwal\Expression\AliasExpression');
+            $expression = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $query = new ScalarSelect('test');
             
             $query = $query->addColumn($expression);

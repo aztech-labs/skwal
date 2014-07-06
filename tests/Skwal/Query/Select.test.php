@@ -1,9 +1,9 @@
 <?php
-namespace Test\Skwal\Query
+namespace Aztech\Skwal\Tests\Query
 {
-    use Skwal\Query\Select;
-    use Skwal\Expression\DerivedColumn;
-use Skwal\OrderBy;
+    use Aztech\Skwal\Query\Select;
+    use Aztech\Skwal\Expression\DerivedColumn;
+use Aztech\Skwal\OrderBy;
 
     class SelectTest extends \PHPUnit_Framework_TestCase
     {
@@ -12,7 +12,7 @@ use Skwal\OrderBy;
         {
             $query = new Select();
 
-            $visitor = $this->getMock('\Skwal\Visitor\TableReference');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\TableReference');
 
             $visitor->expects($this->once())
                 ->method('visitQuery')
@@ -25,7 +25,7 @@ use Skwal\OrderBy;
         {
             $query = new Select();
 
-            $visitor = $this->getMock('\Skwal\Visitor\Query');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Query');
 
             $visitor->expects($this->once())
                 ->method('visitSelect')
@@ -38,7 +38,7 @@ use Skwal\OrderBy;
         {
             $query = new Select();
 
-            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+            $column = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
             $this->assertNotSame($query, $query->addColumn($column));
         }
@@ -153,7 +153,7 @@ use Skwal\OrderBy;
         public function testSetTableReturnsNewInstance()
         {
             $query = new Select();
-            $table = $this->getMock('\Skwal\CorrelatableReference');
+            $table = $this->getMock('\Aztech\Skwal\CorrelatableReference');
 
             $this->assertNotSame($query, $query->setTable($table));
         }
@@ -161,7 +161,7 @@ use Skwal\OrderBy;
         public function testGetTableReturnsSetValue()
         {
             $query = new Select();
-            $table = $this->getMock('\Skwal\CorrelatableReference');
+            $table = $this->getMock('\Aztech\Skwal\CorrelatableReference');
 
             $query = $query->setTable($table);
 
@@ -179,7 +179,7 @@ use Skwal\OrderBy;
         {
             $query = new Select();
 
-            $condition = $this->getMock('\Skwal\Condition\Predicate');
+            $condition = $this->getMock('\Aztech\Skwal\Condition\Predicate');
 
             $this->assertNotSame($query->setCondition($condition), $condition);
         }
@@ -188,7 +188,7 @@ use Skwal\OrderBy;
         {
             $query = new Select();
 
-            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+            $column = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
             $this->assertNotSame($query, $query->groupBy($column));
         }
@@ -199,7 +199,7 @@ use Skwal\OrderBy;
 
             $groupBys = array();
             for ($i = 0; $i < 10; $i++) {
-                $column = $this->getMock('\Skwal\Expression\AliasExpression');
+                $column = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
                 $groupBys[] = $column;
                 $query = $query->groupBy($column);
@@ -215,7 +215,7 @@ use Skwal\OrderBy;
         {
             $query = new Select();
 
-            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+            $column = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
             $orderBy = new OrderBy($column);
 
             $this->assertNotSame($query, $query->orderBy($orderBy));
@@ -227,7 +227,7 @@ use Skwal\OrderBy;
 
             $orderBys = array();
             for ($i = 0; $i < 10; $i++) {
-                $column = $this->getMock('\Skwal\Expression\AliasExpression');
+                $column = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
                 $orderBy = new OrderBy($column);
 
                 $orderBys[] = $orderBy;
@@ -287,7 +287,7 @@ use Skwal\OrderBy;
         {
             $query = new Select();
 
-            $column = $this->getMock('\Skwal\Expression\AliasExpression');
+            $column = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
             $this->assertTrue($query->canAddColumn());
 

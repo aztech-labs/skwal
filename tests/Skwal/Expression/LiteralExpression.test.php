@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal\Expression
+namespace Aztech\Skwal\Tests\Expression
 {
 
-    use Skwal\Expression\LiteralExpression;
+    use Aztech\Skwal\Expression\LiteralExpression;
 
     class LiteralExpressionTest extends \PHPUnit_Framework_TestCase
     {
@@ -43,7 +43,7 @@ namespace Test\Skwal\Expression
         public function testAcceptExpressionVisitorCallsCorrectVisitMethod()
         {
             $constant = new LiteralExpression('anything', 'alias');
-            $visitor = $this->getMock('\Skwal\Visitor\Expression');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Expression');
             
             $visitor->expects($this->once())
                 ->method('visitLiteral')

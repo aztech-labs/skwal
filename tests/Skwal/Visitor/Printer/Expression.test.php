@@ -1,5 +1,5 @@
 <?php
-namespace Test\Skwal\Visitor\Printer
+namespace Aztech\Skwal\Tests\Visitor\Printer
 {
 
     class ExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,9 +9,9 @@ namespace Test\Skwal\Visitor\Printer
          */
         public function testVisitMethodDispatchesCallToVisitable()
         {
-            $expression = $this->getMock('\Skwal\Expression\AliasExpression');
+            $expression = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
-            $visitor = new \Skwal\Visitor\Printer\Expression();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\Expression();
 
             $expression->expects($this->once())
                 ->method('acceptExpressionVisitor')
@@ -32,7 +32,7 @@ namespace Test\Skwal\Visitor\Printer
          */
         public function testPrintLiteralExpression($value, $expected)
         {
-            $visitor = new \Skwal\Visitor\Printer\Expression();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\Expression();
 
             $expression = $this->getLiteralMock($visitor, $value);
 
@@ -45,7 +45,7 @@ namespace Test\Skwal\Visitor\Printer
 
         private function getLiteralMock($visitor, $value, $alias = null)
         {
-            $expression = $this->getMock('\Skwal\Expression\LiteralExpression', array(), array(), '', false);
+            $expression = $this->getMock('\Aztech\Skwal\Expression\LiteralExpression', array(), array(), '', false);
 
             $expression->expects($this->any())
                 ->method('getValue')
@@ -72,7 +72,7 @@ namespace Test\Skwal\Visitor\Printer
          */
         public function testPrintColumnExpressionWithoutAliasReturnsCorrectString()
         {
-            $visitor = new \Skwal\Visitor\Printer\Expression();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\Expression();
             $visitor->useAliases(false);
 
             $expression = $this->getColumnMock($visitor, 'table', 'column');
@@ -85,7 +85,7 @@ namespace Test\Skwal\Visitor\Printer
          */
         public function testPrintColumnExpressionWithAliasReturnsCorrectString()
         {
-            $visitor = new \Skwal\Visitor\Printer\Expression();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\Expression();
             $visitor->useAliases(true);
 
             $expression = $this->getColumnMock($visitor, 'table', 'column', 'alias');
@@ -95,13 +95,13 @@ namespace Test\Skwal\Visitor\Printer
 
         private function getColumnMock($visitor, $tableName, $value, $alias = null)
         {
-            $expression = $this->getMock('\Skwal\Expression\DerivedColumn', array(), array(), '', false);
+            $expression = $this->getMock('\Aztech\Skwal\Expression\DerivedColumn', array(), array(), '', false);
 
             $expression->expects($this->any())
                 ->method('getValue')
                 ->will($this->returnValue($value));
 
-            $table = $this->getMock('\Skwal\CorrelatableReference');
+            $table = $this->getMock('\Aztech\Skwal\CorrelatableReference');
 
             $table->expects($this->any())
                 ->method('getCorrelationName')
@@ -129,9 +129,9 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testPrintParameterStringReturnsCorrectString()
         {
-            $visitor = new \Skwal\Visitor\Printer\Expression();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\Expression();
 
-            $parameter = $this->getMock('\Skwal\Expression\ParameterExpression', array(), array(), '', false);
+            $parameter = $this->getMock('\Aztech\Skwal\Expression\ParameterExpression', array(), array(), '', false);
             $parameter->expects($this->any())
                 ->method('getName')
                 ->will($this->returnValue('param'));
@@ -148,8 +148,8 @@ namespace Test\Skwal\Visitor\Printer
 
         public function testPrintScalarQueryReturnsCorrectString()
         {
-            $queryPrinter = $this->getMock('\Skwal\Visitor\Printer\Query', array('printQuery'), array(), '', false);
-            $query = $this->getMock('\Skwal\Query\ScalarSelect', array('getAlias'), array(), '', false);
+            $queryPrinter = $this->getMock('\Aztech\Skwal\Visitor\Printer\Query', array('printQuery'), array(), '', false);
+            $query = $this->getMock('\Aztech\Skwal\Query\ScalarSelect', array('getAlias'), array(), '', false);
 
             $query->expects($this->any())
                 ->method('getAlias')
@@ -160,7 +160,7 @@ namespace Test\Skwal\Visitor\Printer
                 ->with($this->equalTo($query))
                 ->will($this->returnValue('scalar-query'));
 
-            $visitor = new \Skwal\Visitor\Printer\Expression();
+            $visitor = new \Aztech\Skwal\Visitor\Printer\Expression();
             $visitor->useAliases(true);
             $visitor->setQueryPrinter($queryPrinter);
 

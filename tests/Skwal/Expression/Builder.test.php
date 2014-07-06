@@ -1,9 +1,9 @@
 <?php
-namespace Test\Skwal\Expression
+namespace Aztech\Skwal\Tests\Expression
 {
 
-    use Skwal\Expression\Builder;
-use Skwal\CompOp;
+    use Aztech\Skwal\Expression\Builder;
+use Aztech\Skwal\CompOp;
 
     class BuilderTest extends \PHPUnit_Framework_TestCase
     {
@@ -17,7 +17,7 @@ use Skwal\CompOp;
 
         private function assertComparisonPredicateProperties($predicate, $left, $operator, $right)
         {
-            $this->assertInstanceOf('\Skwal\Condition\ComparisonPredicate', $predicate);
+            $this->assertInstanceOf('\Aztech\Skwal\Condition\ComparisonPredicate', $predicate);
             $this->assertSame($left, $predicate->getLeftOperand());
             $this->assertSame($operator, $predicate->getOperator());
             $this->assertSame($right, $predicate->getRightOperand());
@@ -25,8 +25,8 @@ use Skwal\CompOp;
 
         public function testEqualsReturnsCorrectPredicate()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = $this->builder->equals($left, $right);
 
@@ -35,8 +35,8 @@ use Skwal\CompOp;
 
         public function testNotEqualsReturnsCorrectPredicate()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = $this->builder->notEquals($left, $right);
 
@@ -45,8 +45,8 @@ use Skwal\CompOp;
 
         public function testGreaterThanReturnsCorrectPredicate()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = $this->builder->greaterThan($left, $right);
 
@@ -55,8 +55,8 @@ use Skwal\CompOp;
 
         public function testGreaterThanEqReturnsCorrectPredicate()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = $this->builder->greaterThanEq($left, $right);
 
@@ -65,8 +65,8 @@ use Skwal\CompOp;
 
         public function testLessThanReturnsCorrectPredicate()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = $this->builder->lessThan($left, $right);
 
@@ -75,8 +75,8 @@ use Skwal\CompOp;
 
         public function testLessThanEqReturnsCorrectPredicate()
         {
-            $left = $this->getMock('\Skwal\Expression');
-            $right = $this->getMock('\Skwal\Expression');
+            $left = $this->getMock('\Aztech\Skwal\Expression');
+            $right = $this->getMock('\Aztech\Skwal\Expression');
 
             $predicate = $this->builder->lessThanEq($left, $right);
 
@@ -85,12 +85,12 @@ use Skwal\CompOp;
 
         public function testAssignReturnsCorrectExpression()
         {
-            $assignee = $this->getMock('\Skwal\Expression\AssignableExpression');
-            $value = $this->getMock('\Skwal\Expression\AliasExpression');
+            $assignee = $this->getMock('\Aztech\Skwal\Expression\AssignableExpression');
+            $value = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
             $assignment = $this->builder->assign($assignee, $value);
 
-            $this->assertInstanceOf('\Skwal\Expression\AssignmentExpression', $assignment);
+            $this->assertInstanceOf('\Aztech\Skwal\Expression\AssignmentExpression', $assignment);
             $this->assertSame($assignee, $assignment->getAssignee());
             $this->assertSame($value, $assignment->getValue());
         }

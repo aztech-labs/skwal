@@ -3,4 +3,5 @@
 .settings/
 bootstrap/
 coverage/
+vendor/
 results-testdox.html

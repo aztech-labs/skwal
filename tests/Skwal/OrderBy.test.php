@@ -1,15 +1,15 @@
 <?php
-namespace Test\Skwal
+namespace Aztech\Skwal\Tests
 {
 
-    use Skwal\OrderBy;
+    use Aztech\Skwal\OrderBy;
 
     class OrderByTest extends \PHPUnit_Framework_TestCase
     {
 
         public function testGetExpressionReturnsCorrectInstance()
         {
-            $expression = $this->getMock('\Skwal\Expression');
+            $expression = $this->getMock('\Aztech\Skwal\Expression');
 
             $orderBy = new OrderBy($expression);
 
@@ -18,7 +18,7 @@ namespace Test\Skwal
 
         public function testIsDescendingReturnsCorrectValues()
         {
-            $expression = $this->getMock('\Skwal\Expression');
+            $expression = $this->getMock('\Aztech\Skwal\Expression');
 
             $orderBy = new OrderBy($expression, false);
             $this->assertFalse($orderBy->isDescending());

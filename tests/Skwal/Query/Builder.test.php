@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal\Query
+namespace Aztech\Skwal\Tests\Query
 {
 
-    use Skwal\Query\Builder;
+    use Aztech\Skwal\Query\Builder;
 
     class BuilderTest extends \PHPUnit_Framework_TestCase
     {
@@ -14,7 +14,7 @@ namespace Test\Skwal\Query
             $exprs = $builder->exprs();
             
             $this->assertNotNull($exprs);
-            $this->assertInstanceOf('\Skwal\Expression\Builder', $exprs);
+            $this->assertInstanceOf('\Aztech\Skwal\Expression\Builder', $exprs);
         }
         
         public function testSelectBuildsSelectQuery()
@@ -24,7 +24,7 @@ namespace Test\Skwal\Query
             $select = $builder->select('table');
             $query = $builder->getQuery();
             
-            $this->assertInstanceOf('\Skwal\Query', $query);
+            $this->assertInstanceOf('\Aztech\Skwal\Query', $query);
             $this->assertEquals($query->getTable()->getCorrelationName(), 'table');
         }
         

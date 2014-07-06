@@ -1,14 +1,14 @@
 <?php
 
-namespace Test\Skwal\Expression
+namespace Aztech\Skwal\Tests\Expression
 {
-    use Skwal\Expression\AssignmentExpression;
+    use Aztech\Skwal\Expression\AssignmentExpression;
 				class AssignmentExpressionTest extends \PHPUnit_Framework_TestCase
     {
         public function testGetAssigneeReturnsCorrectInstance()
         {
-            $assignee = $this->getMock('\Skwal\Expression\AssignableExpression');
-            $value = $this->getMock('\Skwal\Expression\AliasExpression');
+            $assignee = $this->getMock('\Aztech\Skwal\Expression\AssignableExpression');
+            $value = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
             $assignment = new AssignmentExpression($assignee, $value);
 
@@ -17,8 +17,8 @@ namespace Test\Skwal\Expression
 
         public function testGetValueReturnsCorrectInstance()
         {
-            $assignee = $this->getMock('\Skwal\Expression\AssignableExpression');
-            $value = $this->getMock('\Skwal\Expression\AliasExpression');
+            $assignee = $this->getMock('\Aztech\Skwal\Expression\AssignableExpression');
+            $value = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
             $assignment = new AssignmentExpression($assignee, $value);
 
@@ -27,12 +27,12 @@ namespace Test\Skwal\Expression
 
         public function testAcceptExpressionVisitorDelegatesCallToCorrectMethod()
         {
-            $assignee = $this->getMock('\Skwal\Expression\AssignableExpression');
-            $value = $this->getMock('\Skwal\Expression\AliasExpression');
+            $assignee = $this->getMock('\Aztech\Skwal\Expression\AssignableExpression');
+            $value = $this->getMock('\Aztech\Skwal\Expression\AliasExpression');
 
             $assignment = new AssignmentExpression($assignee, $value);
 
-            $visitor = $this->getMock('\Skwal\Visitor\Expression');
+            $visitor = $this->getMock('\Aztech\Skwal\Visitor\Expression');
             $visitor->expects($this->once())
                 ->method('visitAssignmentExpression')
                 ->with($this->equalTo($assignment));

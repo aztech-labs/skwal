@@ -1,8 +1,8 @@
 <?php
-namespace Test\Skwal\Visitor\Printer\Assembler
+namespace Aztech\Skwal\Tests\Visitor\Printer\Assembler
 {
 
-    use Skwal\Visitor\Printer\Assembler\Select;
+    use Aztech\Skwal\Visitor\Printer\Assembler\Select;
 
     class SelectTest extends \PHPUnit_Framework_TestCase
     {
