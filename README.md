@@ -2,8 +2,7 @@ skwal
 =====
 
 A PHP PoC SQL generator
-
-
+ 
 #### Current build status
 
 [![Build Status](https://travis-ci.org/aztech-dev/skwal.png?branch=master)](https://travis-ci.org/aztech-dev/skwal)
