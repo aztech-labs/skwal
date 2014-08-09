@@ -1,7 +1,7 @@
 skwal
 =====
 
-A PHP PoC SQL generator
+A PHP PoC SQL generator 
  
 #### Current build status
 
